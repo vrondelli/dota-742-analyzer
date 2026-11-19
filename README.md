@@ -10,6 +10,15 @@ npm start
 
 Open [the analyzer](http://127.0.0.1:4173). It starts on Legend, using the lobby's estimated average medal. Filter by role, select a hero to see item performance by purchase window, or add up to three heroes to compare side by side. Match refreshes appear on page reload.
 
+| View | Use it to answer |
+| --- | --- |
+| Matches | How did heroes and purchases perform in the recorded games? |
+| Role rankings | Which heroes fit my position under the mechanics rubric? |
+| Draft guide | How do revealed picks, game conditions, and farm speed change my options? |
+| Farm budgets | Which builds fit the gold I could earn by a given minute? |
+| Damage rankings | Which hero and item combinations add the most damage per gold across fixed spend bands? |
+| Item lab | What does a specific build add to one hero under the same combat assumptions? |
+
 ```powershell
 npm run refresh -- --rank-tier 5
 npm test
@@ -27,9 +36,9 @@ Import the GitHub repository with the repository root as the Vercel project dire
 
 Use the project's production domain for sharing. Open `/role-rankings` for the role boards or add a role query such as `/role-rankings?role=offlane` to link directly to a position.
 
-## Build efficiency
+## Item lab
 
-Open [Build efficiency](http://127.0.0.1:4173/efficiency) to compare single items and two-item builds under the same gold budget. The model starts from the selected hero and level. Choose a damage, durability, aura or sustain metric and enter the relevant target and fight assumptions. The same page also opens from a selected hero in the Legend analyzer.
+Open the [Item lab](http://127.0.0.1:4173/efficiency) to compare single items and two-item builds under the same gold budget. The model starts from the selected hero and level. Choose a damage, durability, aura or sustain metric and enter the relevant target and fight assumptions. The same page also opens from a selected hero in the Legend analyzer.
 
 - Right-click DPS combines average physical damage per hit, attack rate, supported attack effects, and target armor. Magic damage uses the selected fight window, entered spell damage, target magic resistance, and supported item effects.
 - Armor, magic resistance, effective HP, attack speed, mana and health regeneration use each stat's own unit. Aura values apply per affected unit in range. Documented conflicts are applied where represented.

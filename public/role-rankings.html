@@ -13,30 +13,32 @@
 <body>
   <a class="skip-link" href="#main">Skip to rankings</a>
   <header class="topbar">
-    <div class="shell topbar-content rankings-header">
+    <div class="shell topbar-content analyzer-header">
       <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>Dota 2 Analyzer</span>
       </a>
-      <nav class="rankings-nav" aria-label="Analyzer views">
-        <a href="/">Match results</a>
-        <a href="/gpm-builds">GPM projections</a>
-        <a href="/draft-guide">Draft guide</a>
+      <nav class="analyzer-nav" aria-label="Analyzer views">
+        <a href="/">Matches</a>
         <a href="/role-rankings" aria-current="page">Role rankings</a>
+        <a href="/draft-guide">Draft guide</a>
+        <a href="/gpm-builds">Farm budgets</a>
+        <a href="/legend-builds">Damage rankings</a>
+        <a href="/efficiency">Item lab</a>
       </nav>
+      <span class="analyzer-patch">Patch 7.42</span>
     </div>
   </header>
 
   <main class="shell" id="main">
     <section class="intro rankings-intro" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Patch 7.42 · Legend Ranked All Pick</p>
         <h1 id="page-title">Role rankings</h1>
-        <p class="intro-subtitle">The top 20 in each position, ranked by role mechanics and benchmarks.</p>
+        <p class="intro-subtitle">Legend Ranked All Pick. Match wins across all positions count for up to 5 of 100 points.</p>
       </div>
       <dl class="dataset-stats rankings-stats">
-        <div><dt>Legend matches</dt><dd id="ranking-matches">—</dd></div>
-        <div><dt>Role replays</dt><dd id="ranking-replays">—</dd></div>
+        <div><dt>Matches for win evidence</dt><dd id="ranking-matches">—</dd></div>
+        <div><dt>Replays with position labels</dt><dd id="ranking-replays">—</dd></div>
       </dl>
     </section>
 
@@ -44,36 +46,45 @@
       <a class="role-tab" href="/role-rankings?role=carry" data-role="carry">Carry</a>
       <a class="role-tab" href="/role-rankings?role=mid" data-role="mid">Mid</a>
       <a class="role-tab" href="/role-rankings?role=offlane" data-role="offlane">Offlane</a>
-      <a class="role-tab" href="/role-rankings?role=soft-support" data-role="soft-support">Position 4</a>
-      <a class="role-tab" href="/role-rankings?role=hard-support" data-role="hard-support">Position 5</a>
+      <a class="role-tab" href="/role-rankings?role=soft-support" data-role="soft-support">Soft support (4)</a>
+      <a class="role-tab" href="/role-rankings?role=hard-support" data-role="hard-support">Hard support (5)</a>
     </nav>
 
     <p class="ranking-status" id="ranking-status" role="status">Loading role rankings…</p>
+    <button type="button" id="ranking-retry" class="plain-button" hidden>Retry</button>
     <div class="rankings-layout" id="rankings-layout" hidden>
-      <aside class="surface ranking-method" aria-labelledby="ranking-criteria-title">
-        <h2 id="ranking-criteria-title">Scoring criteria</h2>
-        <p class="ranking-weight-summary"><strong>95%</strong> role mechanics <span><strong>5%</strong> pooled win evidence</span></p>
+      <details class="surface ranking-method" id="ranking-criteria" open>
+        <summary>Scoring criteria</summary>
+        <p class="ranking-weight-summary"><strong>95 points</strong> from mechanics and benchmarks</p>
         <dl class="ranking-weights" id="ranking-weights"></dl>
         <p class="subtle" id="ranking-benchmark" hidden></p>
         <p class="subtle" id="ranking-coverage"></p>
         <details class="ranking-method-details">
-          <summary>How to read the scores</summary>
+          <summary>Scoring method</summary>
           <ul id="ranking-method-notes"></ul>
         </details>
-      </aside>
+        <a href="/api/role-rankings" class="text-link ranking-download" download="dota-742-role-rankings.json">Download ranking data <span aria-hidden="true">↓</span></a>
+      </details>
 
       <section class="surface rankings-board" aria-labelledby="ranking-table-title">
         <div class="section-heading">
-          <div>
-            <h2 id="ranking-table-title">Top 20</h2>
-            <p class="subtle">Open a hero’s breakdown to see its scoring inputs.</p>
+          <h2 id="ranking-table-title">Top 20</h2>
+          <div class="ranking-board-actions">
+            <button type="button" class="plain-button" id="ranking-share">Copy role link</button>
+            <a href="/draft-guide?role=carry" class="text-link" id="ranking-draft">Draft for this role</a>
           </div>
-          <a href="/api/role-rankings" class="text-link" download="dota-742-role-rankings.json">Download JSON <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="ranking-search">
+          <label class="hero-search-field">
+            <span>Find a hero</span>
+            <input id="ranking-search" type="search" autocomplete="off" maxlength="80">
+          </label>
+          <span class="subtle" id="ranking-result-count" aria-live="polite"></span>
         </div>
         <table class="role-ranking-table">
           <thead>
             <tr>
-              <th scope="col">Rank</th><th scope="col">Hero</th><th scope="col">Score</th><th scope="col" class="ranking-note">Role mechanics</th>
+              <th scope="col">Rank</th><th scope="col">Hero</th><th scope="col" aria-sort="descending">Role score</th><th scope="col" class="ranking-note">Role mechanics</th>
             </tr>
           </thead>
           <tbody id="ranking-rows"></tbody>
@@ -82,7 +93,7 @@
     </div>
 
     <footer>
-      <span>Valve mechanics · OpenDota match evidence</span>
+      <span>Mechanics from Valve, match results from OpenDota</span>
       <a class="text-link" href="https://www.dota2.com/patches/7.42">Valve patch notes <span aria-hidden="true">↗</span></a>
     </footer>
   </main>

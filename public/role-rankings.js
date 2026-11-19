@@ -2,8 +2,8 @@ const roleLabels = {
   carry: 'Carry',
   mid: 'Mid',
   offlane: 'Offlane',
-  'soft-support': 'Position 4',
-  'hard-support': 'Position 5',
+  'soft-support': 'Soft support',
+  'hard-support': 'Hard support',
 };
 const criterionLabels = {
   benchmarkDps: 'Modeled right-click DPS',
@@ -24,12 +24,13 @@ const criterionLabels = {
   counterplay: 'Counterplay',
   control: 'Fight control',
   lowGold: 'Low-gold impact',
-  pooledWins: 'Pooled win evidence',
+  pooledWins: 'Match wins across positions',
 };
 const farmLabels = { bad: 'Slow', good: 'Steady', easy: 'Fast' };
 const decimals = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
 const counts = new Intl.NumberFormat('en-US');
 const points = new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const list = new Intl.ListFormat('en-US');
 const state = { report: null };
 const get = (id) => document.getElementById(id);
 const statusLabel = get('ranking-status');
@@ -52,45 +53,65 @@ function activeRole() {
 
 function benchmarkMarkup(role, hero, scoring) {
   if (role === 'carry') {
-    const estimates = scoring.goldBudgets.carry.map(({ key }, index) =>
-      `${farmLabels[key]} ${points.format(hero.dpsByFarmScenario[index])}`);
-    return `<p>Modeled DPS · ${estimates.join(' · ')} · ${points.format(hero.dpsMean)} mean</p>`;
+    const estimates = scoring.goldBudgets.carry.map(({ key, budget }, index) =>
+      `<div><dt>${farmLabels[key]} farm (${counts.format(budget)}g)</dt><dd>${points.format(hero.dpsByFarmScenario[index])} DPS</dd></div>`);
+    return `<section><h4>Modeled right-click damage</h4><dl class="ranking-detail-stats">${estimates.join('')}</dl>
+      <p>${points.format(hero.dpsMean)} damage per second on average across the three budgets.</p></section>`;
   }
   if (role === 'mid') {
     const benchmark = hero.spellBenchmark;
     return benchmark
-      ? `<p>${escape(benchmark.label)} · ${decimals.format(benchmark.damage)} damage</p>`
-      : `<p>Median substituted · ${decimals.format(hero.imputedSpellDamage)} damage</p>`;
+      ? `<section><h4>Modeled single cast</h4><p>${escape(benchmark.label)} deals ${decimals.format(benchmark.damage)} damage per cast.</p></section>`
+      : `<section><h4>Estimated single cast</h4><p>The score uses the median of modeled casts (${decimals.format(hero.imputedSpellDamage)} damage) because this hero lacks a cast benchmark.</p></section>`;
   }
   return '';
 }
 
 function renderRow(role, hero, scoring) {
   const ratings = Object.entries(hero.ratings).map(([key, rating]) =>
-    `${criterionLabel(role, key)} ${rating}/3`).join(' · ');
+    `<div><dt>${criterionLabel(role, key)}</dt><dd>${rating} / 3</dd></div>`).join('');
   const source = hero.heroData?.startsWith('https://www.dota2.com/datafeed/herodata?hero_id=')
-    ? `<a class="text-link" href="${escape(hero.heroData)}">Valve hero data <span aria-hidden="true">↗</span></a>`
+    ? `<a class="text-link" href="${escape(hero.heroData)}">Valve ability data</a>`
     : '';
-  return `<tr>
+  const breakdownId = `rank-breakdown-${hero.heroId}`;
+  return `<tr data-ranked-hero>
     <td class="ranking-index">${hero.rank}</td>
     <th class="ranking-hero" scope="row">
-      ${escape(hero.name)}
+      <button type="button" class="ranking-hero-toggle" data-breakdown="${breakdownId}" aria-controls="${breakdownId}" aria-expanded="false">${escape(hero.name)} <span aria-hidden="true">+</span></button>
       <p class="ranking-note-mobile">${escape(hero.mechanic)}</p>
-      <details>
-        <summary>Breakdown <span class="sr-only">for ${escape(hero.name)}</span></summary>
-        <p>${decimals.format(hero.mechanicsPoints)} mechanics points · ${decimals.format(hero.winPoints)} win points</p>
-        <p>${escape(ratings)}</p>
-        ${benchmarkMarkup(role, hero, scoring)}
-        <p>${counts.format(hero.observedPicksInRole)} picks in this role · ${counts.format(hero.pooledWins)}/${counts.format(hero.pooledMatchCount)} pooled wins</p>
-        ${source}
-      </details>
     </th>
-    <td class="ranking-score-cell">
-      <strong>${points.format(hero.score)}</strong>
-      <progress value="${hero.score}" max="100" aria-hidden="true" tabindex="-1"></progress>
-    </td>
+    <td class="ranking-score-cell"><strong>${points.format(hero.score)}</strong></td>
     <td class="ranking-note">${escape(hero.mechanic)}</td>
+  </tr><tr class="ranking-breakdown-row" id="${breakdownId}" hidden>
+    <td class="ranking-breakdown-cell" colspan="4">
+      <div class="ranking-breakdown">
+        <div>
+          <h3>${escape(hero.name)}'s score</h3>
+          <p>${decimals.format(hero.mechanicsPoints)} mechanics points + ${decimals.format(hero.winPoints)} match win points</p>
+          <dl class="ranking-detail-stats">${ratings}</dl>
+        </div>
+        <div>
+          ${benchmarkMarkup(role, hero, scoring)}
+          <section><h4>Recorded match evidence</h4><p>${counts.format(hero.observedPicksInRole)} picks in this position among reviewed replays.</p>
+          <p>${counts.format(hero.pooledWins)} wins in ${counts.format(hero.pooledMatchCount)} matches across all positions.</p></section>
+        </div>
+        <div class="ranking-breakdown-actions">
+          <a class="text-link" href="/efficiency?heroId=${hero.heroId}">Test a build</a>
+          ${source}
+        </div>
+      </div>
+    </td>
   </tr>`;
+}
+
+function renderRows(role, rankings, scoring) {
+  const search = get('ranking-search').value.trim().toLowerCase();
+  const matches = rankings.filter((hero) => hero.name.toLowerCase().includes(search));
+  const message = 'No ranked heroes match your search.';
+  get('ranking-rows').innerHTML = matches.length
+    ? matches.map((hero) => renderRow(role, hero, scoring)).join('')
+    : `<tr><td colspan="4" class="loading-cell">${message}</td></tr>`;
+  get('ranking-result-count').textContent = search ? `Showing ${matches.length} of ${rankings.length}` : '';
 }
 
 function renderRole() {
@@ -99,25 +120,28 @@ function renderRole() {
   const { roles, scoring } = state.report;
   const { diagnostics, rankings } = roles[role];
   const roleName = roleLabels[role];
-  get('ranking-table-title').textContent = `Top ${rankings.length} · ${roleName}`;
-  get('ranking-rows').innerHTML = rankings.map((hero) => renderRow(role, hero, scoring)).join('');
+  get('ranking-table-title').textContent = `Top ${rankings.length} ${roleName.toLowerCase()} heroes`;
+  renderRows(role, rankings, scoring);
+  get('ranking-draft').href = `/draft-guide?role=${role}`;
+  get('ranking-share').textContent = 'Copy role link';
   get('ranking-weights').innerHTML = Object.entries(scoring.criteriaWeights[role]).map(([key, weight]) =>
     `<div><dt>${criterionLabel(role, key)}</dt><dd>${decimals.format(weight)} pts</dd></div>`).join('');
-  get('ranking-coverage').textContent = `${counts.format(diagnostics.eligible)} candidates · ${counts.format(diagnostics.seenInRole)} observed in role`;
+  get('ranking-coverage').textContent = `Replays included ${counts.format(diagnostics.seenInRole)} of ${counts.format(diagnostics.eligible)} eligible heroes in this position.`;
 
   const benchmark = get('ranking-benchmark');
   benchmark.hidden = role !== 'carry' && role !== 'mid';
   if (role === 'carry') {
-    benchmark.textContent = scoring.goldBudgets.carry.map(({ key, budget }) =>
-      `${farmLabels[key]} ${counts.format(budget)}g`).join(' · ');
+    const budgets = scoring.goldBudgets.carry.map(({ key, budget }) =>
+      `${counts.format(budget)}g for ${farmLabels[key].toLowerCase()} farm`);
+    benchmark.textContent = `Minute 20 budgets are ${list.format(budgets)}.`;
   } else if (role === 'mid') {
-    benchmark.textContent = `${diagnostics.covered} mapped casts of ${diagnostics.eligible} candidates`;
+    benchmark.textContent = `Direct cast benchmarks cover ${diagnostics.covered} of ${diagnostics.eligible} candidates. Other candidates use the middle mapped value.`;
   }
 
   const method = [
     scoring.eligibility,
-    `Kit ratings run from 0 to 3. ${scoring.ratingAnchors.map((text, i) => `${i} ${text.toLowerCase()}`).join(' · ')}.`,
-    `Pooled win points use ${scoring.pooledWinPoints}. Scores compare heroes within the selected position.`,
+    `Kit ratings run from 0 to 3. ${list.format(scoring.ratingAnchors.map((text, i) => `${i} means ${text.toLowerCase()}`))}.`,
+    `Win points use ${scoring.pooledWinPoints}. Hero scores are comparable within one position.`,
     ...(role === 'carry' ? [scoring.carryBenchmark] : role === 'mid' ? [scoring.midBenchmark] : []),
   ];
   get('ranking-method-notes').innerHTML = method.map((text) => `<li>${escape(text)}</li>`).join('');
@@ -134,12 +158,50 @@ get('ranking-role-tabs').addEventListener('click', (event) => {
   const tab = event.target.closest('a[data-role]');
   if (!tab || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
   event.preventDefault();
-  if (tab.dataset.role !== activeRole()) window.history.pushState({}, '', tab.href);
+  if (tab.dataset.role !== activeRole()) {
+    window.history.pushState({}, '', tab.href);
+    get('ranking-search').value = '';
+  }
   renderRole();
 });
-window.addEventListener('popstate', renderRole);
+window.addEventListener('popstate', () => {
+  get('ranking-search').value = '';
+  renderRole();
+});
+get('ranking-search').addEventListener('input', () => {
+  const role = activeRole();
+  if (state.report) renderRows(role, state.report.roles[role].rankings, state.report.scoring);
+});
+get('ranking-rows').addEventListener('click', (event) => {
+  const trigger = event.target.closest('[data-breakdown]');
+  if (!trigger) return;
+  const panel = get(trigger.dataset.breakdown);
+  panel.hidden = !panel.hidden;
+  trigger.setAttribute('aria-expanded', String(!panel.hidden));
+  trigger.querySelector('span').textContent = panel.hidden ? '+' : '−';
+});
+get('ranking-share').addEventListener('click', async (event) => {
+  const button = event.currentTarget;
+  const role = activeRole();
+  const shareUrl = new URL(`/role-rankings?role=${role}`, window.location.origin);
+  try {
+    await navigator.clipboard.writeText(shareUrl.href);
+    if (role === activeRole()) button.textContent = 'Role link copied';
+    statusLabel.textContent = 'Role link copied.';
+  } catch {
+    if (role === activeRole()) button.textContent = 'Copy from address bar';
+    statusLabel.textContent = 'Use your browser address bar to copy this link.';
+  }
+});
+const desktop = window.matchMedia('(min-width: 851px)');
+const setCriteriaDefault = () => { get('ranking-criteria').open = desktop.matches; };
+desktop.addEventListener('change', setCriteriaDefault);
+setCriteriaDefault();
 
 async function load() {
+  get('ranking-retry').hidden = true;
+  statusLabel.classList.remove('sr-only');
+  statusLabel.textContent = 'Loading role rankings…';
   try {
     const response = await fetch('/api/role-rankings');
     if (!response.ok) throw new Error(`Rankings API returned ${response.status}`);
@@ -153,10 +215,12 @@ async function load() {
     renderRole();
     get('rankings-layout').hidden = false;
   } catch (error) {
-    statusLabel.textContent = 'The role rankings could not load. Reload the page to try again.';
+    statusLabel.textContent = 'Role rankings could not load.';
     statusLabel.classList.remove('sr-only');
+    get('ranking-retry').hidden = false;
     console.error(error);
   }
 }
 
+get('ranking-retry').addEventListener('click', () => { void load(); });
 void load();

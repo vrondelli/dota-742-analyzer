@@ -2,8 +2,13 @@ const $ = (id) => document.getElementById(id)
 const settings = $('legend-settings')
 const counts = new Intl.NumberFormat('en')
 const decimals = new Intl.NumberFormat('en', { maximumFractionDigits: 2 })
-const coverageLabels = { flat: 'Flat stats', partial: 'Partial', unmodelled: 'No estimate' }
-const state = { meta: null, result: null, scope: 'overview', request: null }
+const coverageLabels = { flat: 'Flat stats', partial: 'Some effects excluded', unmodelled: 'No estimate' }
+const metricDescriptions = {
+  physicalDps: 'Average physical damage per second from sustained attacks.',
+  magicalDamage: 'Magic damage combines one supported spell cast with modeled item damage during the selected time window.',
+  abilityDamage: 'Ability damage currently compares Juggernaut’s Omnislash, including changes in the number of hits.',
+}
+const state = { meta: null, result: null, query: null, scope: 'overview', request: null }
 
 function escape(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => (
@@ -29,6 +34,10 @@ function signed(value) {
 
 function bandName({ minSpend, maxSpend }) {
   return minSpend <= 1 ? `Up to ${gold(maxSpend)}` : `${count(minSpend)}–${gold(maxSpend)}`
+}
+
+function mobileLabel(label) {
+  return `<span class="legend-mobile-label" aria-hidden="true">${escape(label)}</span>`
 }
 
 function magicMetric() {
@@ -87,11 +96,11 @@ function heroLink(row, band) {
 }
 
 function spellText(spell) {
-  return spell ? `${spell.name} · rank ${spell.rank} · ${number(spell.damage)} raw` : 'Item damage only'
+  return spell ? `${spell.name} (rank ${spell.rank}, ${number(spell.damage)} raw damage)` : 'Item damage only'
 }
 
 function castName(ability) {
-  return ability ? `${ability.name} · rank ${ability.rank} · ${number(ability.durationSeconds)}s` : ''
+  return ability ? `${ability.name} (rank ${ability.rank}, ${number(ability.durationSeconds)}s)` : ''
 }
 
 function castHitGain(ability) {
@@ -116,9 +125,9 @@ function castCells(ability) {
   const margin = Number.isFinite(build.lastHitMarginSeconds)
     ? ` title="Last modeled hit lands ${number(build.lastHitMarginSeconds * 1000)} ms before the cast ends"`
     : ''
-  return `<td class="legend-cast-hits"><span class="legend-cast-value"${margin}>${count(baseline.hits)} → ${count(build.hits)}</span>
+  return `<td role="cell" class="legend-cast-hits">${mobileLabel('Estimated hits')}<span class="legend-cast-value"${margin}>${count(baseline.hits)} → ${count(build.hits)}</span>
     <span class="legend-cast-note">${gained ? `<strong>${signed(gained)} hits</strong>` : 'Same hit count'}</span>${delayed}</td>
-    <td class="legend-cast-speed"><span class="legend-cast-value">${number(baseline.preCastAttackSpeed)} → ${number(build.preCastAttackSpeed)}</span>
+    <td role="cell" class="legend-cast-speed">${mobileLabel('Pre-cast attack speed')}<span class="legend-cast-value">${number(baseline.preCastAttackSpeed)} → ${number(build.preCastAttackSpeed)}</span>
     ${crossed}
     <span class="legend-cast-note">${breakpoint}</span>
     <span class="legend-cast-note" title="Time between estimated hits after Omnislash bonus attack speed">${number(build.slashInterval)}s between hits</span></td>`
@@ -137,39 +146,34 @@ function renderTabs() {
 
 function renderOverview(roles) {
   const bands = roles[0]?.bands ?? []
-  const instructions = abilityMetric()
-    ? 'Open a role to see its ranked builds and cast breakpoints.'
-    : 'Open a role to see its ranked builds. Select a hero to inspect the exact build.'
   return `<div class="surface">
-    <div class="section-heading"><div><h2 id="overview-heading">Leaders by role and spend</h2>
-      <p class="subtle">${instructions}</p></div></div>
-    <div class="scroll-table" tabindex="0" role="region" aria-labelledby="overview-heading">
-    <table class="legend-overview">
-      <thead><tr><th scope="col">Role</th>${bands.map((band) => `<th scope="col" class="legend-band-title">${escape(bandName(band))}</th>`).join('')}</tr></thead>
-      <tbody>${roles.map((role) => `<tr>
-        <td><button type="button" class="plain-button" data-scope="${escape(role.key)}">${escape(role.label)}</button>
-          <span class="legend-role-subtitle subtle">${count(role.replayPicks)} replay picks</span></td>
+    <div class="section-heading"><h3 id="overview-heading">Leaders by role and spend</h3></div>
+    <div class="scroll-table legend-table-region" tabindex="0" role="region" aria-labelledby="overview-heading">
+    <table class="legend-overview" role="table">
+      <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Role</th>${bands.map((band) => `<th scope="col" role="columnheader" class="legend-band-title">${escape(bandName(band))}</th>`).join('')}</tr></thead>
+      <tbody role="rowgroup">${roles.map((role) => `<tr role="row">
+        <th scope="row" role="rowheader" class="legend-role-cell"><button type="button" class="plain-button" data-scope="${escape(role.key)}">${escape(role.label)}</button>
+          <span class="legend-role-subtitle subtle">${count(role.replayPicks)} replay picks</span></th>
         ${role.bands.map((band) => {
           const best = band.rows[0]
           const winner = best ?? band.itemOnlyRows?.[0]
-          if (!winner) return '<td><span class="subtle">No eligible gain</span></td>'
-          const itemOnly = magicMetric() && !best
+          const label = mobileLabel(bandName(band))
+          if (!winner) return `<td role="cell">${label}<span class="subtle">No qualifying improvement</span></td>`
           const spell = magicMetric() ? spellText(winner.spell) : castName(winner.ability)
           const hits = winner.ability
             ? `<span class="legend-cast-note">${count(winner.ability.baseline.hits)} → ${count(winner.ability.build.hits)} hits</span>`
             : ''
-          return `<td>
+          return `<td role="cell">${label}
             <div class="leader-name">${heroLink(winner, band)}</div>
             <div class="leader-items legend-items">${buildItems(winner.items)}</div>
             <div class="leader-output">
               <strong>${signed(winner.gainPer1000)} ${unit()} / 1,000g</strong>
               <span>${gold(winner.cost)}</span>
               <span>${count(winner.replayPicks)} role picks</span>
-              ${winner.coverage === 'partial' ? '<span>Partial item coverage</span>' : ''}
+              ${winner.coverage === 'partial' ? '<span>Some effects excluded</span>' : ''}
             </div>
             ${spell ? `<span class="legend-spell subtle">${escape(spell)}</span>` : ''}
             ${hits}
-            ${itemOnly ? '<span class="subtle">Separate item-only ranking</span>' : ''}
           </td>`
         }).join('')}
       </tr>`).join('')}</tbody>
@@ -179,27 +183,27 @@ function renderOverview(roles) {
 function renderTable(rows, band, showPicks, label) {
   const magic = magicMetric()
   const ability = abilityMetric()
-  return `<div class="scroll-table" tabindex="0" role="region" aria-label="${escape(label)}">
-    <table class="legend-table${ability ? ' legend-ability-table' : ''}">
-      <thead><tr><th scope="col" aria-label="Rank">#</th><th scope="col">Hero</th><th scope="col">Items</th><th scope="col">Cost</th>
-        ${ability ? '<th scope="col">Estimated hits</th><th scope="col">Pre-cast attack speed</th>' : ''}
-        <th scope="col">${ability ? 'Damage per cast' : `Total ${unit()}`}</th><th scope="col">Gain</th><th scope="col" aria-sort="descending">Gain / 1,000g</th>
-        ${showPicks ? '<th scope="col">Role picks</th>' : ''}<th scope="col">Item coverage</th></tr></thead>
-      <tbody>${rows.map((row) => `<tr>
-        <td class="rank-cell">${count(row.rank)}</td>
-        <td><div class="legend-hero-name">${heroLink(row, band)}</div>
+  const totalLabel = ability ? 'Damage per cast' : `Total ${unit()}`
+  return `<div class="scroll-table legend-table-region" tabindex="0" role="region" aria-label="${escape(label)}">
+    <table class="legend-table${ability ? ' legend-ability-table' : ''}" role="table">
+      <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader" aria-label="Rank">#</th><th scope="col" role="columnheader">Hero</th><th scope="col" role="columnheader">Items</th><th scope="col" role="columnheader">Cost</th>
+        ${ability ? '<th scope="col" role="columnheader">Estimated hits</th><th scope="col" role="columnheader">Pre-cast attack speed</th>' : ''}
+        <th scope="col" role="columnheader">${totalLabel}</th><th scope="col" role="columnheader">Gain</th><th scope="col" role="columnheader" aria-sort="descending">Gain per 1,000g</th>
+        ${showPicks ? '<th scope="col" role="columnheader">Role picks</th>' : ''}<th scope="col" role="columnheader">Model coverage</th></tr></thead>
+      <tbody role="rowgroup">${rows.map((row) => `<tr role="row">
+        <td role="cell" class="rank-cell">${mobileLabel('Rank')}${count(row.rank)}</td>
+        <th scope="row" role="rowheader" class="legend-hero-cell"><div class="legend-hero-name">${heroLink(row, band)}</div>
           ${magic ? `<span class="legend-spell subtle">${escape(spellText(row.spell))}</span>` : ''}
-          ${ability ? `<span class="legend-spell subtle">${escape(castName(row.ability))}</span>` : ''}</td>
-        <td><div class="legend-items">${buildItems(row.items)}</div></td>
-        <td class="legend-gold">${gold(row.cost)}</td>
+          ${ability ? `<span class="legend-spell subtle">${escape(castName(row.ability))}</span>` : ''}</th>
+        <td role="cell" class="legend-build-cell"><div class="legend-items">${buildItems(row.items)}</div></td>
+        <td role="cell" class="legend-gold">${mobileLabel('Cost')}${gold(row.cost)}</td>
         ${ability ? castCells(row.ability) : ''}
-        <td title="No-item baseline ${number(row.base)} ${unit()}">${number(row.total)} ${ability
-          ? `<span class="legend-cast-note">${number(row.base)} without items</span>`
-          : `<span class="legend-value-unit">${unit()}</span>`}</td>
-        <td class="legend-value">${signed(row.gain)}</td>
-        <td class="positive legend-value">${signed(row.gainPer1000)}</td>
-        ${showPicks ? `<td class="legend-picks">${count(row.replayPicks)}</td>` : ''}
-        <td class="legend-coverage-cell${row.coverage === 'partial' ? ' is-partial' : ''}">${coverageLabels[row.coverage] ?? '—'}</td>
+        <td role="cell">${mobileLabel(totalLabel)}${number(row.total)} <span class="legend-value-unit">${unit()}</span>
+          <span class="legend-cast-note">${number(row.base)} before items</span></td>
+        <td role="cell" class="legend-value">${mobileLabel('Total gain')}${signed(row.gain)}</td>
+        <td role="cell" class="positive legend-value">${mobileLabel('Gain per 1,000g')}${signed(row.gainPer1000)}</td>
+        ${showPicks ? `<td role="cell" class="legend-picks">${mobileLabel('Role picks')}${count(row.replayPicks)}</td>` : ''}
+        <td role="cell" class="legend-coverage-cell${row.coverage === 'partial' ? ' is-partial' : ''}">${mobileLabel('Model coverage')}${coverageLabels[row.coverage] ?? '—'}</td>
       </tr>`).join('')}</tbody>
     </table></div>`
 }
@@ -254,8 +258,8 @@ function renderAbilityContext(roles, roster, board) {
     ? 'Omnislash unlocks at hero level 6'
     : 'Omnislash hit breakpoints'
   const note = needsRoster
-    ? 'The selected scope has no ranked ability builds. Full roster shows the mechanics comparison without the Legend role filter.'
-    : 'Arrows show no items → selected build. The estimate counts an immediate first hit and later whole hits before the cast window ends.'
+    ? 'Full roster shows Omnislash estimates outside the selected role.'
+    : 'Estimated hits start immediately. Each arrow compares the no-item baseline with the build.'
   const rosterLink = needsRoster
     ? '<button class="role-tab" type="button" data-scope="roster" aria-controls="legend-results">View Full roster</button>'
     : ''
@@ -274,7 +278,7 @@ function renderInteractions(meta) {
   const interactions = meta.abilityInteractions ?? []
   const scored = interactions.filter(({ modelStatus }) => modelStatus === 'implemented').length
   const mapped = interactions.length - scored
-  $('interaction-summary').textContent = `${count(scored)} scored · ${count(mapped)} mapped for future scoring`
+  $('interaction-summary').textContent = `${count(scored)} scored, ${count(mapped)} mapped`
   $('interaction-list').innerHTML = interactions.map((entry) => {
     const isScored = entry.modelStatus === 'implemented'
     const examples = (entry.exampleItems ?? []).map(({ name }) => name)
@@ -282,26 +286,25 @@ function renderInteractions(meta) {
       `${label} ${count(entry.rolePicks[key])}`
     ))
     const parameters = (entry.parameters ?? []).map(({ name, value }) => (
-      `<li><strong>${escape(name)}</strong> · ${escape(formatParameter(value))}</li>`
+      `<li><strong>${escape(name)}</strong> ${escape(formatParameter(value))}</li>`
     ))
     const limitations = (entry.limitations ?? []).map((note) => `<li>${escape(note)}</li>`)
     const evidence = (entry.sources ?? []).filter(({ url }) => typeof url === 'string' && url.startsWith('https://'))
       .map(({ label, url }) => `<a href="${escape(url)}" target="_blank" rel="noreferrer">${escape(label)} ↗</a>`)
     return `<details class="legend-interaction">
       <summary>
-        <span class="interaction-title"><span aria-hidden="true">${isScored ? '●' : '○'}</span>
-          <span><strong>${escape(entry.heroName)}</strong><small>${escape(entry.name)}</small></span></span>
-        <span class="interaction-example">${escape(examples.length ? examples.join(' · ') : (entry.itemStats ?? []).join(' · '))}</span>
+        <span class="interaction-title"><strong>${escape(entry.heroName)}</strong><small>${escape(entry.name)}</small></span>
+        <span class="interaction-example">${escape((examples.length ? examples : entry.itemStats ?? []).join(', '))}</span>
         <span class="interaction-status${isScored ? ' is-scored' : ''}">${isScored ? 'Scored' : 'Mapped'}</span>
       </summary>
       <div class="interaction-detail">
         <p>${escape(entry.mechanic)}</p>
-        ${(entry.itemStats ?? []).length ? `<p><strong>Relevant item stats</strong> · ${escape(entry.itemStats.join(' · '))}</p>` : ''}
+        ${(entry.itemStats ?? []).length ? `<p><strong>Item stats</strong> ${escape(entry.itemStats.join(', '))}</p>` : ''}
         ${parameters.length ? `<ul>${parameters.join('')}</ul>` : ''}
-        ${entry.rolePicks ? `<p><strong>Legend replay picks by inferred role</strong> · ${escape(roleCounts.join(' · ') || '0 across tracked positions')}</p>` : ''}
+        ${entry.rolePicks ? `<p><strong>Inferred Legend role picks</strong> ${escape(roleCounts.join(', ') || '0 across tracked positions')}</p>` : ''}
         ${limitations.length ? `<ul>${limitations.join('')}</ul>` : ''}
-        ${entry.demoCheck ? `<p><strong>Suggested in-game check</strong> · ${escape(entry.demoCheck)}</p>` : ''}
-        ${evidence.length ? `<p>${evidence.join(' · ')}</p>` : ''}
+        ${entry.demoCheck ? `<p><strong>In-game check</strong> ${escape(entry.demoCheck)}</p>` : ''}
+        ${evidence.length ? `<p>${evidence.join(', ')}</p>` : ''}
       </div>
     </details>`
   }).join('')
@@ -318,12 +321,19 @@ function renderResults() {
   $('legend-results-title').textContent = state.scope === 'overview' ? 'Role leaderboard'
     : state.scope === 'roster' ? 'Full roster' : `${board?.label ?? ''} leaderboard`
   const scenario = magicMetric()
-    ? `Level ${options.level} · ${number(options.windowSeconds)}s window · ${number(options.targetMagicResistance)}% target magic resist · ${options.includeOnHit ? 'Attack procs included' : 'Casts only'}`
-    : `Level ${options.level} · ${number(options.targetArmor)} target armor${abilityMetric() ? ' · Damage per cast' : ''}`
-  let evidence = ` · Minimum ${count(options.minReplayPicks ?? 1)} replay ${options.minReplayPicks > 1 ? 'picks' : 'pick'} per role`
-  if (state.scope === 'roster') evidence = ' · Mechanics comparison across the whole roster'
-  else if (board) evidence = ` · ${count(board.replayPicks)} inferred role picks across ${count(board.replayMatches)} replays`
-  $('legend-scenario').textContent = scenario + evidence
+    ? `Level ${options.level} against ${number(options.targetMagicResistance)}% magic resistance over ${number(options.windowSeconds)}s. ${options.includeOnHit ? 'Includes attack procs.' : 'Casts only.'}`
+    : `Level ${options.level} against ${number(options.targetArmor)} armor.`
+  $('legend-scenario').textContent = scenario
+  let evidence = `Minimum ${count(options.minReplayPicks)} replay ${options.minReplayPicks === 1 ? 'pick' : 'picks'} per position.`
+  if (state.scope === 'roster') evidence = 'Includes every modeled hero.'
+  else if (!coverage.replayMatches) evidence = 'Role replays unavailable. Full roster shows damage estimates.'
+  else if (board) evidence = `${count(board.replayPicks)} inferred role picks across ${count(board.replayMatches)} replays.`
+  $('legend-note').textContent = evidence
+  const role = board && state.scope !== 'roster' ? state.scope : ''
+  const farm = new URLSearchParams({ level: options.level, targetArmor: options.targetArmor, maxItems: options.maxItems })
+  if (role) farm.set('role', role)
+  $('legend-gpm-link').href = `/gpm-builds?${farm}`
+  $('legend-role-link').href = role ? `/role-rankings?role=${encodeURIComponent(role)}` : '/role-rankings'
   renderAbilityContext(roles, roster, board)
   $('legend-results').innerHTML = state.scope === 'overview' ? renderOverview(roles)
     : board ? renderBoard(board)
@@ -334,6 +344,7 @@ function showScope(scope, control) {
   if (state.scope === scope) return
   const focusTitle = control.closest('#legend-results, #legend-ability-context')
   state.scope = scope
+  syncUrl()
   for (const button of $('legend-tabs').querySelectorAll('[data-scope]')) {
     button.setAttribute('aria-pressed', String(button.dataset.scope === scope))
   }
@@ -356,38 +367,55 @@ function renderSnapshot({ fetchedAt }) {
 
 function populateSettings(meta) {
   $('legend-level').replaceChildren(...Array.from({ length: 30 }, (_, index) => new Option(index + 1, index + 1)))
+  const query = new URLSearchParams(window.location.search)
   for (const [key, value] of Object.entries(meta.defaults)) {
     const control = settings.elements.namedItem(key)
-    if (control && value != null) control.value = Array.isArray(value) ? value.join(', ') : value
+    if (!control || value == null) continue
+    const fallback = Array.isArray(value) ? value.join(', ') : String(value)
+    const input = query.get(key)
+    control.value = input?.trim() ? input : fallback
+    if (!control.value || (key === 'budgets' ? !parseBudgets(control.value) : control.validity && !control.validity.valid)) {
+      control.value = fallback
+    }
   }
-  const query = new URLSearchParams(window.location.search)
-  const metric = query.get('metric')
-  if (meta.metrics.some(({ key }) => key === metric)) settings.elements.namedItem('metric').value = metric
-  const level = Number(query.get('level'))
-  if (Number.isInteger(level) && level >= 1 && level <= 30) $('legend-level').value = level
-  const procs = query.get('includeOnHit')
-  if (procs === 'true' || procs === 'false') $('legend-procs').value = procs
   const role = query.get('role')
   if (meta.roles.some(({ key }) => key === role) || role === 'roster') state.scope = role
   $('legend-run').disabled = false
+  renderMetricHelp()
   renderTabs()
   renderInteractions(meta)
   renderSnapshot(meta)
 }
 
-function buildQuery() {
-  const input = $('legend-budgets')
-  const parts = input.value.split(',').map((part) => part.trim())
+function parseBudgets(value) {
+  const parts = value.split(',').map((part) => part.trim())
   const values = parts.map(Number)
   const valid = parts.length <= 5 && values.every((value, index) => (
     /^\d+$/.test(parts[index]) && Number.isInteger(value) && value >= 1 && value <= 100000
       && (index === 0 || value > values[index - 1])
   ))
-  input.setCustomValidity(valid ? '' : 'Enter up to five increasing gold ceilings from 1 to 100,000, separated by commas.')
+  return valid ? values : null
+}
+
+function buildQuery() {
+  const input = $('legend-budgets')
+  const values = parseBudgets(input.value)
+  input.setCustomValidity(values ? '' : 'Enter up to five increasing gold limits from 1 to 100,000, separated by commas.')
   if (!settings.reportValidity()) return null
   const query = new URLSearchParams(new FormData(settings))
   query.set('budgets', values.join(','))
   return query
+}
+
+function syncUrl() {
+  if (!state.query) return
+  const query = new URLSearchParams(state.query)
+  if (state.scope !== 'overview') query.set('role', state.scope)
+  window.history.replaceState(null, '', `${window.location.pathname}?${query}${window.location.hash}`)
+}
+
+function renderMetricHelp() {
+  $('legend-metric-help').textContent = metricDescriptions[settings.elements.namedItem('metric').value]
 }
 
 async function loadResults() {
@@ -399,18 +427,14 @@ async function loadResults() {
   const container = $('legend-results')
   container.setAttribute('aria-busy', 'true')
   $('legend-run').disabled = true
-  $('legend-status').textContent = 'Comparing heroes and builds across all roles…'
+  $('legend-status').textContent = 'Comparing builds…'
   try {
     const result = await fetchJson(`/api/legend-builds?${query}`, request.signal)
     if (request.signal.aborted) return
     state.result = result
+    state.query = query
     if (state.scope === 'roster' && !result.roster) state.scope = 'overview'
-    const note = $('legend-note')
-    if (result.coverage.replayMatches) {
-      note.textContent = 'Role eligibility comes from inferred positions in Legend-average replays. Rankings use modeled 7.42 damage and show each hero’s role sample.'
-    } else {
-      note.textContent = 'Legend replays with position estimates are unavailable. The Full roster view still has mechanics estimates.'
-    }
+    syncUrl()
     renderSnapshot(result)
     renderTabs()
     renderResults()
@@ -433,6 +457,9 @@ settings.addEventListener('submit', (event) => {
   else void start()
 })
 $('legend-budgets').addEventListener('input', (event) => event.target.setCustomValidity(''))
+settings.addEventListener('change', (event) => {
+  if (event.target.name === 'metric') renderMetricHelp()
+})
 for (const region of ['legend-tabs', 'legend-results', 'legend-ability-context']) {
   $(region).addEventListener('click', (event) => {
     const control = event.target.closest('[data-scope]')

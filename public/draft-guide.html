@@ -13,38 +13,43 @@
 <body>
   <a class="skip-link" href="#main">Skip to draft guide</a>
   <header class="topbar">
-    <div class="shell topbar-content draft-header">
+    <div class="shell topbar-content analyzer-header">
       <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>Dota 2 Analyzer</span>
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
       </a>
-      <nav class="draft-nav" aria-label="Analyzer views">
-        <a href="/">Match results</a><a href="/legend-builds">Legend builds</a><a href="/gpm-builds">GPM projections</a>
-        <a href="/draft-guide" aria-current="page">Draft guide</a>
+      <nav class="analyzer-nav" aria-label="Analyzer views">
+        <a href="/">Matches</a>
         <a href="/role-rankings">Role rankings</a>
+        <a href="/draft-guide" aria-current="page">Draft guide</a>
+        <a href="/gpm-builds">Farm budgets</a>
+        <a href="/legend-builds">Damage rankings</a>
+        <a href="/efficiency">Item lab</a>
       </nav>
-      <div class="topbar-meta"><span class="patch-label"><span class="patch-dot" aria-hidden="true"></span> Patch 7.42</span></div>
+      <span class="analyzer-patch">Patch 7.42</span>
     </div>
   </header>
   <main class="shell draft-main" id="main">
     <section class="draft-intro" aria-labelledby="draft-title">
-      <div><p class="eyebrow">Legend · Ranked All Pick</p><h1 id="draft-title">Draft and build guide</h1></div>
-      <dl class="draft-stats">
-        <div><dt>Legend matches</dt><dd id="draft-matches">—</dd></div>
-        <div><dt>Role replays</dt><dd id="draft-replays">—</dd></div>
-      </dl>
+      <div>
+        <h1 id="draft-title">Draft guide</h1>
+        <p class="intro-subtitle">Legend Ranked All Pick</p>
+      </div>
+      <button type="button" id="draft-share" class="draft-button draft-share" disabled>Copy draft link</button>
     </section>
 
     <nav class="draft-arms" aria-label="Draft guide views">
       <a id="draft-arm-standard" href="/draft-guide" aria-current="page">Matchup draft</a>
-      <a id="draft-arm-impact" href="/draft-guide?arm=impact&amp;role=offlane">Offlane and support impact</a>
+      <a id="draft-arm-impact" href="/draft-guide?arm=impact&amp;role=offlane">Offlane and support fit</a>
+      <span id="draft-share-status" class="draft-share-status" role="status"></span>
     </nav>
 
     <section aria-labelledby="draft-phase-title" class="draft-phases">
       <h2 class="sr-only" id="draft-phase-title">All Pick sequence</h2>
       <ol>
-        <li data-phase="blind"><span>First two picks</span><strong>Open safely</strong><p>Start with a reliable support or a flexible core while the enemy draft is hidden.</p></li>
-        <li data-phase="early-response"><span>Second two picks</span><strong>Answer the reveal</strong><p>React to the first enemy picks and fill missing damage, catch, or saves.</p></li>
-        <li data-phase="counterpick"><span>Last pick</span><strong>Close the draft</strong><p>Save this slot for the hero whose lane or teamfight depends most on the matchup.</p></li>
+        <li data-phase="blind"><strong>First two picks</strong><p>Open with a reliable support or flexible core.</p></li>
+        <li data-phase="early-response"><strong>Second two picks</strong><p>Answer the first enemy picks. Fill gaps in damage, catch, or saves.</p></li>
+        <li data-phase="counterpick"><strong>Last pick</strong><p>Save it for a hero who depends on the matchup.</p></li>
       </ol>
     </section>
 
@@ -57,46 +62,54 @@
           <select class="select" id="draft-role" name="role" required></select>
 
           <div class="draft-priority" id="draft-priority-controls" hidden>
-            <label for="draft-priority">Team need to prioritize</label>
+            <label for="draft-priority">Team priority</label>
             <select class="select" id="draft-priority" name="priority" disabled></select>
           </div>
 
           <fieldset class="draft-pick-field">
-            <legend>Revealed and unavailable heroes</legend>
+            <legend>Revealed picks</legend>
+            <p class="draft-helper" id="draft-pick-help">Ally picks and bans remove heroes from the shortlist.</p>
             <div class="draft-entry">
-              <label class="sr-only" for="draft-side">Pick status</label>
-              <select class="select" id="draft-side"><option value="enemy">Enemy</option><option value="ally">Ally</option><option value="blocked">Banned</option></select>
-              <label class="sr-only" for="draft-hero-input">Hero name</label>
-              <input id="draft-hero-input" list="draft-roster" type="search" placeholder="Find a hero" autocomplete="off">
-              <datalist id="draft-roster"></datalist>
+              <div>
+                <label for="draft-side">Pick type</label>
+                <select class="select" id="draft-side"><option value="enemy">Enemy</option><option value="ally">Ally</option><option value="blocked">Banned</option></select>
+              </div>
+              <div class="draft-search" id="draft-search">
+                <label for="draft-hero-input">Hero name</label>
+                <input id="draft-hero-input" type="search" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="draft-roster" aria-describedby="draft-pick-help">
+                <ul class="draft-suggestions" id="draft-roster" role="listbox" aria-label="Matching heroes" hidden></ul>
+              </div>
               <button class="draft-button" id="draft-add" type="button">Add</button>
             </div>
             <p class="draft-field-status" id="draft-pick-status" role="status"></p>
             <div id="draft-picks" aria-label="Current picks"></div>
+            <button type="button" id="draft-clear" class="draft-clear" hidden>Clear all picks and bans</button>
           </fieldset>
 
-          <label for="draft-condition">Main problem this game</label>
+          <label for="draft-condition">What should the build handle?</label>
           <select class="select" id="draft-condition" name="condition"><option value="">Use default item paths</option></select>
           <div id="draft-hints" class="draft-hints"></div>
 
           <div class="draft-time">
             <div><label for="draft-minute">Game minute</label><input type="number" id="draft-minute" name="targetMinute" min="1" max="90" step="1" required></div>
-            <div><label for="draft-reserve">Gold reserve</label><input type="number" id="draft-reserve" name="reserveGold" min="0" max="100000" step="1" required></div>
+            <div><label for="draft-reserve">Gold set aside</label><input type="number" id="draft-reserve" name="reserveGold" min="0" max="100000" step="1" required aria-describedby="draft-budget-help"></div>
           </div>
-          <button type="submit" class="draft-button draft-update" id="draft-update" disabled>Update guide</button>
+          <p class="draft-helper" id="draft-budget-help">The item budget excludes gold you set aside.</p>
+          <button type="submit" class="draft-button draft-update" id="draft-update" disabled>Update budgets</button>
         </form>
       </section>
 
       <div class="draft-output" id="draft-output" aria-busy="true">
-        <section id="draft-impact-rubric" class="surface draft-rubric" aria-labelledby="impact-rubric-title" hidden></section>
         <section class="surface draft-shortlist" aria-labelledby="draft-shortlist-title">
           <div class="draft-section-head"><h2 id="draft-shortlist-title">Pick shortlist</h2><p id="draft-stage-note"></p></div>
           <p id="draft-status" class="draft-field-status" role="status">Loading Legend guide…</p>
           <div id="draft-heroes" class="draft-heroes"></div>
+          <p id="draft-coverage" class="draft-coverage" hidden><strong id="draft-matches">—</strong> Legend-average matches for matchup results. <strong id="draft-replays">—</strong> replays with the selected position inferred.</p>
         </section>
         <section class="surface draft-detail" id="draft-detail" aria-labelledby="draft-detail-title" hidden>
           <div id="draft-builds"></div>
         </section>
+        <section id="draft-impact-rubric" class="surface draft-rubric" aria-labelledby="impact-rubric-title" hidden></section>
       </div>
     </div>
 
@@ -104,7 +117,7 @@
       <summary>Sources and scoring <span aria-hidden="true">+</span></summary>
       <div id="draft-method"></div>
     </details>
-    <footer><span id="draft-snapshot">OpenDota · Valve 7.42</span><a class="text-link" href="/gpm-builds#gpm-context">Review Item Potency <span aria-hidden="true">↗</span></a></footer>
+    <footer><span id="draft-snapshot">OpenDota match snapshot</span><a class="text-link" href="/gpm-builds#gpm-context">Item Potency report</a></footer>
   </main>
 </body>
 </html>

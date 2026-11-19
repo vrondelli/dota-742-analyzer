@@ -3,16 +3,16 @@ const form = $('gpm-settings')
 const integers = new Intl.NumberFormat('en', { maximumFractionDigits: 0 })
 const decimals = new Intl.NumberFormat('en', { maximumFractionDigits: 1 })
 const scenarioTypes = [
-  { key: 'bad', label: 'Bad game', percentile: 'Q25' },
-  { key: 'good', label: 'Good game', percentile: 'Q50 · median' },
-  { key: 'easy', label: 'Easy game', percentile: 'Q85' },
+  { key: 'bad', label: 'Low farm', percentile: '25th percentile' },
+  { key: 'good', label: 'Typical farm', percentile: 'Median' },
+  { key: 'easy', label: 'High farm', percentile: '85th percentile' },
 ]
 const basisLabels = {
-  'gold-timeline': 'Cumulative gold at minute',
-  'full-match-gpm': 'Full-match GPM extrapolation',
+  'gold-timeline': 'Gold tracked by minute',
+  'full-match-gpm': 'Estimated from full-match gold per minute',
   unavailable: 'No economy samples',
 }
-const state = { meta: null, result: null, request: null, context: null, contextLoading: false }
+const state = { meta: null, result: null, query: null, request: null, context: null, contextLoading: false }
 
 function escape(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => (
@@ -64,11 +64,27 @@ function buildUrl(row, scenario) {
 }
 
 function buildMarkup(row, scenario, label) {
-  if (!scenario.items?.length) return '<span class="gpm-build">Baseline only</span>'
+  if (!scenario.items?.length) return '<span class="gpm-build">No items in this estimate</span>'
   const parts = scenario.items.map((item) => `<span class="gpm-build-part" title="${gold(item.cost)}">
     ${thumbnail('items', item.key)}${escape(item.name)}</span>`).join('<span aria-hidden="true">+</span>')
-  const description = `Inspect ${row.hero.name} in a ${label.toLowerCase()} with ${scenario.items.map(({ name }) => name).join(' and ')}`
+  const description = `Inspect ${row.hero.name} at ${label.toLowerCase()} with ${scenario.items.map(({ name }) => name).join(' and ')}`
   return `<a class="gpm-build" href="${escape(buildUrl(row, scenario))}" aria-label="${escape(description)}">${parts}</a>`
+}
+
+function renderFarmBudgets(roles, { role, targetMinute, reserveGold }) {
+  const withSamples = roles.filter(({ scenarios }) => scenarios.length)
+  $('gpm-farm').hidden = !withSamples.length
+  if (!withSamples.length) return
+  const scope = role === 'all' ? 'Across sampled roles' : withSamples[0].label
+  $('gpm-farm-note').textContent = `${scope} at minute ${count(targetMinute)}, after setting aside ${gold(reserveGold)}.`
+  $('gpm-farm-budgets').innerHTML = scenarioTypes.map(({ key, label, percentile }) => {
+    const budgets = withSamples.flatMap(({ scenarios }) => scenarios.filter((scenario) => scenario.key === key)
+      .map(({ budget }) => budget))
+    const lowest = Math.min(...budgets)
+    const highest = Math.max(...budgets)
+    const range = lowest === highest ? gold(lowest) : `${count(lowest)}–${gold(highest)}`
+    return `<div><dt>${label}</dt><dd>${range}<small>${percentile} of gold earned</small></dd></div>`
+  }).join('')
 }
 
 function economyMarkup(roles) {
@@ -78,16 +94,16 @@ function economyMarkup(roles) {
   if (!roles.length) return
   const sampledRole = state.result.options.role
   const display = sampledRole === 'all' ? roles : roles.filter(({ key }) => key === sampledRole)
-  content.innerHTML = `<p>Samples are grouped by inferred Legend role. Budget subtracts the selected reserve from projected gold earned.</p>
+  content.innerHTML = `<p>Each sample is one player with an inferred role. Gold per minute (GPM) estimates gold earned.</p>
     <div class="scroll-table" tabindex="0" role="region" aria-label="Role economy and item budgets">
-      <table><thead><tr><th scope="col">Role</th><th scope="col">Economy sample</th>
+      <table><thead><tr><th scope="col">Role</th><th scope="col">Player samples</th>
         ${scenarioTypes.map(({ label, percentile }) => `<th scope="col">${label} · ${percentile}</th>`).join('')}</tr></thead>
       <tbody>${display.map((role) => `<tr><td>${escape(role.label)}</td>
-        <td>${count(role.scenarios[0]?.sampleSize ?? 0)} picks <span class="gpm-source-label">${basisLabels[role.basis] ?? 'Economy basis unavailable'}</span></td>
+        <td>${count(role.scenarios[0]?.sampleSize ?? 0)} <span class="gpm-source-label">${basisLabels[role.basis] ?? 'Farm samples unavailable'}</span></td>
         ${scenarioTypes.map(({ key }) => {
           const scenario = role.scenarios.find((entry) => entry.key === key)
           if (!scenario || !Number.isFinite(scenario.gpm)) return '<td class="gpm-muted">—</td>'
-          return `<td>${amount(scenario.gpm)} GPM · ${gold(scenario.budget)} budget<span class="gpm-source-label">${gold(scenario.earnedGold)} earned · n=${count(scenario.sampleSize)}</span></td>`
+          return `<td>${amount(scenario.gpm)} GPM · ${gold(scenario.budget)} budget<span class="gpm-source-label">${gold(scenario.earnedGold)} estimated earned</span></td>`
         }).join('')}
       </tr>`).join('')}</tbody></table>
     </div>`
@@ -97,15 +113,15 @@ function projectionCell(row, { key, label }) {
   const scenario = row.scenarios.find((entry) => entry.key === key)
   if (!scenario) return '<td><span class="subtle">Projection unavailable</span></td>'
   const tone = scenario.gain > 0 ? 'positive' : 'neutral'
-  const partial = scenario.coverage === 'partial' ? ' · partial item coverage' : ''
+  const partial = scenario.coverage === 'partial' ? '<p class="gpm-spend">Some item effects are outside the model.</p>' : ''
   return `<td>
     <div class="gpm-projection-figures">
       <strong>${amount(scenario.dps)} <small>DPS</small></strong>
       <span>${gold(scenario.budget)} budget</span>
     </div>
     ${buildMarkup(row, scenario, label)}
-    <p class="gpm-spend"><span class="${tone}">${signed(scenario.gain)} DPS</span> · ${gold(scenario.spent)} spent · ${gold(scenario.unspent)} budget left${partial}</p>
-    <p class="gpm-spend">${amount(scenario.gpm)} GPM · ${gold(scenario.earnedGold)} earned</p>
+    <p class="gpm-spend"><span class="${tone}">${signed(scenario.gain)} DPS from items</span></p>
+    <p class="gpm-spend">${gold(scenario.spent)} spent · ${gold(scenario.unspent)} left</p>${partial}
   </td>`
 }
 
@@ -121,13 +137,13 @@ function renderRows() {
   const scenarios = scenarioTypes.filter(({ key }) => view === 'all' || view === key)
   target.innerHTML = `<div class="scroll-table" tabindex="0" role="region" aria-label="Ranked GPM build projections">
     <table class="gpm-table${view === 'all' ? ' gpm-all-scenarios' : ''}">
-      <thead><tr><th scope="col">Hero</th><th scope="col" aria-sort="descending">Mean DPS</th>
+      <thead><tr><th scope="col">Hero</th><th scope="col" aria-sort="descending">Avg. DPS</th>
         ${scenarios.map(({ key, label, percentile }) => `<th scope="col" class="gpm-scenario-head gpm-${key}">${label}<span>${percentile}</span></th>`).join('')}</tr></thead>
       <tbody>${rows.map((row) => `<tr>
         <th scope="row"><span class="gpm-hero-identity">
           <span class="gpm-hero-rank" aria-label="Rank ${count(row.rank)}">${count(row.rank)}</span>
           ${thumbnail('heroes', row.hero.key)}<span>${escape(row.hero.name)}</span>
-        </span><span class="gpm-row-evidence">${escape(row.roleLabel)} · ${count(row.replayPicks)} role picks</span></th>
+        </span><span class="gpm-row-evidence">${escape(row.roleLabel)} · ${count(row.replayPicks)} replay ${row.replayPicks === 1 ? 'pick' : 'picks'}</span></th>
         <td class="gpm-mean">${amount(row.averageDps)} <small>${amount(row.baselineDps)} no items</small></td>
         ${scenarios.map((scenario) => projectionCell(row, scenario)).join('')}
       </tr>`).join('')}</tbody>
@@ -223,16 +239,22 @@ function renderResult(query) {
   const usedSamples = roles.reduce((total, role) => total + (role.scenarios[0]?.sampleSize ?? 0), 0)
   $('gpm-sample-count').textContent = count(usedSamples)
   $('gpm-hero-count').textContent = count(coverage.returnedHeroes)
-  $('gpm-results-title').textContent = `Top ${options.limit} heroes`
-  $('gpm-results-scenario').textContent = `Mean DPS across three scenarios · Minute ${options.targetMinute} · Level ${options.level} · ${amount(options.targetArmor)} target armor`
-  const legendQuery = new URLSearchParams({ level: options.level })
+  $('gpm-results-title').textContent = coverage.returnedHeroes ? `Top ${count(coverage.returnedHeroes)} heroes` : 'Right-click damage projections'
+  const roleNote = options.role === 'all' ? ' Each hero uses their highest-scoring observed role and its own budget.' : ''
+  $('gpm-results-scenario').textContent = `Ranked by average damage per second (DPS) across all farm levels, at level ${options.level} against ${amount(options.targetArmor)} armor.${roleNote}`
+  const legendQuery = new URLSearchParams({ level: options.level, targetArmor: options.targetArmor, maxItems: options.maxItems })
   if (options.role !== 'all') legendQuery.set('role', options.role)
   $('gpm-legend-link').href = `/legend-builds?${legendQuery}`
+  const draftQuery = new URLSearchParams({ targetMinute: options.targetMinute, reserveGold: options.reserveGold })
+  if (options.role !== 'all') draftQuery.set('role', options.role)
+  $('gpm-draft-link').href = `/draft-guide?${draftQuery}`
   $('gpm-export').href = `/api/gpm-builds.csv?${query}`
   $('gpm-export').hidden = !coverage.returnedHeroes
   const provenance = 'Patch assignment may use match start time. Legend roles are inferred from the replay observations.'
-  $('gpm-assumptions').innerHTML = `<ul>${[...assumptions, provenance].map((line) => `<li>${escape(line)}</li>`).join('')}</ul>`
+  $('gpm-assumptions').innerHTML = `<ul>${[...assumptions, provenance].map((line) =>
+    `<li>${escape(line.replace('Bad, good, and easy', 'Low, typical, and high farm'))}</li>`).join('')}</ul>`
   renderSnapshot(state.result)
+  renderFarmBudgets(roles, options)
   economyMarkup(roles)
   renderRows()
   renderContext()
@@ -243,14 +265,28 @@ function populateSettings(meta) {
     ? meta.roles : [{ key: 'all', label: 'All observed roles' }, ...meta.roles]
   $('gpm-role').replaceChildren(...roles.map(({ key, label }) => new Option(key === 'all' ? 'All observed roles' : label, key)))
   $('gpm-level').replaceChildren(...Array.from({ length: 30 }, (_, index) => new Option(index + 1, index + 1)))
+  const query = new URLSearchParams(window.location.search)
   for (const [field, value] of Object.entries(meta.defaults)) {
     const control = form.elements.namedItem(field)
-    if (control && value != null) control.value = value
+    if (!control || value == null) continue
+    const input = query.get(field)
+    control.value = input?.trim() ? input : value
+    if (!control.value || !control.checkValidity()) control.value = value
   }
-  const role = new URLSearchParams(window.location.search).get('role')
-  if (roles.some(({ key }) => key === role)) $('gpm-role').value = role
+  const view = query.get('scenario')
+  const display = $('gpm-display')
+  display.value = [...display.options].some(({ value }) => value === view) ? view
+    : window.matchMedia('(max-width: 680px)').matches ? 'good' : 'all'
   $('gpm-run').disabled = false
   renderSnapshot(meta)
+}
+
+function syncUrl() {
+  if (!state.query) return
+  const query = new URLSearchParams(state.query)
+  query.set('scenario', $('gpm-display').value)
+  const url = `${window.location.pathname}?${query}${window.location.hash}`
+  window.history.replaceState(null, '', url)
 }
 
 async function loadResults() {
@@ -265,11 +301,13 @@ async function loadResults() {
     const result = await fetchJson(`/api/gpm-builds?${query}`, request.signal)
     if (request.signal.aborted) return
     state.result = result
+    state.query = query
+    syncUrl()
     renderResult(query)
     $('gpm-status').textContent = ''
   } catch (error) {
     if (request.signal.aborted) return
-    $('gpm-status').textContent = error.message
+    $('gpm-status').textContent = state.result ? `${error.message} Showing the last successful projection.` : error.message
     if (!state.result) $('gpm-result-body').innerHTML = '<div class="gpm-empty">Choose Project builds to retry.</div>'
   } finally {
     if (!request.signal.aborted) {
@@ -284,7 +322,10 @@ form.addEventListener('submit', (event) => {
   if (state.meta) void loadResults()
   else void start()
 })
-$('gpm-display').addEventListener('change', renderRows)
+$('gpm-display').addEventListener('change', () => {
+  syncUrl()
+  renderRows()
+})
 $('gpm-context').addEventListener('toggle', openContext)
 if (window.location.hash === '#gpm-context') $('gpm-context').open = true
 document.addEventListener('error', (event) => {

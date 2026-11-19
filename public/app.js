@@ -96,15 +96,17 @@ function renderCoverage(cohort) {
   $('dataset-matches').textContent = count(cohort.matches)
   $('dataset-roles').textContent = coverage(cohort.roleKnownPicks, cohort.totalPicks)
   $('dataset-purchases').textContent = coverage(cohort.parsedPicks, cohort.totalPicks)
+  $('dataset-roles').title = `${count(cohort.roleKnownPicks)} of ${count(cohort.totalPicks)} hero picks`
+  $('dataset-purchases').title = `${count(cohort.parsedPicks)} of ${count(cohort.totalPicks)} hero picks`
   const note = $('dataset-note')
   const rankLabel = $('rank-filter').selectedOptions[0]?.textContent ?? 'All ranks'
   const inferred = cohort.matches - cohort.verifiedMatches
   if (!cohort.matches) {
-    note.textContent = `No match results for ${rankLabel.toLowerCase()} with these filters.`
+    note.textContent = `No match results for ${rankLabel} with these filters.`
   } else if (inferred > 0) {
-    note.textContent = `${count(inferred)} of ${count(cohort.matches)} matches are assigned to 7.42 by start time. Roles and items use available replay data.`
+    note.textContent = `The patch is inferred from start time for ${count(inferred)} of ${count(cohort.matches)} matches.`
   } else {
-    note.textContent = `${count(cohort.matches)} matches have a verified patch. Roles and items use available replay data.`
+    note.textContent = `Patch verified for all ${count(cohort.matches)} matches.`
   }
   note.classList.remove('is-error')
 }
@@ -128,7 +130,7 @@ function renderMetadata() {
       const timestamp = new Intl.DateTimeFormat('en', {
         month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo', timeZoneName: 'short',
       }).format(date)
-      $('snapshot-label').textContent = `OpenDota snapshot · ${timestamp}`
+      $('snapshot-label').textContent = `OpenDota snapshot from ${timestamp}`
     }
   }
 }
@@ -137,13 +139,13 @@ function renderHeroRows() {
   const body = $('hero-rows')
   const cohort = state.heroData
   if (!cohort) {
-    const message = state.heroError ? 'Hero rankings could not be loaded. Try changing a filter.' : 'Loading heroes…'
+    const message = state.heroError ? 'Match results could not load. <button type="button" class="plain-button" data-retry-heroes>Retry</button>' : 'Loading heroes…'
     body.innerHTML = `<tr><td colspan="6" class="loading-cell">${message}</td></tr>`
     $('pagination').hidden = true
     return
   }
 
-  $('hero-cohort').textContent = `${count(cohort.matches)} matches · ${count(cohort.eligiblePicks)} eligible picks · ${count(cohort.minGames)} to rank`
+  $('hero-cohort').textContent = `${count(cohort.eligiblePicks)} hero picks. Ranking requires ${count(cohort.minGames)} matches.`
   const search = $('hero-search').value.trim().toLowerCase()
   const matches = cohort.rows.filter((hero) => hero.name?.toLowerCase().includes(search))
   const pages = Math.max(1, Math.ceil(matches.length / pageSize))
@@ -164,13 +166,11 @@ function renderHeroRows() {
     const tone = winsAboveHalf ? (hero.winRate > 0.5 ? 'positive' : 'negative') : 'neutral'
     const interval = hasGames && Number.isFinite(hero.confidenceLow) && Number.isFinite(hero.confidenceHigh)
       ? ` title="95% interval ${rate(hero.confidenceLow)}–${rate(hero.confidenceHigh)}"` : ''
-    const bar = hasGames
-      ? `<span class="rate-track" aria-hidden="true"><span class="rate-fill" style="--value:${Math.min(100, Math.max(0, hero.winRate * 100))}%"></span></span>` : ''
     const rankName = hero.rank == null ? (hasGames ? 'Below ranking minimum' : 'No observations') : `Rank ${hero.rank}`
     return `<tr data-row="${hero.heroId}" class="${selected ? 'selected-row' : ''}">
       <td class="rank-cell${hero.rank == null ? '' : ' ranked'}" title="${rankName}">${hero.rank ?? '—'}</td>
       <td><button type="button" class="hero-select" data-hero="${hero.heroId}" aria-pressed="${selected}" aria-controls="item-section">${thumbnail('heroes', hero.slug)}<span>${escape(hero.name)}</span></button></td>
-      <td class="${tone}"${interval}><span class="rate-stack">${hasGames ? rate(hero.winRate) : '—'}${bar}</span></td>
+      <td class="${tone}"${interval}>${hasGames ? rate(hero.winRate) : '—'}</td>
       <td class="pick-cell">${rate(hero.pickRate)}</td>
       <td class="sample-cell">${count(hero.games)}</td>
       <td class="compare-cell"><button type="button" class="compare-button" data-compare="${hero.heroId}" aria-label="Compare ${escape(hero.name)}" aria-pressed="${compared}" aria-controls="comparison">${compared ? '−' : '+'}</button></td>
@@ -190,8 +190,8 @@ function renderComparison() {
   $('comparison-link').hidden = chosen.length === 0
   $('comparison-link').textContent = `Compare ${chosen.length}`
   $('compare-description').textContent = chosen.length
-    ? `${activeRole()} · ${$('rank-filter').selectedOptions[0]?.textContent ?? 'All ranks'}`
-    : 'Add up to three heroes from the table.'
+    ? `${activeRole()} (${$('rank-filter').selectedOptions[0]?.textContent ?? 'all ranks'})`
+    : 'Add up to three heroes with +.'
   body.style.setProperty('--count', chosen.length || 1)
   body.innerHTML = chosen.map((hero) => {
     const id = hero.heroId ?? hero.id
@@ -225,14 +225,13 @@ function renderHeroFeature() {
     picture.hidden = false
   }
   $('detail-heading').textContent = hero.name
-  $('detail-context').textContent = state.role === 'all' ? 'Selected hero' : activeRole()
   $('featured-record').textContent = hero.games > 0
-    ? `${rate(hero.winRate)} win rate · ${count(hero.games)} ${hero.games === 1 ? 'match' : 'matches'}`
-    : 'No observations in this cohort'
+    ? `Won ${rate(hero.winRate)} of ${count(hero.games)} ${hero.games === 1 ? 'match' : 'matches'}`
+    : 'No matches for these filters'
 }
 
 function itemNotice(title, description) {
-  return `<div class="file-note"><strong>${escape(title)}</strong><span>${escape(description)}</span></div>`
+  return `<div class="file-note"><strong>${escape(title)}</strong>${description ? `<span>${escape(description)}</span>` : ''}</div>`
 }
 
 function renderItems() {
@@ -244,28 +243,28 @@ function renderItems() {
   status.textContent = ''
 
   if (!hero) {
-    context.textContent = 'Select a hero to view purchase data.'
+    context.textContent = ''
     body.innerHTML = ''
     return
   }
-  context.textContent = `${activeRole()} · First purchases in the selected window`
+  context.textContent = `First purchases (${activeRole().toLowerCase()})`
   if (state.itemError) {
-    body.innerHTML = itemNotice('Item results unavailable', 'Try switching the purchase window or changing a filter.')
+    body.innerHTML = `${itemNotice('Purchase results could not load')}<button type="button" class="plain-button" data-retry-items>Retry</button>`
     return
   }
   if (!result) {
-    body.innerHTML = itemNotice('Loading purchases…', 'Checking the selected cohort and purchase window.')
+    body.innerHTML = itemNotice('Loading purchases…')
     return
   }
 
-  status.textContent = `${count(result.parsedGames)} of ${count(result.windowGames)} eligible games with purchase logs · ${count(result.heroGames)} hero games`
+  status.textContent = `${count(result.parsedGames)} of ${count(result.windowGames)} games in this time range have purchase logs`
   if (!result.rows.length) {
     if (!result.heroGames) {
-      body.innerHTML = itemNotice('No games in this cohort', 'Try all roles or a different rank bracket.')
+      body.innerHTML = itemNotice('No games for these filters', 'Try all roles or a different match rank.')
     } else if (!result.windowGames) {
       body.innerHTML = itemNotice('No games reached this window', 'Choose an earlier purchase window.')
     } else if (!result.parsedGames) {
-      body.innerHTML = itemNotice('Purchase logs are still sparse', 'Item rankings update as parsed matches become available.')
+      body.innerHTML = itemNotice('No purchase logs in this window', 'Try a different purchase window.')
     } else {
       body.innerHTML = itemNotice('Not enough comparable purchases', `Each item needs at least ${result.minGroup} games with a purchase and ${result.minGroup} without one in this window.`)
     }
@@ -289,10 +288,10 @@ function renderItems() {
     </tr>`
   }).join('')
   body.innerHTML = `${sampleNote}<div class="scroll-table"><table class="item-table">
-    <thead><tr><th scope="col">Item</th><th scope="col" title="Buyer win rate">Win rate</th><th scope="col" title="Buyer minus comparison win rate">Δ win</th><th scope="col" title="Buyer and comparison sample sizes">Games</th><th scope="col" title="Median first purchase time">Time</th></tr></thead>
+    <thead><tr><th scope="col">Item</th><th scope="col">Buyer win rate</th><th scope="col" title="Buyer minus comparison win rate">Win gap</th><th scope="col" title="Buyer and comparison sample sizes">Games</th><th scope="col" title="Median first purchase time">Time</th></tr></thead>
     <tbody>${rows}</tbody>
   </table></div>
-  <details class="item-disclosure"><summary>Read the item comparison</summary><p>Games shows buyers / comparisons. Δ win is the difference in percentage points between those groups. Time is the median first purchase.</p></details>`
+  <details class="item-disclosure"><summary>How to read the item table</summary><p>Games lists buyers first and comparison games second. Win gap is buyer win rate minus comparison win rate in percentage points. Time is the median first purchase.</p></details>`
 }
 
 async function loadHeroes() {
@@ -389,6 +388,10 @@ function toggleComparison(id) {
 
 function handleHeroAction(event) {
   const origin = event.currentTarget
+  if (event.target.closest('[data-retry-heroes]')) {
+    void loadHeroes()
+    return
+  }
   const compareButton = event.target.closest('[data-compare]')
   if (compareButton) {
     const id = Number(compareButton.dataset.compare)
@@ -463,6 +466,9 @@ $('next-page').addEventListener('click', () => { state.page += 1; renderHeroRows
 $('previous-page').addEventListener('click', () => { state.page -= 1; renderHeroRows() })
 $('hero-rows').addEventListener('click', handleHeroAction)
 $('comparison-body').addEventListener('click', handleHeroAction)
+$('item-body').addEventListener('click', (event) => {
+  if (event.target.closest('[data-retry-items]')) void loadItems()
+})
 $('clear-comparison').addEventListener('click', () => {
   state.comparison.clear()
   renderHeroRows()

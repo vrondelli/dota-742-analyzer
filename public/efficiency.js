@@ -4,7 +4,7 @@ const whole = new Intl.NumberFormat('en', { maximumFractionDigits: 0 })
 const decimals = new Intl.NumberFormat('en', { maximumFractionDigits: 2 })
 const pageSize = 10
 const effectSwitches = ['includeActives', 'includeOnHit', 'includeAuras']
-const state = { meta: null, query: null, request: null, result: null, page: 0, selected: null }
+const state = { meta: null, query: null, appliedQuery: null, request: null, result: null, page: 0, selected: null }
 
 const statLabels = {
   damage: ['Attack damage', ''], strength: ['Strength', ''], agility: ['Agility', ''],
@@ -72,7 +72,8 @@ function populateSettings(meta) {
     else control.value = value
   }
 
-  for (const field of ['level', 'budget', 'targetArmor', 'targetMagicResistance', 'windowSeconds', 'baseSpellDamage', 'metric']) {
+  for (const field of ['level', 'budget', 'targetArmor', 'targetMagicResistance', 'windowSeconds',
+    'baseSpellDamage', 'ownArmor', 'ownMagicResistance', 'metric']) {
     const value = query.get(field)
     if (value === null || value.trim() === '') continue
     const control = form.elements.namedItem(field)
@@ -80,8 +81,13 @@ function populateSettings(meta) {
     control.value = value
     if (!control.value || !control.checkValidity()) control.value = previous
   }
-  const onHit = query.get('includeOnHit')
-  if (onHit === 'true' || onHit === 'false') form.elements.namedItem('includeOnHit').checked = onHit === 'true'
+  for (const flag of effectSwitches) {
+    const value = query.get(flag)
+    if (value === 'true' || value === 'false') form.elements.namedItem(flag).checked = value === 'true'
+  }
+  const size = query.get('maxItems')
+  if (size === '1' || size === '2') form.elements.namedItem('maxItems').value = size
+  if (query.get('sort') === 'gain') $('result-sort').value = 'gain'
 
   if (items?.length) {
     const sorted = [...items].sort((first, second) => first.name.localeCompare(second.name))
@@ -114,7 +120,7 @@ function syncManual() {
 
 function scenarioLabel(metric, options) {
   if (metric.key === 'physicalDps') return `Sustained attacks against ${number(options.targetArmor)} armor`
-  if (metric.key === 'magicalDamage') return `${number(options.windowSeconds)}s · ${number(options.baseSpellDamage)} base spell damage · ${number(options.targetMagicResistance)}% target magic resist`
+  if (metric.key === 'magicalDamage') return `${number(options.baseSpellDamage)} base spell damage over ${number(options.windowSeconds)}s against ${number(options.targetMagicResistance)}% magic resist`
   if (metric.group === 'Auras') return options.includeAuras ? 'One in-range unit per aura' : 'Auras disabled in combat assumptions'
   if (metric.key === 'physicalEhp' || metric.key === 'magicEhp') return 'Effective health against a single damage type'
   return metric.label
@@ -160,26 +166,23 @@ function buildButton(row, index) {
 function renderTable(result, metric) {
   const { rows, totalRows, options } = result
   const start = state.page * pageSize
-  const buildSize = options.maxItems === 2 ? 'Singles and pairs' : 'One-item builds'
-  const selection = options.itemKeys?.length ? 'Selected build' : buildSize
-  $('result-summary').textContent = `${selection} · ${whole.format(totalRows)} within ${gold(options.budget)}`
+  const count = whole.format(totalRows)
+  const noun = totalRows === 1 ? 'build' : 'builds'
+  $('result-summary').textContent = `${count} ${noun} within ${gold(options.budget)}`
   $('eff-pagination').hidden = totalRows <= pageSize
   $('eff-page-count').textContent = `${whole.format(start + 1)}–${whole.format(start + rows.length)} of ${whole.format(totalRows)}`
   $('eff-previous').disabled = state.page === 0
   $('eff-next').disabled = start + rows.length >= totalRows
+  const byGain = $('result-sort').value === 'gain'
   if (!rows.length) {
     $('eff-results').innerHTML = '<div class="empty-state"><strong>No eligible builds</strong><span>Increase the budget or change your item selection.</span></div>'
     return
   }
 
-  const sortKey = $('result-sort').value === 'gain' ? 'gain' : 'gainPer1000'
-  const maxGain = Math.max(0, ...rows.map((row) => row[sortKey] ?? 0))
+  const sortKey = byGain ? 'gain' : 'gainPer1000'
   const markup = rows.map((row, index) => {
     const selected = state.selected === index
-    const expense = row[sortKey]
-    const width = maxGain > 0 ? Math.max(0, expense ?? 0) / maxGain * 100 : 0
     const tone = row.gain > 0 ? 'positive' : row.gain < 0 ? 'negative' : 'neutral'
-    const track = width ? `<span class="gain-track" aria-hidden="true"><span style="--gain:${width}%"></span></span>` : ''
     const gain = signed(row.gain)
     const ratio = signed(row.gainPer1000)
     return `<tr class="${selected ? 'selected-build' : ''}">
@@ -187,12 +190,12 @@ function renderTable(result, metric) {
       <td>${buildButton(row, index)}</td>
       <td class="gold-value">${gold(row.cost)}</td>
       <td>${row.gain === null ? '—' : number(row.metrics[metric.key])}</td>
-      <td class="build-gain ${tone}">${sortKey === 'gain' ? `<span class="gain-stack">${gain}${track}</span>` : gain}</td>
-      <td class="build-gain ${tone}">${sortKey === 'gainPer1000' ? `<span class="gain-stack">${ratio}${track}</span>` : ratio}</td>
+      <td class="build-gain ${tone}">${gain}</td>
+      <td class="build-gain ${tone}">${ratio}</td>
       <td class="subtle">${coverageNames[row.coverage] ?? '—'}</td>
     </tr>`
   }).join('')
-  $('eff-results').innerHTML = `<div class="scroll-table" tabindex="0" role="region" aria-label="Ranked builds table"><table class="build-table">
+  $('eff-results').innerHTML = `<div class="scroll-table" tabindex="0" role="region" aria-label="Ranked builds table"><table class="build-table build-table-results${byGain ? ' by-gain' : ''}">
     <thead><tr><th scope="col" aria-label="Rank">#</th><th scope="col">Build</th><th scope="col">Cost</th>
       <th scope="col">Total (${escape(metric.unit === 'pp' ? '%' : metric.unit)})</th>
       <th scope="col"${sortKey === 'gain' ? ' aria-sort="descending"' : ''}>Gain${metric.unit === 'pp' ? ' (pp)' : ''}</th>
@@ -242,7 +245,16 @@ function renderBuildDetails(result, metric, row) {
   if (!row) return
   $('build-detail-title').textContent = buildName(row)
   $('build-detail-summary').textContent = `${gold(row.cost)} · ${coverageNames[row.coverage] ?? 'Modeled effects'}`
-  const entries = []
+  const exactQuery = new URLSearchParams(state.appliedQuery)
+  exactQuery.delete('itemKey')
+  for (const item of row.items) exactQuery.append('itemKey', item.key)
+  $('exact-build-link').href = `/efficiency?${exactQuery}`
+  $('exact-build-link').hidden = Boolean(result.options.itemKeys?.length)
+  const totalUnit = metric.unit === 'pp' ? '%' : ` ${metric.unit}`
+  const entries = Number.isFinite(row.gain) ? [
+    ['With these items', `${number(row.metrics[metric.key])}${totalUnit}`],
+    ['Increase over no items', `${signed(row.gain)} ${metric.unit}`],
+  ] : []
   if (Number.isFinite(row.synergy)) entries.push(['Gain beyond sum of individual items', signed(row.synergy)])
   for (const [side, auraStats] of Object.entries(row.metrics.auras ?? {})) {
     const description = describeStats(auraStats)
@@ -319,7 +331,7 @@ function renderFrontier(result, metric) {
   const { frontier } = result
   $('frontier-surface').hidden = !frontier?.length
   if (!frontier?.length) return
-  $('frontier-summary').textContent = `Best improvements by gold threshold · gain in ${metric.unit}`
+  $('frontier-summary').textContent = `Best gain at each budget (${metric.unit})`
   $('frontier-data').innerHTML = `<table class="build-table"><thead><tr><th scope="col">Build</th><th scope="col">Cost</th><th scope="col">Gain</th><th scope="col">Gain / 1,000g</th></tr></thead>
     <tbody>${frontier.map((point) => `<tr><td>${escape(point.label)}</td><td>${gold(point.cost)}</td><td>${signed(point.gain)}</td><td>${signed(point.gainPer1000)}</td></tr>`).join('')}</tbody></table>`
   requestAnimationFrame(drawChart)
@@ -346,14 +358,21 @@ async function refresh() {
   query.set('limit', pageSize)
   $('settings-status').textContent = 'Calculating builds…'
   $('eff-results').setAttribute('aria-busy', 'true')
+  $('copy-comparison').disabled = true
+  $('copy-comparison-status').textContent = ''
   $('eff-previous').disabled = true
   $('eff-next').disabled = true
   try {
     const result = await getJson(`/api/efficiency?${query}`, request.signal)
     if (request.signal.aborted) return
+    query.delete('offset')
+    query.delete('limit')
+    state.appliedQuery = query
     state.result = result
     state.selected = result.options.itemKeys?.length && result.rows.length ? 0 : null
     render()
+    history.replaceState(null, '', `/efficiency?${query}${location.hash}`)
+    $('copy-comparison').disabled = false
     $('settings-status').textContent = ''
   } catch (error) {
     if (request.signal.aborted) return
@@ -385,6 +404,17 @@ form.addEventListener('change', syncManual)
 $('result-sort').addEventListener('change', () => { state.page = 0; void refresh() })
 $('eff-previous').addEventListener('click', () => { state.page -= 1; void refresh() })
 $('eff-next').addEventListener('click', () => { state.page += 1; void refresh() })
+$('copy-comparison').addEventListener('click', async () => {
+  if (!state.appliedQuery) return
+  const url = new URL('/efficiency', location.origin)
+  url.search = state.appliedQuery.toString()
+  try {
+    await navigator.clipboard.writeText(url.href)
+    $('copy-comparison-status').textContent = 'Setup link copied.'
+  } catch {
+    $('copy-comparison-status').textContent = 'Copy the setup link from your address bar.'
+  }
+})
 $('eff-results').addEventListener('click', (event) => {
   const control = event.target.closest('[data-build]')
   if (!control || !state.result) return
