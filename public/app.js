@@ -212,6 +212,13 @@ function renderHeroFeature() {
   const hero = heroById(state.selected)
   const picture = $('featured-image')
   $('build-link').href = hero ? `/efficiency?heroId=${hero.heroId ?? hero.id}` : '/efficiency'
+  const profile = $('featured-profile')
+  profile.hidden = !hero?.slug
+  if (!profile.hidden) {
+    const role = ['all', 'unknown'].includes(state.role) ? '' : `?role=${encodeURIComponent(state.role)}`
+    profile.href = `/hero/${encodeURIComponent(hero.slug)}${role}`
+    profile.setAttribute('aria-label', `${hero.name} hero guide`)
+  }
   if (!hero) {
     picture.hidden = true
     $('detail-heading').textContent = 'Select a hero'

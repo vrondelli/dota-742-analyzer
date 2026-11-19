@@ -231,8 +231,10 @@ function renderDetail() {
   const n = economy.scenarios[0]?.sampleSize
   const tactics = plan.swaps.filter(({ trigger }) => trigger !== condition).map(({ trigger, label, item }) =>
     `<button class="draft-hint" type="button" data-condition="${escape(trigger)}">${escape(label)}<small>${escape(item.name)}</small></button>`).join('')
+  const slug = hero.key.replace(/^npc_dota_hero_/, '')
   $('draft-builds').innerHTML = `<div class="draft-detail-head">
-    <h2 id="draft-detail-title">${escape(hero.name)} purchase order</h2><p>${escape(plan.pickNote)}</p>${uncovered}</div>
+    <h2 id="draft-detail-title">${escape(hero.name)} purchase order</h2><p>${escape(plan.pickNote)}</p>${uncovered}
+    <a class="text-link" href="/hero/${encodeURIComponent(slug)}?role=${escape(state.result.role.key)}">${escape(hero.name)} hero guide</a></div>
     <div class="draft-plan-context">
       <p><strong>Minute ${number(farm.targetMinute)} item budgets</strong> (${gold(farm.reserveGold)} set aside)</p>
       <p>${n ? `Estimated from ${number(n)} observations of ${source}. ` : 'Economy data unavailable. '}<a class="text-link" href="/gpm-builds?role=${escape(state.result.role.key)}">Farm budgets</a></p>

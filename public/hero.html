@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <meta name="description" content="Find a Dota 2 hero's Legend role rankings, matchups, and item builds for patch 7.42.">
+  <title>Heroes | Dota 2 Analyzer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/hero.css">
+  <script src="/hero.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to hero information</a>
+  <header class="topbar">
+    <div class="shell topbar-content analyzer-header">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <nav class="analyzer-nav" aria-label="Analyzer views">
+        <a href="/">Matches</a>
+        <a href="/heroes" aria-current="page">Heroes</a>
+        <a href="/role-rankings">Role rankings</a>
+        <a href="/draft-guide">Draft guide</a>
+        <a href="/gpm-builds">Farm budgets</a>
+        <a href="/legend-builds">Damage rankings</a>
+        <a href="/efficiency">Item lab</a>
+      </nav>
+      <span class="analyzer-patch" id="profile-patch">Patch 7.42</span>
+    </div>
+  </header>
+
+  <main class="shell hero-page" id="main">
+    <div class="profile-directory-heading" id="profile-directory-heading" hidden>
+      <h1 id="directory-title">Heroes</h1>
+      <p class="intro-subtitle">Legend role rankings, matchups, and farm-based builds.</p>
+    </div>
+    <div class="profile-tools">
+      <a class="profile-back text-link" id="profile-back" href="/heroes" hidden><span aria-hidden="true">‹</span> All heroes</a>
+      <div class="profile-search" id="hero-search-panel">
+        <label for="profile-search">Find a hero</label>
+        <input id="profile-search" type="search" autocomplete="off" maxlength="80" aria-controls="hero-search-results" disabled>
+        <ul class="profile-search-results" id="hero-search-results" aria-label="Matching heroes" hidden></ul>
+      </div>
+      <p class="sr-only" id="search-status" role="status"></p>
+    </div>
+
+    <section id="hero-directory" aria-labelledby="directory-title" hidden>
+      <p id="directory-empty" class="profile-empty" hidden>No heroes match that search.</p>
+      <ul id="hero-directory-list" class="profile-directory-list"></ul>
+    </section>
+
+    <p class="profile-load" id="profile-status" role="status">Loading heroes…</p>
+    <button class="profile-button" id="profile-retry" type="button" hidden>Retry</button>
+
+    <div id="hero-profile" hidden>
+      <section class="profile-summary surface" aria-labelledby="profile-title">
+        <img class="profile-portrait" id="profile-image" alt="" width="256" height="144" hidden>
+        <div>
+          <h1 id="profile-title"></h1>
+          <p class="intro-subtitle">Legend Ranked All Pick</p>
+        </div>
+        <div class="profile-share">
+          <button class="profile-button" id="profile-share" type="button">Copy hero link</button>
+          <p class="subtle" id="share-status" role="status"></p>
+        </div>
+      </section>
+
+      <section class="surface profile-ranks" aria-labelledby="profile-ranks-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="profile-ranks-title">Legend ranks by role</h2>
+            <p class="subtle">Choose a role to see its purchase plan. Ranks are from each role’s top 20.</p>
+          </div>
+        </div>
+        <div class="profile-role-list" id="profile-roles" role="group" aria-label="Purchase plan role"></div>
+        <div class="profile-role-detail" id="profile-role-detail"></div>
+      </section>
+
+      <div class="profile-sections">
+        <section class="surface profile-matchups" aria-labelledby="profile-matchups-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="profile-matchups-title">Who to pick against</h2>
+              <p class="subtle" id="profile-matchup-context"></p>
+            </div>
+          </div>
+          <div id="profile-matchups"></div>
+          <details class="reading-note profile-method" id="profile-matchup-method" hidden>
+            <summary>How matchups are measured <span aria-hidden="true">+</span></summary>
+            <div id="profile-matchup-notes"></div>
+          </details>
+        </section>
+
+        <section class="surface profile-farm" id="profile-farm" aria-labelledby="profile-farm-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="profile-farm-title">What to buy</h2>
+              <p class="subtle" id="profile-farm-context"></p>
+            </div>
+          </div>
+          <p class="subtle profile-role-status" id="profile-role-status" role="status"></p>
+          <div class="profile-farm-content" id="profile-farm-content"></div>
+          <details class="reading-note profile-method" id="profile-farm-method" hidden>
+            <summary>How farm budgets are estimated <span aria-hidden="true">+</span></summary>
+            <div id="profile-farm-notes"></div>
+          </details>
+        </section>
+      </div>
+    </div>
+
+    <footer>
+      <span>Mechanics from Valve, match results from OpenDota</span>
+      <a class="text-link" href="https://www.dota2.com/patches/7.42">Valve patch notes <span aria-hidden="true">↗</span></a>
+    </footer>
+  </main>
+</body>
+</html>

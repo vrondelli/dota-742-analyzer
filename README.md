@@ -13,6 +13,7 @@ Open [the analyzer](http://127.0.0.1:4173). It starts on Legend, using the lobby
 | View | Use it to answer |
 | --- | --- |
 | Matches | How did heroes and purchases perform in the recorded games? |
+| Heroes | Where does this hero rank, which opponents look favorable, and what can I buy by minute 20? |
 | Role rankings | Which heroes fit my position under the mechanics rubric? |
 | Draft guide | How do revealed picks, game conditions, and farm speed change my options? |
 | Farm budgets | Which builds fit the gold I could earn by a given minute? |
@@ -103,6 +104,12 @@ The matchup results and budget estimates appear alongside the role fit score. Ea
 Open [Role rankings](http://127.0.0.1:4173/role-rankings) to see 20 heroes for each position. Select a hero to inspect the mechanics rationale, individual ratings, and supported benchmarks. The fixed 7.42 analysis gives mechanics and benchmarks up to 95 points and confidence-adjusted pooled win rate up to five.
 
 The snapshot combines 15,008 Legend-average public matches with 49 inferred-role replays. Candidate positions are curated from the hero kit and conventional role fit. Carry DPS uses three minute-20 farm budgets. The mid benchmark evaluates one supported cast at level 12 and labels cases that use the median mapped cast as a scoring input. [Ranking dataset](data/7.42/role-rankings.json)
+
+## Hero guides
+
+Open [Heroes](http://127.0.0.1:4173/heroes) to search the 7.42 roster. A hero guide shows that hero's placement on each top-20 position board and opponent results pooled across Legend positions. Matchups compare the hero's adjusted results against an enemy to its results in other games, with at least 20 games in each group.
+
+Select a position to compare bad, good, and easy farm. Item budgets use that position's 25th, 50th, and 85th percentile farm by minute 20, less 1,500 gold reserved for other spending. Each guide labels the basis of the purchases, whether the view uses a curated build, a right-click damage model, or a general role template. Share a selected role with a link such as `/hero/juggernaut?role=carry`.
 
 ## Patch sources
 

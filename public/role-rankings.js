@@ -74,6 +74,7 @@ function renderRow(role, hero, scoring) {
     ? `<a class="text-link" href="${escape(hero.heroData)}">Valve ability data</a>`
     : '';
   const breakdownId = `rank-breakdown-${hero.heroId}`;
+  const slug = state.report.heroSlugs?.[hero.heroId];
   return `<tr data-ranked-hero>
     <td class="ranking-index">${hero.rank}</td>
     <th class="ranking-hero" scope="row">
@@ -96,6 +97,7 @@ function renderRow(role, hero, scoring) {
           <p>${counts.format(hero.pooledWins)} wins in ${counts.format(hero.pooledMatchCount)} matches across all positions.</p></section>
         </div>
         <div class="ranking-breakdown-actions">
+          ${slug ? `<a class="text-link" href="/hero/${encodeURIComponent(slug)}?role=${role}">${escape(hero.name)} hero guide</a>` : ''}
           <a class="text-link" href="/efficiency?heroId=${hero.heroId}">Test a build</a>
           ${source}
         </div>

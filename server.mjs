@@ -11,6 +11,8 @@ import { ROLE_BUILD_DEFAULTS } from './lib/role-builds.mjs';
 import { buildDraftGuide, DRAFT_GUIDE_DEFAULTS } from './lib/draft-guide.mjs';
 import { DRAFT_CONDITIONS, priceDraftPlan } from './lib/draft-plans.mjs';
 import { ROLE_IMPACT_KEYS, prepareImpactRubric, scoreRoleImpact } from './lib/role-impact.mjs';
+import { getHeroMatchups } from './lib/hero-matchups.mjs';
+import { buildHeroFarm } from './lib/hero-farm.mjs';
 
 const patch = '7.42';
 const dataDirectory = new URL(`./data/${patch}/`, import.meta.url);
@@ -37,6 +39,8 @@ const heroes = patchIndex.heroes
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 const heroesById = new Map(heroes.map((hero) => [hero.id, hero]));
+const heroesBySlug = new Map(heroes.map((hero) => [hero.slug, hero]));
+const heroSlugs = Object.fromEntries(heroes.map(({ id, slug }) => [id, slug]));
 const roles = [
   { key: 'all', label: 'All roles' },
   { key: 'carry', label: 'Carry' },
@@ -86,10 +90,14 @@ const staticFiles = new Map([
   ['/role-rankings', ['role-rankings.html', 'text/html; charset=utf-8']],
   ['/role-rankings.css', ['role-rankings.css', 'text/css; charset=utf-8']],
   ['/role-rankings.js', ['role-rankings.js', 'text/javascript; charset=utf-8']],
+  ['/hero', ['hero.html', 'text/html; charset=utf-8']],
+  ['/hero.css', ['hero.css', 'text/css; charset=utf-8']],
+  ['/hero.js', ['hero.js', 'text/javascript; charset=utf-8']],
 ]);
 const emptySnapshot = { patch, fetchedAt: null, source: 'OpenDota', matches: [] };
 let snapshotCache;
 let buildData;
+let heroProfileEvidence;
 let currentProjectionSnapshot;
 const projectionCache = new Map();
 let projectionQueue = Promise.resolve();
@@ -433,6 +441,77 @@ async function loadImpactRoles() {
   return new Map(datasets.flatMap(({ roles }) => roles.map((role) => [role.key, role])));
 }
 
+async function loadDraftPlans() {
+  const guide = await readJson(new URL('draft-plans.json', dataDirectory));
+  if (guide.patch !== patch || !Array.isArray(guide.plans)) throw new Error(`Expected draft plans for patch ${patch}.`);
+  return guide;
+}
+
+function profileEvidence(snapshot) {
+  if (heroProfileEvidence?.snapshot === snapshot) return heroProfileEvidence;
+  const picks = new Map(rankedRoles.map(({ key }) => [key, new Map()]));
+  let roleReplayMatches = 0;
+  for (const match of snapshot.matches) {
+    if (match.rankTier !== 5) continue;
+    let hasRole = false;
+    for (const player of match.players) {
+      const byHero = picks.get(player.role);
+      if (!byHero) continue;
+      hasRole = true;
+      byHero.set(player.heroId, (byHero.get(player.heroId) ?? 0) + 1);
+    }
+    if (hasRole) roleReplayMatches += 1;
+  }
+  const economy = projectGpmEconomy(snapshot);
+  heroProfileEvidence = { snapshot, picks, economy, roleReplayMatches };
+  return heroProfileEvidence;
+}
+
+const exampleRoles = {
+  riki: 'carry', doom_bringer: 'offlane', lycan: 'offlane', lone_druid: 'mid',
+  keeper_of_the_light: 'soft-support', muerta: 'carry', largo: 'hard-support',
+};
+
+function chooseProfileRole(requestedRole, roleCards, heroPlans, slug) {
+  if (requestedRole) return { role: requestedRole, roleBasis: 'selected' };
+  const placed = roleCards.filter(({ rank }) => rank !== null)
+    .sort((a, b) => a.rank - b.rank || b.replayPicks - a.replayPicks)[0];
+  if (placed) return { role: placed.key, roleBasis: 'ranked' };
+  if (heroPlans.length) return { role: heroPlans[0].role, roleBasis: 'curated' };
+  const observed = [...roleCards].sort((a, b) => b.replayPicks - a.replayPicks)[0];
+  if (observed.replayPicks) return { role: observed.key, roleBasis: 'replay' };
+  return { role: exampleRoles[slug] ?? 'carry', roleBasis: 'example' };
+}
+
+async function handleHeroProfile(response, slug, requestedRole) {
+  const hero = heroesBySlug.get(slug);
+  if (!hero) return sendJson(response, 404, { error: 'Hero not found in the 7.42 roster.' });
+  if (requestedRole !== null && !rankedRoles.some(({ key }) => key === requestedRole)) {
+    return sendJson(response, 400, { error: 'Select one Legend role.' });
+  }
+  const [snapshot, data, guide] = await Promise.all([loadSnapshot(), loadBuildData(), loadDraftPlans()]);
+  const { picks, economy, roleReplayMatches } = profileEvidence(snapshot);
+  const roleCards = rankedRoles.map(({ key, label }) => {
+    const ranking = roleRankings.roles[key].rankings.find((row) => row.heroId === hero.id);
+    return { key, label, rank: ranking?.rank ?? null, score: ranking?.score ?? null,
+      summary: ranking?.mechanic ?? null, replayPicks: picks.get(key).get(hero.id) ?? 0 };
+  });
+  const plans = guide.plans.filter(({ heroId }) => heroId === hero.id);
+  const { role, roleBasis } = chooseProfileRole(requestedRole, roleCards, plans, slug);
+  const farm = buildHeroFarm(data.heroes.get(hero.id) ?? hero, data.items, catalog, plans, {
+    options: { ...economy.options, role }, roles: economy.roles.filter(({ key }) => key === role),
+  }, { role, replayPicks: picks.get(role).get(hero.id) ?? 0, snapshot });
+  const matchups = getHeroMatchups(heroes, snapshot, hero.id);
+  const addSlugs = (rows) => rows.map((row) => ({ ...row, enemySlug: heroSlugs[row.enemyId] ?? null }));
+  return sendJson(response, 200, {
+    patch, source: snapshot.source, fetchedAt: snapshot.fetchedAt, hero, roles: roleCards, role, roleBasis, roleReplayMatches,
+    rankCoverage: { legendMatches: roleRankings.sample.publicMatches,
+      inferredRoleReplays: roleRankings.sample.positionInferredReplayMatches },
+    matchups: { ...matchups, favorable: addSlugs(matchups.favorable), difficult: addSlugs(matchups.difficult) },
+    farm,
+  });
+}
+
 async function handleDraftGuide(url, response) {
   try {
     const query = url.searchParams;
@@ -468,9 +547,8 @@ async function handleDraftGuide(url, response) {
     const allyIds = draftIds(query, 'ally');
     const blockedIds = draftIds(query, 'blocked');
     const [snapshot, guide] = await Promise.all([
-      loadSnapshot(), readJson(new URL('draft-plans.json', dataDirectory)),
+      loadSnapshot(), loadDraftPlans(),
     ]);
-    if (guide.patch !== patch || !Array.isArray(guide.plans)) throw new Error(`Expected draft plans for patch ${patch}.`);
     const plansByHero = new Map(guide.plans.filter((entry) => entry.role === role).map((entry) => [entry.heroId, entry]));
     const candidateIds = [...plansByHero.keys()].filter((id) => !impact || profiles.has(id));
     const draft = buildDraftGuide(heroes, snapshot, {
@@ -554,8 +632,10 @@ export async function handleRequest(request, response, routedUrl) {
     }
     const url = routedUrl ?? new URL(request.url, 'http://localhost');
     const route = url.pathname;
-    if (staticFiles.has(route)) {
-      const [file, type] = staticFiles.get(route);
+    const heroPage = /^\/(?:heroes|hero(?:\/[a-z0-9_-]+)?)\/?$/i.test(route);
+    const page = staticFiles.get(heroPage ? '/hero' : route);
+    if (page) {
+      const [file, type] = page;
       const content = await readFile(new URL(`./public/${file}`, import.meta.url));
       response.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'no-cache' });
       return response.end(content);
@@ -580,7 +660,12 @@ export async function handleRequest(request, response, routedUrl) {
     }
     if (route === '/api/gpm-builds/context') return await handleGpmContext(response);
     if (route === '/api/draft-guide' || route === '/api/draft-guide/meta') return await handleDraftGuide(url, response);
-    if (route === '/api/role-rankings') return sendJson(response, 200, roleRankings);
+    if (route === '/api/role-rankings') return sendJson(response, 200, { ...roleRankings, heroSlugs });
+    if (route === '/api/hero-profiles/meta') {
+      return sendJson(response, 200, { patch, heroes: heroes.map(({ id, name, slug }) => ({ id, name, slug })) });
+    }
+    const heroProfile = /^\/api\/hero-profiles\/([a-z0-9_-]+)$/.exec(route);
+    if (heroProfile) return await handleHeroProfile(response, heroProfile[1], url.searchParams.get('role'));
     if (route === '/api/gpm-builds' || route === '/api/gpm-builds/meta' || route === '/api/gpm-builds.csv') {
       return await handleGpmBuilds(url, response);
     }
