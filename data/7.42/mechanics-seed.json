@@ -1,0 +1,69 @@
+{
+  "patch": "7.42",
+  "source": "https://www.dota2.com/datafeed/patchnotes?version=7.42&language=english",
+  "hero_stats": {
+    "base_health": { "before": 120, "after": 200 },
+    "health_per_strength": { "before": 22, "after": 20 },
+    "magic_resistance_percentage_points_per_intelligence": { "before": 0.1, "after": 0.125 }
+  },
+  "economy": {
+    "passive_gold_per_minute": 90,
+    "passive_experience_per_minute": 50,
+    "passive_experience_while_dead": true,
+    "hero_kill_bounty": {
+      "base_gold": { "before": 125, "after": 100 },
+      "gold_per_victim_level": { "before": 8, "after": 10 },
+      "adds_killstreak_factor": true
+    },
+    "xp_to_level_30": { "before": 64400, "after": 66600 },
+    "xp_per_level_up_starting_at_level": 2,
+    "xp_per_level_up": [
+      250, 400, 550, 800, 850, 925, 1050, 1150, 1225, 1300,
+      1375, 1450, 1525, 1600, 1675, 1750, 1825, 1900, 2000, 2200,
+      2400, 2600, 2800, 3000, 4000, 5000, 6000, 7000, 8000
+    ]
+  },
+  "item_potency": {
+    "default_multiplier": 1,
+    "default_illusion_multiplier": 0.2,
+    "illusion_rune_illusion_multiplier": 0.4,
+    "pangolier_swashbuckle_multiplier": 0.6,
+    "tier_4_evolved_enchantment_potency_bonus_percentage_points": 20,
+    "debuff_multiple_sources": "highest_item_potency",
+    "example": {
+      "item_id": 168,
+      "item_key": "item_desolator",
+      "attribute": "armor",
+      "base_modifier": -6,
+      "evolved_enchantment_attack_modifier": -7.2,
+      "swashbuckle_attack_modifier": -3.6
+    }
+  },
+  "pip_health": {
+    "hero_roshan_tower_fountain_attack": 1,
+    "illusion_or_creep_attack": 0.25,
+    "melee_hero_attack_against_fragile": 2
+  },
+  "spell_rules": {
+    "same_item_spell_lifesteal_stacking": "additive",
+    "debuff_immunity_piercing_bypasses_immunity_magic_resistance": false,
+    "non_piercing_leash_blocks_movement_abilities_during_debuff_immunity": false
+  },
+  "map_objectives": {
+    "tormentor_initial_spawn_seconds": { "before": 1200, "after": 900 },
+    "tormentor_base_barrier": { "before": 3000, "after": 4000 },
+    "tormentor_always_drops_item_id": 1951,
+    "tormentor_shard_starts_on_kill": 2,
+    "roshan_respawn_reduction_seconds_per_kill": 60,
+    "roshan_minimum_respawn_seconds": 300,
+    "glyph_max_charges": 2,
+    "glyph_replenish_seconds": 360,
+    "glyph_cooldown_seconds": 7
+  },
+  "neutral_items": {
+    "tier_unlock_seconds": { "1": 0, "2": 900, "3": 1800, "4": 3000 },
+    "infinite_madstone_start_seconds": 3900,
+    "tier_4_initial_madstone_cost": 14,
+    "tier_4_recraft_madstone_cost_increment": 6
+  }
+}

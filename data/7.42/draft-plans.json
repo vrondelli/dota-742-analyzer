@@ -1,0 +1,372 @@
+{
+  "patch": "7.42",
+  "provenance": {
+    "patchUrl": "https://www.dota2.com/patches/7.42",
+    "reportBaseline": "Selected build interactions reference the supplied 7.42 report. Its Dota2ProTracker examples are from 7.41f.",
+    "method": "The pick notes and purchase paths are curated for the indicated roles. Prices and observed matchup outcomes come from separate sources."
+  },
+  "plans": [
+    {
+      "heroId": 8, "role": "carry", "profile": "blind",
+      "pickNote": "A flexible carry when your team already has a way to hold one target. Check illusion and save picks before committing to an Omnislash-centered fight plan.",
+      "strengths": ["Wave clear", "Sustain", "Isolated-target damage"],
+      "watchFor": ["Illusions can absorb slashes", "Saves or disarms can waste a damage window"],
+      "goodAgainst": [{"heroId": 6, "note": "If your team isolates Drow, reaching melee range threatens her positioning and lets Omnislash concentrate on her."}],
+      "avoidAgainst": [{"heroId": 12, "note": "Phantom Lancer copies can absorb Omnislash hits and hide the real target."}, {"heroId": 89, "note": "Naga illusions can split slashes. Clear copies and isolate a target first."}],
+      "builds": {
+        "bad": {"note": "Buy a cheap fighting item and a farming tool before saving for a large upgrade.", "items": ["magic_wand", "power_treads", "orb_of_corrosion", "maelstrom", "manta"]},
+        "good": {"note": "Use Phase and Maelstrom to farm and reach fights, then add Yasha movement and attack speed.", "items": ["magic_wand", "phase_boots", "maelstrom", "yasha", "basher"]},
+        "easy": {"note": "Finish Mjollnir while the map is open, then work toward Scepter to unlock the 75%-potency attacks during Blade Fury.", "items": ["magic_wand", "power_treads", "mjollnir", "ultimate_scepter", "basher"]}
+      },
+      "swaps": [
+        {"trigger": "illusions", "itemKey": "mjollnir", "replaceKeys": ["maelstrom"], "note": "Prioritize finishing the lightning upgrade against a persistent wall of copies.", "bridge": {"itemKey": "maelstrom", "replaceKeys": ["mjollnir"], "note": "Use Maelstrom for affordable wave and illusion clear. Finish Mjollnir later if the copies are still the main problem."}},
+        {"trigger": "armor", "itemKey": "desolator", "replaceKeys": ["yasha", "ultimate_scepter"], "note": "If allies also deal physical damage, apply Corruption before the team’s burst."},
+        {"trigger": "evasion", "itemKey": "monkey_king_bar", "replaceKeys": ["basher", "ultimate_scepter", "yasha"], "note": "Pick up Pierce before luxury damage when the target is dodging attacks."},
+        {"trigger": "healing", "itemKey": "orb_of_corrosion", "replaceKeys": ["yasha", "basher"], "note": "Bring early health-restoration reduction when repeated attacks can keep the debuff active."},
+        {"trigger": "control", "itemKey": "manta", "replaceKeys": ["yasha", "basher"], "note": "Use the dispel against silences and other dispellable effects that stop your follow-up."}
+      ]
+    },
+    {
+      "heroId": 81, "role": "carry", "profile": "response",
+      "pickNote": "Choose Chaos Knight when Reality Rift can expose one enemy to Phantasm and opposing area clear is manageable.",
+      "strengths": ["Single-target lockdown", "Burst with Phantasm", "Full-potency illusion on-hits"],
+      "watchFor": ["Area damage and cleave", "Disengage before Phantasm connects"],
+      "goodAgainst": [{"heroId": 22, "note": "Rift threatens a back-line Zeus if you can close the distance and reach him with the copies."}],
+      "avoidAgainst": [{"heroId": 18, "note": "Sven cleave can hit multiple Phantasms grouped around the Rift target."}, {"heroId": 7, "note": "A tightly clustered Phantasm group can give Earthshaker more Echo Slam targets."}],
+      "builds": {
+        "bad": {"note": "Fight around Armlet and the cheap Orb rather than committing straight to a large luxury item.", "items": ["magic_wand", "power_treads", "armlet", "orb_of_corrosion", "blink"]},
+        "good": {"note": "Armlet plus Diffusal lets Phantasm apply mana burn at full Item Potency.", "items": ["magic_wand", "power_treads", "armlet", "diffusal_blade", "blink"]},
+        "easy": {"note": "Buy early Blink to convert farm into initiations, then add Shard for follow-up pressure.", "items": ["magic_wand", "power_treads", "armlet", "blink", "aghanims_shard", "heart"]}
+      },
+      "swaps": [
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["blink", "aghanims_shard"], "note": "Protect the real hero against repeated nonpiercing control before spending more on initiation."},
+        {"trigger": "armor", "itemKey": "desolator", "replaceKeys": ["diffusal_blade", "aghanims_shard"], "note": "Time allied physical burst around Corruption. Phantasms apply its full-strength debuff and repeat applications refresh it."},
+        {"trigger": "healing", "itemKey": "orb_of_corrosion", "replaceKeys": ["diffusal_blade", "aghanims_shard"], "note": "Add a cheap anti-heal option that can be refreshed by eligible illusions."},
+        {"trigger": "evasion", "itemKey": "monkey_king_bar", "replaceKeys": ["diffusal_blade", "aghanims_shard"], "note": "Pierce also works on illusions in 7.42, with separate illusion proc damage."}
+      ]
+    },
+    {
+      "heroId": 54, "role": "carry", "profile": "response",
+      "pickNote": "Good in extended melee fights against high-health targets or ordinary magic control. Draft an ally who can get you onto slippery targets.",
+      "strengths": ["Melee sustain", "Rage", "Infest delivery"],
+      "watchFor": ["Kiting", "Piercing disables", "Limited wave clear before a farming item"],
+      "goodAgainst": [{"heroId": 14, "note": "Feast likes high-health frontliners, but respect the threat of Dismember and enemy follow-up."}],
+      "avoidAgainst": [{"heroId": 34, "note": "Repeated disengage makes the fight depend on ally catch."}],
+      "builds": {
+        "bad": {"note": "Keep the first fight timing low with Phase and Armlet, then buy cheap stickiness and anti-heal.", "items": ["magic_wand", "phase_boots", "armlet", "orb_of_corrosion", "basher"]},
+        "good": {"note": "Armlet and Yasha keep damage and movement online while you build toward lockdown.", "items": ["magic_wand", "phase_boots", "armlet", "yasha", "basher"]},
+        "easy": {"note": "Buy Radiance first when lanes and camps are safe. Add Armlet next and consider the later Sabatons slot upgrade.", "items": ["magic_wand", "phase_boots", "radiance", "armlet", "basher"]}
+      },
+      "swaps": [
+        {"trigger": "kite", "itemKey": "basher", "replaceKeys": ["yasha", "radiance"], "note": "Prioritize keeping a target in melee once you can reach it."},
+        {"trigger": "evasion", "itemKey": "monkey_king_bar", "replaceKeys": ["yasha", "basher"], "note": "Add Pierce when misses prevent both damage and sustain."},
+        {"trigger": "saves", "itemKey": "nullifier", "replaceKeys": ["yasha", "basher"], "note": "Pressure Ghost Scepter or other dispellable defensive buffs. In 7.42 Nullify also reduces allied forced movement on the target."}
+      ]
+    },
+    {
+      "heroId": 18, "role": "carry", "profile": "response",
+      "pickNote": "Pick Sven when enemies must stand together or rely on copies and summons. Line up a second initiator if fights start at long range.",
+      "strengths": ["Cleave", "Physical burst", "Area stun"],
+      "watchFor": ["Kiting", "Disarms", "Long fights outside God's Strength"],
+      "goodAgainst": [{"heroId": 12, "note": "Great Cleave helps thin Phantom Lancer copies when their formation is tight."}, {"heroId": 81, "note": "Cleave punishes clustered Phantasms."}],
+      "builds": {
+        "bad": {"note": "Use a cheap attack-speed item and Crystalys for farm and an early fight window.", "items": ["magic_wand", "power_treads", "mask_of_madness", "lesser_crit", "blink"]},
+        "good": {"note": "Echo Sabre adds an early hit spike. Blink lets you choose the target and approach angle.", "items": ["magic_wand", "power_treads", "echo_sabre", "blink", "black_king_bar"]},
+        "easy": {"note": "Finish Harpoon while ahead to close the last gap, then buy damage and spell protection.", "items": ["magic_wand", "power_treads", "harpoon", "lesser_crit", "black_king_bar"]}
+      },
+      "swaps": [
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["blink", "lesser_crit"], "note": "Buy debuff immunity before optional damage if disables are consuming God's Strength."},
+        {"trigger": "armor", "itemKey": "assault", "replaceKeys": ["lesser_crit"], "note": "Choose an armor swing that also supports allied physical damage and tower pressure."},
+        {"trigger": "kite", "itemKey": "blink", "replaceKeys": ["lesser_crit", "echo_sabre"], "note": "Start next to the target when ranged positioning is the obstacle."},
+        {"trigger": "evasion", "itemKey": "monkey_king_bar", "replaceKeys": ["lesser_crit", "echo_sabre"], "note": "Get Pierce before critical damage if evasion is blocking the kill."}
+      ]
+    },
+    {
+      "heroId": 44, "role": "carry", "profile": "response",
+      "pickNote": "Prefer Phantom Assassin against exposed back-line targets that cannot easily punish your jump. Wait for enemy lockdown and evasion answers to be revealed.",
+      "strengths": ["Back-line jump", "Physical burst", "Evasion against ordinary attacks"],
+      "watchFor": ["True Strike", "Reliable burst control", "Delayed farming timing"],
+      "goodAgainst": [{"heroId": 22, "note": "Can reach Zeus from a favorable angle if his team lacks instant counter-initiation."}],
+      "avoidAgainst": [{"heroId": 2, "note": "Berserker's Call punishes a predictable jump, so wait for Axe to commit first."}, {"heroId": 104, "note": "Duel threatens an exposed entry, especially if Legion has Blink and follow-up."}],
+      "builds": {
+        "bad": {"note": "Skip the farming detour if your team needs immediate damage. Group around early Desolator and allied control.", "items": ["magic_wand", "power_treads", "desolator", "black_king_bar", "basher"]},
+        "good": {"note": "Build Battle Fury on an open map, then buy spell protection before overcommitting in fights.", "items": ["magic_wand", "power_treads", "bfury", "black_king_bar", "desolator"]},
+        "easy": {"note": "Convert an early Battle Fury timing to a fast Desolator and take towers after clean kills.", "items": ["magic_wand", "power_treads", "bfury", "desolator", "black_king_bar"]}
+      },
+      "swaps": [
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["desolator"], "note": "Move BKB before the damage spike when disablers can reliably lock the first jump."},
+        {"trigger": "evasion", "itemKey": "monkey_king_bar", "replaceKeys": ["desolator", "basher"], "note": "Buy a direct evasion answer when repeated misses block kills."},
+        {"trigger": "saves", "itemKey": "nullifier", "replaceKeys": ["desolator", "basher"], "note": "Bring a dispel for Ghost Scepter and other dispellable saves once you have enough damage to punish the target."}
+      ]
+    },
+    {
+      "heroId": 39, "role": "mid", "profile": "blind",
+      "pickNote": "Flexible tempo mid with a way to enter and leave side-lane fights. Make sure another teammate supplies reliable lockdown.",
+      "strengths": ["Back-line access", "Mobility", "Area burst"],
+      "watchFor": ["Instant disables after Blink", "Long silences", "Enemies who can survive the first burst"],
+      "goodAgainst": [{"heroId": 6, "note": "Blink gives you an angle onto a Drow who wants to maintain range."}, {"heroId": 35, "note": "Can approach Sniper from outside the normal front-to-back line if his team lacks instant lockdown."}],
+      "avoidAgainst": [{"heroId": 26, "note": "Instant Hex threatens a predictable Blink entry. Wait for Lion to show or spend it."}],
+      "builds": {
+        "bad": {"note": "Invest in repeatable farming and poke before saving for your defensive item.", "items": ["bottle", "power_treads", "witch_blade", "force_staff", "black_king_bar"]},
+        "good": {"note": "Use Orchid to turn Blink into pickoffs while enemy dispels are still scarce.", "items": ["bottle", "power_treads", "orchid", "black_king_bar", "ultimate_scepter"]},
+        "easy": {"note": "Use the extra gold for a durable spell-damage build, then push toward Scepter.", "items": ["bottle", "power_treads", "kaya_and_sange", "ultimate_scepter", "black_king_bar"]}
+      },
+      "swaps": [
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["witch_blade", "orchid", "ultimate_scepter"], "note": "Bring BKB forward when nonpiercing instant control threatens the first Blink."},
+        {"trigger": "saves", "itemKey": "sheepstick", "replaceKeys": ["orchid", "ultimate_scepter"], "note": "Disable the save hero before committing the team’s burst."},
+        {"trigger": "healing", "itemKey": "spirit_vessel", "replaceKeys": ["witch_blade", "orchid"], "note": "If the team lacks a Vessel buyer, take the early anti-heal timing."}
+      ]
+    },
+    {
+      "heroId": 47, "role": "mid", "profile": "response",
+      "pickNote": "Pick Viper for a lane or frontline matchup where ranged pressure and Viper Strike Break matter. Draft someone who can catch mobile enemies.",
+      "strengths": ["Lane pressure", "Break on Viper Strike", "Sustained ranged attacks"],
+      "watchFor": ["Low mobility", "Long-range control", "Enemy ability to play away from Viper"],
+      "goodAgainst": [{"heroId": 99, "note": "Time Viper Strike's Break for the allied burst window against Bristleback."}, {"heroId": 67, "note": "Break can suppress a breakable defensive passive during the kill attempt."}],
+      "avoidAgainst": [{"heroId": 17, "note": "Storm can bypass your front line or disengage when you lack allied catch."}],
+      "builds": {
+        "bad": {"note": "Use a cheap Orb and attack range to contribute while recovering farm.", "items": ["magic_wand", "power_treads", "orb_of_corrosion", "dragon_lance", "black_king_bar"]},
+        "good": {"note": "Add attack range and Yasha movement while the team can play slowly around you.", "items": ["magic_wand", "power_treads", "dragon_lance", "yasha", "black_king_bar"]},
+        "easy": {"note": "Complete Pike early for positioning, then build toward Mage Slayer if you can keep landing hits on a spell threat.", "items": ["magic_wand", "power_treads", "hurricane_pike", "mage_slayer", "black_king_bar"]}
+      },
+      "swaps": [
+        {"trigger": "magic-burst", "itemKey": "mage_slayer", "replaceKeys": ["yasha", "dragon_lance"], "note": "Prioritize the spell-damage debuff when you can reach and keep hitting its source."},
+        {"trigger": "kite", "itemKey": "hurricane_pike", "replaceKeys": ["dragon_lance", "yasha"], "note": "Complete Pike as your range and reposition purchase."},
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["yasha", "mage_slayer"], "note": "Get an attack window when repeated nonpiercing control stops you from applying poison."}
+      ]
+    },
+    {
+      "heroId": 22, "role": "mid", "profile": "response",
+      "pickNote": "Take Zeus when your team can protect a ranged caster and wants repeatable magical area damage. He can help check invisibility with Lightning Bolt vision.",
+      "strengths": ["Repeated area damage", "Global follow-up", "Detection with Lightning Bolt"],
+      "watchFor": ["Fast back-line jump", "Magic resistance", "Low access to towers on his own"],
+      "goodAgainst": [{"heroId": 32, "note": "Bolt vision can expose Riki in the relevant area. Keep detection and respect Smoke Screen."}, {"heroId": 12, "note": "Arc Lightning can pressure multiple nearby bodies when there is space to cast safely."}],
+      "avoidAgainst": [{"heroId": 44, "note": "PA can jump into your casting range quickly. Position behind a teammate who can stop her."}],
+      "builds": {
+        "bad": {"note": "Keep mana flowing with Arcane Boots and add a range or save purchase to stay in fights.", "items": ["bottle", "arcane_boots", "aether_lens", "force_staff", "ultimate_scepter"]},
+        "good": {"note": "Lean into spell output with Kaya and use Force to survive the first jump.", "items": ["bottle", "arcane_boots", "kaya", "force_staff", "ultimate_scepter"]},
+        "easy": {"note": "Complete Scepter early for Nimbus map pressure, then add range or a utility item.", "items": ["bottle", "arcane_boots", "ultimate_scepter", "aether_lens", "force_staff"]}
+      },
+      "swaps": [
+        {"trigger": "kite", "itemKey": "force_staff", "replaceKeys": ["aether_lens", "kaya"], "note": "Prioritize safe positioning when enemy gap closers can reach you."},
+        {"trigger": "magic-burst", "itemKey": "glimmer_cape", "replaceKeys": ["aether_lens", "kaya"], "note": "Buy a magic barrier for yourself or an ally when one burst window decides the fight."},
+        {"trigger": "control", "itemKey": "cyclone", "replaceKeys": ["aether_lens", "kaya"], "note": "Get a self-dispel and cyclone when a dispellable silence or telegraphed setup is the issue."}
+      ]
+    },
+    {
+      "heroId": 106, "role": "mid", "profile": "blind",
+      "pickNote": "Mobile mid with split-map options. The draft needs reliable initiation if Ember must spend Remnants to disengage.",
+      "strengths": ["Mobility", "Wave pressure", "Repeated multi-target contact"],
+      "watchFor": ["Instant Hex and silence", "Persistent catch that stops escape"],
+      "goodAgainst": [{"heroId": 12, "note": "Sleight can hit clustered copies. Its 80% Item Potency supports eligible lightning procs while Ember keeps his position."}],
+      "avoidAgainst": [{"heroId": 26, "note": "Hex can stop a Remnant escape. Hold a safe angle until Lion shows."}],
+      "builds": {
+        "bad": {"note": "Use cheap Phase movement and Maelstrom to catch up on waves.", "items": ["bottle", "phase_boots", "maelstrom", "black_king_bar", "ultimate_scepter"]},
+        "good": {"note": "Buy Mage Slayer if you can apply its debuff to high-impact spellcasters, then secure a defensive timing.", "items": ["bottle", "phase_boots", "mage_slayer", "black_king_bar", "ultimate_scepter"]},
+        "easy": {"note": "Complete Gleipnir quickly when holding targets improves your team’s follow-up damage.", "items": ["bottle", "phase_boots", "gungir", "black_king_bar", "ultimate_scepter"]}
+      },
+      "swaps": [
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["gungir", "mage_slayer"], "note": "Take debuff immunity before the next luxury purchase when you cannot use Remnant under control."},
+        {"trigger": "illusions", "itemKey": "maelstrom", "replaceKeys": ["mage_slayer", "gungir"], "note": "Get repeatable lightning for waves and copies at a reachable price."},
+        {"trigger": "magic-burst", "itemKey": "mage_slayer", "replaceKeys": ["maelstrom", "gungir"], "note": "Prioritize the debuff if you can hit the enemy spell source before it commits."}
+      ]
+    },
+    {
+      "heroId": 120, "role": "mid", "profile": "response",
+      "pickNote": "A mechanics-based flex option when the team needs mobile area disruption. Check the observed role count before treating it as part of the Legend sample.",
+      "strengths": ["Area disruption", "Swashbuckle on-hit effects", "Repositioning"],
+      "watchFor": ["Tight casts under instant control", "Rolling Thunder positioning"],
+      "goodAgainst": [{"heroId": 42, "note": "Diffusal pressure can matter before Wraith King has a mana-independent Reincarnation upgrade."}],
+      "builds": {
+        "bad": {"note": "Finish Diffusal and play around the mana-burn timing before saving for mobility.", "items": ["bottle", "power_treads", "diffusal_blade", "blink", "aghanims_shard"]},
+        "good": {"note": "Use a Blink first when reliable Rolling Thunder initiation matters more than damage.", "items": ["bottle", "power_treads", "blink", "diffusal_blade", "aghanims_shard"]},
+        "easy": {"note": "Complete Diffusal plus Blink early, then reserve the next major purchase for Scepter.", "items": ["bottle", "power_treads", "diffusal_blade", "blink", "ultimate_scepter"]}
+      },
+      "swaps": [
+        {"trigger": "control", "itemKey": "aghanims_shard", "replaceKeys": ["ultimate_scepter", "blink"], "note": "Consider Roll Up early if instant interruption blocks your setup."},
+        {"trigger": "magic-burst", "itemKey": "mage_slayer", "replaceKeys": ["ultimate_scepter", "blink"], "note": "Apply the spell-damage debuff when safe Swashbuckle hits can reach the enemy caster."},
+        {"trigger": "kite", "itemKey": "blink", "replaceKeys": ["diffusal_blade"], "note": "Bring Blink forward if targets can reliably play away from Rolling Thunder."}
+      ]
+    },
+    {
+      "heroId": 2, "role": "offlane", "profile": "response",
+      "pickNote": "Pick Axe to punish opponents who must cluster or keep attacking in melee. Plan the Blink timing and confirm allied damage can finish the first Call.",
+      "strengths": ["Initiation", "Area lockdown", "Punishes clustered attackers"],
+      "watchFor": ["Long ranged poke", "Enemy saves", "Interrupted Blink access"],
+      "goodAgainst": [{"heroId": 44, "note": "Call can hold a PA after she jumps without needing Axe to land normal attacks."}, {"heroId": 81, "note": "Call can catch clustered Chaos Knight illusions and expose the real hero to follow-up."}, {"heroId": 12, "note": "Area Call and spin pressure clustered copies. In 7.42, attacks that miss Axe also advance his Counter Helix counter."}],
+      "builds": {
+        "bad": {"note": "Keep boots cheap and finish Blink first so you can start fights while behind.", "items": ["magic_wand", "boots", "blink", "blade_mail", "black_king_bar"]},
+        "good": {"note": "Add Phase armor and mobility, then choose your Blink angle before finishing Blade Mail.", "items": ["magic_wand", "phase_boots", "blink", "blade_mail", "black_king_bar"]},
+        "easy": {"note": "Get Phase, Blink and Blade Mail, then add Shard before the next major defensive purchase.", "items": ["magic_wand", "phase_boots", "blink", "blade_mail", "aghanims_shard", "black_king_bar"]}
+      },
+      "swaps": [
+        {"trigger": "illusions", "itemKey": "crimson_guard", "replaceKeys": ["aghanims_shard", "black_king_bar"], "note": "Protect teammates from repeated attack instances across a group. Its 7.42 active can be dispelled."},
+        {"trigger": "magic-burst", "itemKey": "pipe", "replaceKeys": ["aghanims_shard", "blade_mail"], "note": "If the lineup needs an area magic barrier, buy it after the initiation timing."},
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["aghanims_shard", "blade_mail"], "note": "Bring debuff immunity forward if enemy control stops you from getting the Call off."}
+      ]
+    },
+    {
+      "heroId": 104, "role": "offlane", "profile": "blind",
+      "pickNote": "A pickoff initiator with a dispel for allies. Check whether another hero covers waves and fights against multiple targets.",
+      "strengths": ["Single-target initiation", "Strong dispel", "Counter-initiation"],
+      "watchFor": ["Saves during Duel", "Overcommitting into a second enemy", "Low allied follow-up damage"],
+      "goodAgainst": [{"heroId": 17, "note": "An immediate Duel from fog can hold Storm for allied burst before he zips away."}],
+      "avoidAgainst": [{"heroId": 111, "note": "Oracle can protect a Duel target. Catch Oracle or have someone interrupt the save."}, {"heroId": 50, "note": "A timely Shallow Grave can deny the Duel kill. Track Dazzle’s position."}],
+      "builds": {
+        "bad": {"note": "Get the initiation tool before the damage item if the team can follow up your Duel.", "items": ["magic_wand", "phase_boots", "blink", "blade_mail", "black_king_bar"]},
+        "good": {"note": "Buy Blade Mail first when it helps survive and contest the lane, then pair it with Blink.", "items": ["magic_wand", "phase_boots", "blade_mail", "blink", "black_king_bar"]},
+        "easy": {"note": "Use the extra farm to complete both tools and add Shard before the next big fight.", "items": ["magic_wand", "phase_boots", "blade_mail", "blink", "aghanims_shard", "black_king_bar"]}
+      },
+      "swaps": [
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["aghanims_shard", "blade_mail"], "note": "Protect the Duel entry against nonpiercing disruption before buying luxury damage."},
+        {"trigger": "saves", "itemKey": "orchid", "replaceKeys": ["aghanims_shard", "blade_mail"], "note": "Pressure the save caster with a silence when their dispels are scarce."},
+        {"trigger": "magic-burst", "itemKey": "pipe", "replaceKeys": ["aghanims_shard", "blade_mail"], "note": "Take the early team barrier when nobody else can cover the magic burst."}
+      ]
+    },
+    {
+      "heroId": 29, "role": "offlane", "profile": "blind",
+      "pickNote": "Frontline and area initiation from a single pick. He works best with heroes that can use the Ravage window, including against tightly grouped opponents.",
+      "strengths": ["Area initiation", "Frontlining", "Damage reduction through Anchor Smash"],
+      "watchFor": ["Separated formations", "Short windows before defensive items", "Breakable defenses"],
+      "goodAgainst": [{"heroId": 81, "note": "Anchor Smash and area control help manage tightly grouped Chaos Knight illusions."}, {"heroId": 89, "note": "Time Ravage for the group and use Anchor Smash to pressure clustered bodies."}],
+      "builds": {
+        "bad": {"note": "Use basic boots and Blink plus a cheap sustain pickup to keep Ravage relevant.", "items": ["magic_wand", "boots", "blink", "mekansm", "pipe"]},
+        "good": {"note": "Use team mana and Blink first, then buy the armor and sustain auras your team needs.", "items": ["magic_wand", "arcane_boots", "blink", "vladmir", "pipe"]},
+        "easy": {"note": "Build Arcane and Blink, then reach Shiva's Guard for pressure on grouped attackers.", "items": ["magic_wand", "arcane_boots", "blink", "shivas_guard", "refresher"]}
+      },
+      "swaps": [
+        {"trigger": "magic-burst", "itemKey": "pipe", "replaceKeys": ["mekansm", "vladmir", "shivas_guard"], "note": "Choose an early group magic barrier when it lets allies survive the follow-up."},
+        {"trigger": "summons", "itemKey": "crimson_guard", "replaceKeys": ["mekansm", "vladmir", "shivas_guard"], "note": "Prioritize damage block against repeated attacks from the zoo or a mass of copies."},
+        {"trigger": "control", "itemKey": "lotus_orb", "replaceKeys": ["mekansm", "vladmir", "shivas_guard"], "note": "Dispel a teammate and threaten reflection when spells are targeted. The original spell still resolves."}
+      ]
+    },
+    {
+      "heroId": 38, "role": "offlane", "profile": "response",
+      "pickNote": "Draft Beastmaster when winning fights can lead to objectives. Check enemy wave clear and whether the team can make use of vision and auras.",
+      "strengths": ["Objective pressure", "Primal Roar", "Aura timing"],
+      "watchFor": ["Cleave and broad area damage", "Teams that avoid the push and cut waves"],
+      "goodAgainst": [{"heroId": 17, "note": "Roar can hold a mobile Storm for follow-up if you can start in range."}],
+      "avoidAgainst": [{"heroId": 18, "note": "Do not group controlled units beside a valuable target for Sven’s cleave."}],
+      "builds": {
+        "bad": {"note": "Get an affordable team aura and hold an objective while recovering farm.", "items": ["magic_wand", "boots", "vladmir", "blink", "pipe"]},
+        "good": {"note": "Buy Helm of the Dominator for controlled-unit utility, then secure a Roar setup.", "items": ["magic_wand", "boots", "helm_of_the_dominator", "blink", "vladmir"]},
+        "easy": {"note": "Reach Ristul's Devotion when you can group early, then add initiation and match-specific defense.", "items": ["magic_wand", "boots", "ristuls_devotion", "blink", "pipe"]}
+      },
+      "swaps": [
+        {"trigger": "magic-burst", "itemKey": "pipe", "replaceKeys": ["vladmir", "ristuls_devotion"], "note": "Shift the aura budget to a magic barrier if area damage is stopping the push."},
+        {"trigger": "summons", "itemKey": "crimson_guard", "replaceKeys": ["vladmir", "ristuls_devotion"], "note": "Protect allies who are being hit by many enemy units; the active is dispellable."},
+        {"trigger": "kite", "itemKey": "blink", "replaceKeys": ["vladmir", "ristuls_devotion"], "note": "Buy the Roar setup earlier when the enemy stays outside cast range."}
+      ]
+    },
+    {
+      "heroId": 86, "role": "soft-support", "profile": "response",
+      "pickNote": "Pick Rubick when the enemy reveals reliable spells worth stealing and your lane partner can trade. Prepare an escape route before stepping into steal range.",
+      "strengths": ["Ranged control", "Flexible Spell Steal", "Counter-initiation"],
+      "watchFor": ["Spell Steal bait", "Back-line jump", "Low initiative before positioning items"],
+      "goodAgainst": [{"heroId": 29, "note": "If Tide uses Ravage and exposes it to Spell Steal, convert it into counter-initiation."}, {"heroId": 97, "note": "Reverse Polarity is high value if Magnus leaves it as a stealable last spell."}],
+      "builds": {
+        "bad": {"note": "Cheap boots and Pavise let you protect an ally while saving toward positioning.", "items": ["magic_wand", "boots", "pavise", "force_staff", "blink"]},
+        "good": {"note": "Build Tranquils and Force to hold a safe steal angle and move allies away from danger.", "items": ["magic_wand", "tranquil_boots", "force_staff", "blink", "aether_lens"]},
+        "easy": {"note": "Complete Arcane Boots and Blink to contest fight positioning, then add cast range.", "items": ["magic_wand", "arcane_boots", "blink", "aether_lens", "force_staff"]}
+      },
+      "swaps": [
+        {"trigger": "magic-burst", "itemKey": "glimmer_cape", "replaceKeys": ["pavise", "aether_lens", "blink"], "note": "Buy a magic barrier when a single spell volley decides whether your core survives."},
+        {"trigger": "kite", "itemKey": "force_staff", "replaceKeys": ["blink", "aether_lens"], "note": "Buy the ally save earlier if positioning matters more than your own initiation."},
+        {"trigger": "physical-burst", "itemKey": "pavise", "replaceKeys": ["aether_lens"], "note": "Shield the ally drawing physical burst while holding a safe Spell Steal angle."},
+        {"trigger": "control", "itemKey": "lotus_orb", "replaceKeys": ["aether_lens", "blink"], "note": "Prioritize dispel and reflection against targeted spells when the team can afford it."}
+      ]
+    },
+    {
+      "heroId": 123, "role": "soft-support", "profile": "blind",
+      "pickNote": "Flexible ranged catch around trees and an option to pressure defensive passives with Sharpshooter. Check that your team has durable front-line vision.",
+      "strengths": ["Area catch", "Break from range", "Tree-line positioning"],
+      "watchFor": ["Tree destruction", "Enemies who close distance quickly", "Interruptions during Sharpshooter setup"],
+      "goodAgainst": [{"heroId": 99, "note": "A landed Sharpshooter can start a Break window for the team’s burst."}],
+      "avoidAgainst": [{"heroId": 54, "note": "Rage can interfere with a magic-control setup. Wait for your team to force it first."}],
+      "builds": {
+        "bad": {"note": "Complete Bloodslinger for a cheap ranged utility timing, then prioritise a save.", "items": ["magic_wand", "boots", "bloodslinger", "force_staff", "aether_lens"]},
+        "good": {"note": "Add Force after Tranquils so your team can follow or escape the catch timing.", "items": ["magic_wand", "tranquil_boots", "force_staff", "aether_lens", "gungir"]},
+        "easy": {"note": "When allies already cover saves, a Maelstrom timing can speed waves and add attack procs.", "items": ["magic_wand", "tranquil_boots", "maelstrom", "force_staff", "aether_lens"]}
+      },
+      "swaps": [
+        {"trigger": "healing", "itemKey": "spirit_vessel", "replaceKeys": ["bloodslinger", "aether_lens", "maelstrom"], "note": "Use the early anti-heal slot if your lineup lacks a better Vessel carrier."},
+        {"trigger": "magic-burst", "itemKey": "glimmer_cape", "replaceKeys": ["maelstrom", "aether_lens", "bloodslinger"], "note": "Buy the save ahead of damage when losing one ally loses the fight."},
+        {"trigger": "kite", "itemKey": "force_staff", "replaceKeys": ["maelstrom", "aether_lens"], "note": "Move Force ahead of damage for teammates who need help escaping or getting into range."}
+      ]
+    },
+    {
+      "heroId": 71, "role": "soft-support", "profile": "response",
+      "pickNote": "Pick Spirit Breaker when early rotations can punish enemies spread across the map. Coordinate charge paths and avoid committing alone into defensive vision.",
+      "strengths": ["Long-range initiation", "Map speed", "Catch on spread lanes"],
+      "watchFor": ["Charge interrupts", "Saves at the endpoint", "Low damage follow-up"],
+      "goodAgainst": [{"heroId": 53, "note": "Charge can create a response to a visible split-pusher if teammates can join safely."}],
+      "avoidAgainst": [{"heroId": 26, "note": "Fast Hex or stun can interrupt arrival. Time your charge around Lion’s position."}],
+      "builds": {
+        "bad": {"note": "Use cheap movement for rotations, then buy affordable team utility.", "items": ["magic_wand", "boots", "wind_lace", "urn_of_shadows", "force_staff"]},
+        "good": {"note": "Phase and an early Drum timing enable repeated group moves.", "items": ["magic_wand", "phase_boots", "ancient_janggo", "force_staff", "black_king_bar"]},
+        "easy": {"note": "Complete Phase and Blade Mail while ahead and shift toward protection if charges start feeding.", "items": ["magic_wand", "phase_boots", "blade_mail", "black_king_bar", "ultimate_scepter"]}
+      },
+      "swaps": [
+        {"trigger": "healing", "itemKey": "spirit_vessel", "replaceKeys": ["urn_of_shadows", "ancient_janggo", "blade_mail"], "note": "Shift rotation gold into anti-heal when kills depend on stopping a large recovery."},
+        {"trigger": "control", "itemKey": "black_king_bar", "replaceKeys": ["blade_mail", "ancient_janggo"], "note": "Buy protection before optional fight items if nonpiercing control interrupts the arrival."},
+        {"trigger": "kite", "itemKey": "force_staff", "replaceKeys": ["blade_mail", "ancient_janggo"], "note": "Buy a reposition tool if your team needs help joining or leaving the engagement."}
+      ]
+    },
+    {
+      "heroId": 50, "role": "hard-support", "profile": "blind",
+      "pickNote": "Draft Dazzle early if your team can supply initiation. Protect one key target and keep a position where the enemy has to commit twice to reach you.",
+      "strengths": ["Save", "Sustain", "Armor pressure"],
+      "watchFor": ["Enemies who jump the save caster", "Effects that bypass Shallow Grave", "Limited initiation"],
+      "goodAgainst": [{"heroId": 104, "note": "A well-timed Shallow Grave can deny the Duel kill if you stay in cast range."}],
+      "avoidAgainst": [{"heroId": 2, "note": "Culling Blade can finish a Grave target at its threshold. Use healing and repositioning before that point."}],
+      "builds": {
+        "bad": {"note": "Pavise provides a cheap physical save while your other gold covers support needs.", "items": ["magic_wand", "boots", "pavise", "force_staff", "glimmer_cape"]},
+        "good": {"note": "Buy Mekansm when team healing is the highest-impact first completed item.", "items": ["magic_wand", "boots", "mekansm", "force_staff", "glimmer_cape"]},
+        "easy": {"note": "Use the larger budget for Tranquils and Force to cast and save from better positions.", "items": ["magic_wand", "tranquil_boots", "force_staff", "holy_locket", "glimmer_cape"]}
+      },
+      "swaps": [
+        {"trigger": "magic-burst", "itemKey": "glimmer_cape", "replaceKeys": ["pavise", "mekansm", "holy_locket"], "note": "Move the magic barrier ahead of healing when allies are dying before heals resolve."},
+        {"trigger": "physical-burst", "itemKey": "pavise", "replaceKeys": ["mekansm", "holy_locket"], "note": "Use an early physical barrier on the ally being focused before they fall into Grave range."},
+        {"trigger": "kite", "itemKey": "force_staff", "replaceKeys": ["pavise", "mekansm"], "note": "Bring Force forward when a teammate needs displacement to survive."},
+        {"trigger": "healing", "itemKey": "spirit_vessel", "replaceKeys": ["pavise", "mekansm", "holy_locket"], "note": "Coordinate one Vessel buyer if a large enemy heal is deciding fights."}
+      ]
+    },
+    {
+      "heroId": 26, "role": "hard-support", "profile": "response",
+      "pickNote": "Pick Lion for fast catch against mobile enemies. Make sure another teammate can cover lane and wave pressure if the team falls behind.",
+      "strengths": ["Immediate Hex", "Follow-up stun", "Burst setup"],
+      "watchFor": ["Back-line jump", "Weak farming from behind", "Enemy dispels and defensive items"],
+      "goodAgainst": [{"heroId": 17, "note": "Hex can stop Storm before an escape if you start within cast range."}, {"heroId": 106, "note": "An immediate disable can prevent Remnant escape during the kill attempt."}],
+      "builds": {
+        "bad": {"note": "Buy cheap boots and a first protection item before saving for Blink.", "items": ["magic_wand", "boots", "pavise", "blink", "force_staff"]},
+        "good": {"note": "First Blink is feasible when you need to start fights against heroes who are otherwise too mobile.", "items": ["magic_wand", "boots", "blink", "force_staff", "aether_lens"]},
+        "easy": {"note": "Finish Tranquils and Blink, then use the next purchase to improve cast range.", "items": ["magic_wand", "tranquil_boots", "blink", "aether_lens", "force_staff"]}
+      },
+      "swaps": [
+        {"trigger": "magic-burst", "itemKey": "glimmer_cape", "replaceKeys": ["pavise", "aether_lens"], "note": "Add a save if counter-initiation is more important than starting the fight yourself."},
+        {"trigger": "physical-burst", "itemKey": "ghost", "replaceKeys": ["pavise", "aether_lens"], "note": "Protect yourself against an attack-based jump if surviving to cast Hex decides fights."},
+        {"trigger": "kite", "itemKey": "force_staff", "replaceKeys": ["pavise", "aether_lens"], "note": "Bring an ally reposition earlier if teammates die before you can counter-initiate."},
+        {"trigger": "saves", "itemKey": "blink", "replaceKeys": ["pavise", "aether_lens"], "note": "Reach and Hex the save caster first so the team can commit its damage."}
+      ]
+    },
+    {
+      "heroId": 112, "role": "hard-support", "profile": "response",
+      "pickNote": "Draft Winter Wyvern to punish grouped physical attackers. Keep an eye on enemy magic damage before committing Cold Embrace.",
+      "strengths": ["Physical save", "Punishes clumped attackers", "Ranged wave pressure"],
+      "watchFor": ["Burst magic on a Cold Embrace target", "Enemies who spread out", "Interruptions before Winter's Curse"],
+      "goodAgainst": [{"heroId": 81, "note": "Winter's Curse punishes a formation of high-damage units packed around a target."}, {"heroId": 18, "note": "Cold Embrace can cover an ally during a physical burst window if the enemy lacks follow-up magic."}],
+      "avoidAgainst": [{"heroId": 22, "note": "Zeus can follow with magic through Cold Embrace. Favor a magic save when needed."}],
+      "builds": {
+        "bad": {"note": "Use cheap movement and Bloodslinger for small fight utility while saving a larger defensive item.", "items": ["magic_wand", "boots", "bloodslinger", "glimmer_cape", "blink"]},
+        "good": {"note": "Finish Tranquils and Glimmer to layer a magic barrier over the physical save plan.", "items": ["magic_wand", "tranquil_boots", "glimmer_cape", "force_staff", "blink"]},
+        "easy": {"note": "Add Arcane and Blink quickly when your team can capitalize on your Curse positioning.", "items": ["magic_wand", "arcane_boots", "blink", "glimmer_cape", "aether_lens"]}
+      },
+      "swaps": [
+        {"trigger": "magic-burst", "itemKey": "glimmer_cape", "replaceKeys": ["bloodslinger", "blink"], "note": "Buy magic protection early when Cold Embrace needs a second layer."},
+        {"trigger": "physical-burst", "itemKey": "pavise", "replaceKeys": ["bloodslinger", "aether_lens"], "note": "Use a physical barrier to protect someone who needs to keep moving and attacking."},
+        {"trigger": "kite", "itemKey": "force_staff", "replaceKeys": ["bloodslinger", "blink"], "note": "Use an ally reposition to defeat enemy catch or preserve a safe Curse angle."},
+        {"trigger": "illusions", "itemKey": "blink", "replaceKeys": ["bloodslinger", "aether_lens"], "note": "Choose the angle and timing to catch clustered units with Curse."}
+      ]
+    }
+  ]
+}

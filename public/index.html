@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <title>Dota 2 Analyzer | 7.42</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to analyzer</a>
+  <header class="topbar">
+    <div class="shell topbar-content">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <div class="topbar-meta">
+        <span class="patch-label"><span class="patch-dot" aria-hidden="true"></span> Patch 7.42</span>
+        <a class="text-link" href="/legend-builds">Legend builds <span aria-hidden="true">→</span></a>
+        <a class="text-link" id="build-link" href="/efficiency">Build efficiency <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell" id="main">
+    <section class="intro" aria-labelledby="page-heading">
+      <div>
+        <p class="eyebrow">Ranked All Pick</p>
+        <h1 id="page-heading">Heroes &amp; items</h1>
+        <p class="intro-subtitle">Compare heroes by role and see how item purchases performed. <a class="text-link" href="/role-rankings">Top 20 by role <span aria-hidden="true">→</span></a></p>
+      </div>
+      <dl class="dataset-stats" aria-label="Coverage for the selected match rank">
+        <div><dt>Matches</dt><dd id="dataset-matches">—</dd></div>
+        <div><dt>Role coverage</dt><dd id="dataset-roles">—</dd></div>
+        <div><dt>Purchase coverage</dt><dd id="dataset-purchases">—</dd></div>
+      </dl>
+    </section>
+
+    <div id="dataset-note" class="dataset-note" aria-live="polite">Loading 7.42 match data…</div>
+
+    <section class="filter-bar" aria-label="Match filters">
+      <div class="filter-row">
+        <div class="role-tabs" id="role-tabs" role="group" aria-label="Hero role"></div>
+        <div class="filter-actions">
+          <label class="sr-only" for="rank-filter">Estimated match rank</label>
+          <select class="select" id="rank-filter"><option value="5">Legend</option></select>
+          <button type="button" class="filter-button" id="filter-toggle" aria-expanded="false" aria-controls="filter-details">
+            <span class="filter-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>Filters</span>
+          </button>
+        </div>
+      </div>
+      <div class="filter-details" id="filter-details" hidden>
+        <label><input id="verified-filter" type="checkbox"> Verified patch only</label>
+        <label><input id="observed-filter" type="checkbox"> Observed role only</label>
+        <label for="sample-filter">Min. hero matches <input id="sample-filter" type="number" min="1" max="10000" step="1" value="5"></label>
+        <label for="item-sample-filter">Min. item group <input id="item-sample-filter" type="number" min="1" max="10000" step="1" value="5"></label>
+      </div>
+    </section>
+
+    <div class="columns">
+      <div class="hero-column">
+        <section class="surface hero-surface" aria-labelledby="hero-heading">
+          <div class="section-heading">
+            <div>
+              <h2 id="hero-heading">Hero rankings</h2>
+              <p class="subtle" id="hero-cohort">Loading match counts…</p>
+            </div>
+            <label class="search-box">
+              <span class="search-icon" aria-hidden="true"></span>
+              <span class="sr-only">Find a hero</span>
+              <input id="hero-search" type="search" placeholder="Find a hero" autocomplete="off" maxlength="80">
+            </label>
+          </div>
+          <div class="scroll-table">
+            <table class="hero-table">
+              <thead>
+                <tr>
+                  <th scope="col" aria-label="Ranking">#</th>
+                  <th scope="col">Hero</th>
+                  <th scope="col">Win rate</th>
+                  <th scope="col">Pick rate</th>
+                  <th scope="col">Matches</th>
+                  <th scope="col" class="compare-col">Compare</th>
+                </tr>
+              </thead>
+              <tbody id="hero-rows"><tr><td colspan="6" class="loading-cell">Loading heroes…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="pagination" id="pagination" hidden>
+            <span id="page-count"></span>
+            <div>
+              <a href="#comparison" class="comparison-link" id="comparison-link" hidden>View comparison</a>
+              <button type="button" id="previous-page" class="compact-button" aria-label="Previous hero page">‹</button>
+              <button type="button" id="next-page" class="compact-button" aria-label="Next hero page">›</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="surface comparison-surface" id="comparison" aria-labelledby="compare-heading">
+          <div class="section-heading">
+            <div>
+              <h2 id="compare-heading">Compare heroes</h2>
+              <p class="subtle" id="compare-description">Add up to three heroes from the table.</p>
+            </div>
+            <button type="button" class="plain-button" id="clear-comparison" hidden>Clear</button>
+          </div>
+          <div class="comparison-body" id="comparison-body"></div>
+        </section>
+      </div>
+
+      <aside class="detail-column" aria-labelledby="detail-heading">
+        <section class="surface detail-surface">
+          <div class="hero-feature">
+            <img id="featured-image" alt="" hidden>
+            <div class="feature-layer"></div>
+            <div class="feature-content">
+              <p class="eyebrow" id="detail-context">Hero detail</p>
+              <h2 id="detail-heading">Select a hero</h2>
+              <p id="featured-record"></p>
+            </div>
+          </div>
+          <div class="item-section" id="item-section" aria-labelledby="item-heading">
+            <div class="item-heading">
+              <h3 id="item-heading">Item performance</h3>
+              <p class="subtle" id="item-context">Select a hero to view purchase data.</p>
+            </div>
+            <div class="window-tabs" id="window-tabs" role="group" aria-label="Purchase window"></div>
+            <div class="item-coverage" id="item-coverage" aria-live="polite"></div>
+            <div id="item-body"></div>
+          </div>
+        </section>
+
+        <details class="surface reading-note">
+          <summary>How rankings work <span aria-hidden="true">+</span></summary>
+          <div>
+            <p>Hero ranks use the lower bound of a 95% Wilson interval for win rate. Pick rate is the share of eligible hero picks in the selected cohort.</p>
+            <p>Rank is estimated from the lobby's average medal. Role estimates come from available replays. Patch membership can be inferred from match start time.</p>
+            <p>Item results compare first purchases during the selected window with eligible games without that purchase in the same window. The win-rate difference is an observed association.</p>
+          </div>
+        </details>
+      </aside>
+    </div>
+
+    <footer>
+      <span id="snapshot-label">OpenDota match data</span>
+      <a class="text-link" href="https://www.dota2.com/patches/7.42" target="_blank" rel="noreferrer">Patch notes <span aria-hidden="true">↗</span></a>
+      <a class="text-link" href="https://docs.opendota.com/" target="_blank" rel="noreferrer">OpenDota API <span aria-hidden="true">↗</span></a>
+    </footer>
+    <div class="sr-only" id="announcements" role="status"></div>
+  </main>
+</body>
+</html>

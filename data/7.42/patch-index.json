@@ -1,0 +1,2450 @@
+{
+  "patch": "7.42",
+  "patch_feed": "https://www.dota2.com/datafeed/patchnotes?version=7.42&language=english",
+  "patch_feed_timestamp_utc": "2026-11-18T08:00:00.0000000+00:00",
+  "catalog_sources": [
+    "https://www.dota2.com/datafeed/herolist?language=english",
+    "https://www.dota2.com/datafeed/itemlist?language=english"
+  ],
+  "catalog_fetched_at_utc": "2026-11-18T21:23:40.4692617+00:00",
+  "client": {
+    "mirror": "SteamTracking/GameTracking-Dota2",
+    "build": 6978,
+    "commit": "2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300",
+    "file_count": 135,
+    "archive_sha256": "d51efb64ae87552291eb89efec53a6137c3a851fb559b0d7e1fd010588bfe3ec"
+  },
+  "general_sections": [
+    "Global Mechanics",
+    "Lane Creeps, Towers and Bases",
+    "Map Objectives",
+    "Terrain Changes"
+  ],
+  "neutral_creep_records": 24,
+  "heroes": [
+    {
+      "id": 1,
+      "key": "npc_dota_hero_antimage",
+      "name": "Anti-Mage",
+      "changed_ability_ids": [],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 2,
+      "key": "npc_dota_hero_axe",
+      "name": "Axe",
+      "changed_ability_ids": [
+        5008,
+        5009,
+        5010
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 3,
+      "key": "npc_dota_hero_bane",
+      "name": "Bane",
+      "changed_ability_ids": [
+        5011,
+        5013
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 4,
+      "key": "npc_dota_hero_bloodseeker",
+      "name": "Bloodseeker",
+      "changed_ability_ids": [
+        5015,
+        5017,
+        5018
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 0
+    },
+    {
+      "id": 5,
+      "key": "npc_dota_hero_crystal_maiden",
+      "name": "Crystal Maiden",
+      "changed_ability_ids": [
+        5129,
+        953
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 6,
+      "key": "npc_dota_hero_drow_ranger",
+      "name": "Drow Ranger",
+      "changed_ability_ids": [
+        5019,
+        5632,
+        5022
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 0
+    },
+    {
+      "id": 7,
+      "key": "npc_dota_hero_earthshaker",
+      "name": "Earthshaker",
+      "changed_ability_ids": [
+        5024,
+        5026
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 1
+    },
+    {
+      "id": 8,
+      "key": "npc_dota_hero_juggernaut",
+      "name": "Juggernaut",
+      "changed_ability_ids": [
+        5028
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 9,
+      "key": "npc_dota_hero_mirana",
+      "name": "Mirana",
+      "changed_ability_ids": [
+        1739,
+        5048
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 10,
+      "key": "npc_dota_hero_morphling",
+      "name": "Morphling",
+      "changed_ability_ids": [
+        1741,
+        5057
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 11,
+      "key": "npc_dota_hero_nevermore",
+      "name": "Shadow Fiend",
+      "changed_ability_ids": [
+        5059,
+        5063,
+        5064
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 4
+    },
+    {
+      "id": 12,
+      "key": "npc_dota_hero_phantom_lancer",
+      "name": "Phantom Lancer",
+      "changed_ability_ids": [
+        1221,
+        5067
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 5
+    },
+    {
+      "id": 13,
+      "key": "npc_dota_hero_puck",
+      "name": "Puck",
+      "changed_ability_ids": [
+        5071,
+        5073
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 14,
+      "key": "npc_dota_hero_pudge",
+      "name": "Pudge",
+      "changed_ability_ids": [
+        5075,
+        5077
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 15,
+      "key": "npc_dota_hero_razor",
+      "name": "Razor",
+      "changed_ability_ids": [
+        5083,
+        1224
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 0
+    },
+    {
+      "id": 16,
+      "key": "npc_dota_hero_sand_king",
+      "name": "Sand King",
+      "changed_ability_ids": [
+        5102,
+        1229,
+        5105
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 17,
+      "key": "npc_dota_hero_storm_spirit",
+      "name": "Storm Spirit",
+      "changed_ability_ids": [
+        1231
+      ],
+      "hero_note_count": 4,
+      "talent_note_count": 2
+    },
+    {
+      "id": 18,
+      "key": "npc_dota_hero_sven",
+      "name": "Sven",
+      "changed_ability_ids": [
+        5094,
+        5096
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 19,
+      "key": "npc_dota_hero_tiny",
+      "name": "Tiny",
+      "changed_ability_ids": [
+        5106,
+        5108
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 2
+    },
+    {
+      "id": 20,
+      "key": "npc_dota_hero_vengefulspirit",
+      "name": "Vengeful Spirit",
+      "changed_ability_ids": [
+        1238,
+        5124,
+        5123
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 0
+    },
+    {
+      "id": 21,
+      "key": "npc_dota_hero_windrunner",
+      "name": "Windranger",
+      "changed_ability_ids": [
+        1742,
+        5133
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 22,
+      "key": "npc_dota_hero_zuus",
+      "name": "Zeus",
+      "changed_ability_ids": [
+        6325
+      ],
+      "hero_note_count": 4,
+      "talent_note_count": 1
+    },
+    {
+      "id": 23,
+      "key": "npc_dota_hero_kunkka",
+      "name": "Kunkka",
+      "changed_ability_ids": [
+        5033,
+        5035
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 25,
+      "key": "npc_dota_hero_lina",
+      "name": "Lina",
+      "changed_ability_ids": [
+        5043,
+        944
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 26,
+      "key": "npc_dota_hero_lion",
+      "name": "Lion",
+      "changed_ability_ids": [
+        1249,
+        5047
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 27,
+      "key": "npc_dota_hero_shadow_shaman",
+      "name": "Shadow Shaman",
+      "changed_ability_ids": [
+        1250,
+        5079,
+        5081
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 28,
+      "key": "npc_dota_hero_slardar",
+      "name": "Slardar",
+      "changed_ability_ids": [],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 29,
+      "key": "npc_dota_hero_tidehunter",
+      "name": "Tidehunter",
+      "changed_ability_ids": [
+        1746,
+        5118,
+        5121
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 30,
+      "key": "npc_dota_hero_witch_doctor",
+      "name": "Witch Doctor",
+      "changed_ability_ids": [
+        5141
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 31,
+      "key": "npc_dota_hero_lich",
+      "name": "Lich",
+      "changed_ability_ids": [
+        1245,
+        5134,
+        5136,
+        5137
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 32,
+      "key": "npc_dota_hero_riki",
+      "name": "Riki",
+      "changed_ability_ids": [
+        1258,
+        5142
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 0
+    },
+    {
+      "id": 33,
+      "key": "npc_dota_hero_enigma",
+      "name": "Enigma",
+      "changed_ability_ids": [
+        5146,
+        5147,
+        5149
+      ],
+      "hero_note_count": 4,
+      "talent_note_count": 0
+    },
+    {
+      "id": 34,
+      "key": "npc_dota_hero_tinker",
+      "name": "Tinker",
+      "changed_ability_ids": [
+        5150,
+        5152,
+        1744,
+        909
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 2
+    },
+    {
+      "id": 35,
+      "key": "npc_dota_hero_sniper",
+      "name": "Sniper",
+      "changed_ability_ids": [
+        5154,
+        5156,
+        5157
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 36,
+      "key": "npc_dota_hero_necrolyte",
+      "name": "Necrophos",
+      "changed_ability_ids": [
+        5160,
+        5159,
+        661
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 37,
+      "key": "npc_dota_hero_warlock",
+      "name": "Warlock",
+      "changed_ability_ids": [
+        5163
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 38,
+      "key": "npc_dota_hero_beastmaster",
+      "name": "Beastmaster",
+      "changed_ability_ids": [
+        5168,
+        7231,
+        1894
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 2
+    },
+    {
+      "id": 39,
+      "key": "npc_dota_hero_queenofpain",
+      "name": "Queen of Pain",
+      "changed_ability_ids": [
+        1277,
+        5173,
+        5176
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 4
+    },
+    {
+      "id": 40,
+      "key": "npc_dota_hero_venomancer",
+      "name": "Venomancer",
+      "changed_ability_ids": [
+        1749,
+        5180,
+        1105
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 41,
+      "key": "npc_dota_hero_faceless_void",
+      "name": "Faceless Void",
+      "changed_ability_ids": [
+        5691
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 42,
+      "key": "npc_dota_hero_skeleton_king",
+      "name": "Wraith King",
+      "changed_ability_ids": [
+        5086,
+        5087
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 43,
+      "key": "npc_dota_hero_death_prophet",
+      "name": "Death Prophet",
+      "changed_ability_ids": [
+        5092,
+        5090,
+        5091,
+        5685,
+        5093
+      ],
+      "hero_note_count": 4,
+      "talent_note_count": 6
+    },
+    {
+      "id": 44,
+      "key": "npc_dota_hero_phantom_assassin",
+      "name": "Phantom Assassin",
+      "changed_ability_ids": [
+        5192,
+        1287
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 4
+    },
+    {
+      "id": 45,
+      "key": "npc_dota_hero_pugna",
+      "name": "Pugna",
+      "changed_ability_ids": [
+        1288,
+        5187,
+        5188,
+        5189
+      ],
+      "hero_note_count": 6,
+      "talent_note_count": 3
+    },
+    {
+      "id": 46,
+      "key": "npc_dota_hero_templar_assassin",
+      "name": "Templar Assassin",
+      "changed_ability_ids": [
+        5197
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 0
+    },
+    {
+      "id": 47,
+      "key": "npc_dota_hero_viper",
+      "name": "Viper",
+      "changed_ability_ids": [
+        1461
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 48,
+      "key": "npc_dota_hero_luna",
+      "name": "Luna",
+      "changed_ability_ids": [
+        1462,
+        5223
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 49,
+      "key": "npc_dota_hero_dragon_knight",
+      "name": "Dragon Knight",
+      "changed_ability_ids": [
+        5226,
+        1752
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 4
+    },
+    {
+      "id": 50,
+      "key": "npc_dota_hero_dazzle",
+      "name": "Dazzle",
+      "changed_ability_ids": [
+        1293,
+        1550,
+        1930
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 6
+    },
+    {
+      "id": 51,
+      "key": "npc_dota_hero_rattletrap",
+      "name": "Clockwerk",
+      "changed_ability_ids": [
+        1295,
+        5237,
+        321
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 52,
+      "key": "npc_dota_hero_leshrac",
+      "name": "Leshrac",
+      "changed_ability_ids": [
+        1297,
+        5244,
+        539
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 2
+    },
+    {
+      "id": 53,
+      "key": "npc_dota_hero_furion",
+      "name": "Nature's Prophet",
+      "changed_ability_ids": [
+        1298,
+        5245,
+        5246,
+        5247,
+        997
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 54,
+      "key": "npc_dota_hero_life_stealer",
+      "name": "Lifestealer",
+      "changed_ability_ids": [
+        5252
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 55,
+      "key": "npc_dota_hero_dark_seer",
+      "name": "Dark Seer",
+      "changed_ability_ids": [
+        5255,
+        5258,
+        687
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 56,
+      "key": "npc_dota_hero_clinkz",
+      "name": "Clinkz",
+      "changed_ability_ids": [
+        1678,
+        1120,
+        5259
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 57,
+      "key": "npc_dota_hero_omniknight",
+      "name": "Omniknight",
+      "changed_ability_ids": [
+        656
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 58,
+      "key": "npc_dota_hero_enchantress",
+      "name": "Enchantress",
+      "changed_ability_ids": [
+        5268
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 59,
+      "key": "npc_dota_hero_huskar",
+      "name": "Huskar",
+      "changed_ability_ids": [],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 60,
+      "key": "npc_dota_hero_night_stalker",
+      "name": "Night Stalker",
+      "changed_ability_ids": [
+        5277,
+        1753
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 61,
+      "key": "npc_dota_hero_broodmother",
+      "name": "Broodmother",
+      "changed_ability_ids": [
+        1313,
+        5279
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 62,
+      "key": "npc_dota_hero_bounty_hunter",
+      "name": "Bounty Hunter",
+      "changed_ability_ids": [
+        5287,
+        5288
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 63,
+      "key": "npc_dota_hero_weaver",
+      "name": "Weaver",
+      "changed_ability_ids": [
+        1754,
+        5291,
+        5292
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 64,
+      "key": "npc_dota_hero_jakiro",
+      "name": "Jakiro",
+      "changed_ability_ids": [
+        1318,
+        5300
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 65,
+      "key": "npc_dota_hero_batrider",
+      "name": "Batrider",
+      "changed_ability_ids": [
+        5320,
+        5321
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 2
+    },
+    {
+      "id": 66,
+      "key": "npc_dota_hero_chen",
+      "name": "Chen",
+      "changed_ability_ids": [
+        1755,
+        5328,
+        5330
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 67,
+      "key": "npc_dota_hero_spectre",
+      "name": "Spectre",
+      "changed_ability_ids": [
+        1679,
+        5337
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 68,
+      "key": "npc_dota_hero_ancient_apparition",
+      "name": "Ancient Apparition",
+      "changed_ability_ids": [
+        1756,
+        5345,
+        5346,
+        5347,
+        5348
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 4
+    },
+    {
+      "id": 69,
+      "key": "npc_dota_hero_doom_bringer",
+      "name": "Doom",
+      "changed_ability_ids": [
+        1324,
+        5339,
+        5340
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 70,
+      "key": "npc_dota_hero_ursa",
+      "name": "Ursa",
+      "changed_ability_ids": [
+        5357
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 71,
+      "key": "npc_dota_hero_spirit_breaker",
+      "name": "Spirit Breaker",
+      "changed_ability_ids": [
+        1757,
+        5353,
+        7301,
+        5355,
+        987
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 72,
+      "key": "npc_dota_hero_gyrocopter",
+      "name": "Gyrocopter",
+      "changed_ability_ids": [
+        1759,
+        5362,
+        5363,
+        5364,
+        1758
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 73,
+      "key": "npc_dota_hero_alchemist",
+      "name": "Alchemist",
+      "changed_ability_ids": [
+        1333,
+        642
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 74,
+      "key": "npc_dota_hero_invoker",
+      "name": "Invoker",
+      "changed_ability_ids": [
+        5381,
+        5385,
+        5386,
+        5390
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 75,
+      "key": "npc_dota_hero_silencer",
+      "name": "Silencer",
+      "changed_ability_ids": [
+        1335,
+        5378
+      ],
+      "hero_note_count": 4,
+      "talent_note_count": 0
+    },
+    {
+      "id": 76,
+      "key": "npc_dota_hero_obsidian_destroyer",
+      "name": "Outworld Destroyer",
+      "changed_ability_ids": [
+        5391,
+        1760,
+        5394
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 77,
+      "key": "npc_dota_hero_lycan",
+      "name": "Lycan",
+      "changed_ability_ids": [
+        1921,
+        333
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 78,
+      "key": "npc_dota_hero_brewmaster",
+      "name": "Brewmaster",
+      "changed_ability_ids": [
+        1681,
+        5400,
+        7310,
+        5403
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 79,
+      "key": "npc_dota_hero_shadow_demon",
+      "name": "Shadow Demon",
+      "changed_ability_ids": [
+        5421,
+        5425,
+        916
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 80,
+      "key": "npc_dota_hero_lone_druid",
+      "name": "Lone Druid",
+      "changed_ability_ids": [
+        7309
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 0
+    },
+    {
+      "id": 81,
+      "key": "npc_dota_hero_chaos_knight",
+      "name": "Chaos Knight",
+      "changed_ability_ids": [
+        1910,
+        5426,
+        5429
+      ],
+      "hero_note_count": 4,
+      "talent_note_count": 0
+    },
+    {
+      "id": 82,
+      "key": "npc_dota_hero_meepo",
+      "name": "Meepo",
+      "changed_ability_ids": [
+        5433,
+        547
+      ],
+      "hero_note_count": 6,
+      "talent_note_count": 1
+    },
+    {
+      "id": 83,
+      "key": "npc_dota_hero_treant",
+      "name": "Treant Protector",
+      "changed_ability_ids": [
+        338,
+        5435
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 84,
+      "key": "npc_dota_hero_ogre_magi",
+      "name": "Ogre Magi",
+      "changed_ability_ids": [
+        5438,
+        5439
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 3
+    },
+    {
+      "id": 85,
+      "key": "npc_dota_hero_undying",
+      "name": "Undying",
+      "changed_ability_ids": [
+        1360,
+        5444,
+        5447,
+        1913
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 86,
+      "key": "npc_dota_hero_rubick",
+      "name": "Rubick",
+      "changed_ability_ids": [
+        7320
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 87,
+      "key": "npc_dota_hero_disruptor",
+      "name": "Disruptor",
+      "changed_ability_ids": [
+        5460,
+        1362
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 0
+    },
+    {
+      "id": 88,
+      "key": "npc_dota_hero_nyx_assassin",
+      "name": "Nyx Assassin",
+      "changed_ability_ids": [
+        1901,
+        5462,
+        1104,
+        5465,
+        5666
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 2
+    },
+    {
+      "id": 89,
+      "key": "npc_dota_hero_naga_siren",
+      "name": "Naga Siren",
+      "changed_ability_ids": [
+        5469
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 90,
+      "key": "npc_dota_hero_keeper_of_the_light",
+      "name": "Keeper of the Light",
+      "changed_ability_ids": [
+        1769,
+        5474,
+        1372,
+        7316
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 91,
+      "key": "npc_dota_hero_wisp",
+      "name": "Io",
+      "changed_ability_ids": [
+        1770,
+        5487
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 92,
+      "key": "npc_dota_hero_visage",
+      "name": "Visage",
+      "changed_ability_ids": [
+        5480
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 93,
+      "key": "npc_dota_hero_slark",
+      "name": "Slark",
+      "changed_ability_ids": [
+        5497
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 1
+    },
+    {
+      "id": 94,
+      "key": "npc_dota_hero_medusa",
+      "name": "Medusa",
+      "changed_ability_ids": [
+        5505,
+        1475
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 3
+    },
+    {
+      "id": 95,
+      "key": "npc_dota_hero_troll_warlord",
+      "name": "Troll Warlord",
+      "changed_ability_ids": [
+        5512
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 0
+    },
+    {
+      "id": 96,
+      "key": "npc_dota_hero_centaur",
+      "name": "Centaur Warrunner",
+      "changed_ability_ids": [
+        1379,
+        5515,
+        5517
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 97,
+      "key": "npc_dota_hero_magnataur",
+      "name": "Magnus",
+      "changed_ability_ids": [
+        5518
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 98,
+      "key": "npc_dota_hero_shredder",
+      "name": "Timbersaw",
+      "changed_ability_ids": [
+        5524,
+        5527
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 1
+    },
+    {
+      "id": 99,
+      "key": "npc_dota_hero_bristleback",
+      "name": "Bristleback",
+      "changed_ability_ids": [
+        1479,
+        5548
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 100,
+      "key": "npc_dota_hero_tusk",
+      "name": "Tusk",
+      "changed_ability_ids": [
+        1386,
+        1385
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 0
+    },
+    {
+      "id": 101,
+      "key": "npc_dota_hero_skywrath_mage",
+      "name": "Skywrath Mage",
+      "changed_ability_ids": [
+        833,
+        5583,
+        5584
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 5
+    },
+    {
+      "id": 102,
+      "key": "npc_dota_hero_abaddon",
+      "name": "Abaddon",
+      "changed_ability_ids": [
+        1481,
+        5585,
+        5587,
+        5588
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 6
+    },
+    {
+      "id": 103,
+      "key": "npc_dota_hero_elder_titan",
+      "name": "Elder Titan",
+      "changed_ability_ids": [
+        1393
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 5
+    },
+    {
+      "id": 104,
+      "key": "npc_dota_hero_legion_commander",
+      "name": "Legion Commander",
+      "changed_ability_ids": [],
+      "hero_note_count": 1,
+      "talent_note_count": 3
+    },
+    {
+      "id": 105,
+      "key": "npc_dota_hero_techies",
+      "name": "Techies",
+      "changed_ability_ids": [
+        1778,
+        879,
+        5599
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 106,
+      "key": "npc_dota_hero_ember_spirit",
+      "name": "Ember Spirit",
+      "changed_ability_ids": [
+        5604,
+        5605,
+        5606
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 107,
+      "key": "npc_dota_hero_earth_spirit",
+      "name": "Earth Spirit",
+      "changed_ability_ids": [
+        1395,
+        5608,
+        5612
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 108,
+      "key": "npc_dota_hero_abyssal_underlord",
+      "name": "Underlord",
+      "changed_ability_ids": [
+        1486,
+        865
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 109,
+      "key": "npc_dota_hero_terrorblade",
+      "name": "Terrorblade",
+      "changed_ability_ids": [
+        1396,
+        5619,
+        425,
+        699
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 110,
+      "key": "npc_dota_hero_phoenix",
+      "name": "Phoenix",
+      "changed_ability_ids": [
+        5626,
+        5630
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 111,
+      "key": "npc_dota_hero_oracle",
+      "name": "Oracle",
+      "changed_ability_ids": [
+        5638,
+        5639,
+        5640
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 112,
+      "key": "npc_dota_hero_winter_wyvern",
+      "name": "Winter Wyvern",
+      "changed_ability_ids": [
+        5651,
+        5653
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 113,
+      "key": "npc_dota_hero_arc_warden",
+      "name": "Arc Warden",
+      "changed_ability_ids": [
+        5683
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 114,
+      "key": "npc_dota_hero_monkey_king",
+      "name": "Monkey King",
+      "changed_ability_ids": [
+        5716,
+        5721
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 119,
+      "key": "npc_dota_hero_dark_willow",
+      "name": "Dark Willow",
+      "changed_ability_ids": [
+        6340
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 120,
+      "key": "npc_dota_hero_pangolier",
+      "name": "Pangolier",
+      "changed_ability_ids": [
+        6344
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 121,
+      "key": "npc_dota_hero_grimstroke",
+      "name": "Grimstroke",
+      "changed_ability_ids": [
+        8007,
+        7852
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 1
+    },
+    {
+      "id": 123,
+      "key": "npc_dota_hero_hoodwink",
+      "name": "Hoodwink",
+      "changed_ability_ids": [
+        1423,
+        8158,
+        8106,
+        9501,
+        1422
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 3
+    },
+    {
+      "id": 126,
+      "key": "npc_dota_hero_void_spirit",
+      "name": "Void Spirit",
+      "changed_ability_ids": [
+        1420,
+        6470,
+        7710,
+        7705
+      ],
+      "hero_note_count": 4,
+      "talent_note_count": 0
+    },
+    {
+      "id": 128,
+      "key": "npc_dota_hero_snapfire",
+      "name": "Snapfire",
+      "changed_ability_ids": [
+        1782,
+        6488,
+        6482
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 129,
+      "key": "npc_dota_hero_mars",
+      "name": "Mars",
+      "changed_ability_ids": [
+        6583,
+        6495,
+        1416
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 2
+    },
+    {
+      "id": 131,
+      "key": "npc_dota_hero_ringmaster",
+      "name": "Ringmaster",
+      "changed_ability_ids": [
+        389,
+        390,
+        196,
+        386,
+        385,
+        195
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 1
+    },
+    {
+      "id": 135,
+      "key": "npc_dota_hero_dawnbreaker",
+      "name": "Dawnbreaker",
+      "changed_ability_ids": [
+        1424,
+        7902
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 1
+    },
+    {
+      "id": 136,
+      "key": "npc_dota_hero_marci",
+      "name": "Marci",
+      "changed_ability_ids": [
+        1428,
+        1427
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 137,
+      "key": "npc_dota_hero_primal_beast",
+      "name": "Primal Beast",
+      "changed_ability_ids": [
+        992,
+        7739
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 0
+    },
+    {
+      "id": 138,
+      "key": "npc_dota_hero_muerta",
+      "name": "Muerta",
+      "changed_ability_ids": [
+        5753,
+        1785
+      ],
+      "hero_note_count": 3,
+      "talent_note_count": 3
+    },
+    {
+      "id": 145,
+      "key": "npc_dota_hero_kez",
+      "name": "Kez",
+      "changed_ability_ids": [
+        1498,
+        1502,
+        1504,
+        1501
+      ],
+      "hero_note_count": 0,
+      "talent_note_count": 0
+    },
+    {
+      "id": 155,
+      "key": "npc_dota_hero_largo",
+      "name": "Largo",
+      "changed_ability_ids": [
+        1659,
+        1661,
+        1662,
+        1663
+      ],
+      "hero_note_count": 2,
+      "talent_note_count": 0
+    },
+    {
+      "id": 1961,
+      "key": null,
+      "name": null,
+      "changed_ability_ids": [
+        1888
+      ],
+      "hero_note_count": 1,
+      "talent_note_count": 0
+    }
+  ],
+  "items": [
+    {
+      "id": 1951,
+      "key": "item_horn_of_battle_greater",
+      "name": "Greater Horn of Battle",
+      "note_count": 4
+    },
+    {
+      "id": 10,
+      "key": "item_quarterstaff",
+      "name": "Quarterstaff",
+      "note_count": 2
+    },
+    {
+      "id": 1123,
+      "key": "item_blood_grenade",
+      "name": "Blood Grenade",
+      "note_count": 1
+    },
+    {
+      "id": 7,
+      "key": "item_javelin",
+      "name": "Javelin",
+      "note_count": 1
+    },
+    {
+      "id": 42,
+      "key": "item_ward_observer",
+      "name": "Observer Ward",
+      "note_count": 2
+    },
+    {
+      "id": 240,
+      "key": "item_blight_stone",
+      "name": "Orb of Blight",
+      "note_count": 2
+    },
+    {
+      "id": 1575,
+      "key": "item_orb_of_frost",
+      "name": "Orb of Frost",
+      "note_count": 3
+    },
+    {
+      "id": 181,
+      "key": "item_orb_of_venom",
+      "name": "Orb of Venom",
+      "note_count": 1
+    },
+    {
+      "id": 1804,
+      "key": "item_roshans_banner",
+      "name": "Roshan's Banner",
+      "note_count": 2
+    },
+    {
+      "id": 43,
+      "key": "item_ward_sentry",
+      "name": "Sentry Ward",
+      "note_count": 2
+    },
+    {
+      "id": 188,
+      "key": "item_smoke_of_deceit",
+      "name": "Smoke of Deceit",
+      "note_count": 4
+    },
+    {
+      "id": 1802,
+      "key": "item_tiara_of_selemene",
+      "name": "Tiara of Selemene",
+      "note_count": 1
+    },
+    {
+      "id": 1942,
+      "key": "item_bloodslinger",
+      "name": "Bloodslinger",
+      "note_count": 6
+    },
+    {
+      "id": 1955,
+      "key": "item_caduceus",
+      "name": "Caduceus",
+      "note_count": 6
+    },
+    {
+      "id": 1944,
+      "key": "item_ristuls_devotion",
+      "name": "Ristul's Devotion",
+      "note_count": 5
+    },
+    {
+      "id": 1953,
+      "key": "item_berserkers_sabatons",
+      "name": "Sabatons of Mordiggian",
+      "note_count": 6
+    },
+    {
+      "id": 1948,
+      "key": "item_skypiercer",
+      "name": "Skypiercer",
+      "note_count": 7
+    },
+    {
+      "id": 1946,
+      "key": "item_starforge",
+      "name": "Starforge",
+      "note_count": 9
+    },
+    {
+      "id": 232,
+      "key": "item_aether_lens",
+      "name": "Aether Lens",
+      "note_count": 2
+    },
+    {
+      "id": 180,
+      "key": "item_arcane_boots",
+      "name": "Arcane Boots",
+      "note_count": 3
+    },
+    {
+      "id": 231,
+      "key": "item_guardian_greaves",
+      "name": "Guardian Greaves",
+      "note_count": 3
+    },
+    {
+      "id": 151,
+      "key": "item_armlet",
+      "name": "Armlet of Mordiggian",
+      "note_count": 2
+    },
+    {
+      "id": 127,
+      "key": "item_blade_mail",
+      "name": "Blade Mail",
+      "note_count": 1
+    },
+    {
+      "id": 250,
+      "key": "item_bloodthorn",
+      "name": "Bloodthorn",
+      "note_count": 5
+    },
+    {
+      "id": 86,
+      "key": "item_buckler",
+      "name": "Buckler",
+      "note_count": 3
+    },
+    {
+      "id": 242,
+      "key": "item_crimson_guard",
+      "name": "Crimson Guard",
+      "note_count": 9
+    },
+    {
+      "id": 81,
+      "key": "item_vladmir",
+      "name": "Vladmir's Offering",
+      "note_count": 2
+    },
+    {
+      "id": 139,
+      "key": "item_butterfly",
+      "name": "Butterfly",
+      "note_count": 6
+    },
+    {
+      "id": 168,
+      "key": "item_desolator",
+      "name": "Desolator",
+      "note_count": 2
+    },
+    {
+      "id": 174,
+      "key": "item_diffusal_blade",
+      "name": "Diffusal Blade",
+      "note_count": 2
+    },
+    {
+      "id": 1097,
+      "key": "item_disperser",
+      "name": "Disperser",
+      "note_count": 2
+    },
+    {
+      "id": 236,
+      "key": "item_dragon_lance",
+      "name": "Dragon Lance",
+      "note_count": 1
+    },
+    {
+      "id": 208,
+      "key": "item_abyssal_blade",
+      "name": "Abyssal Blade",
+      "note_count": 7
+    },
+    {
+      "id": 939,
+      "key": "item_harpoon",
+      "name": "Harpoon",
+      "note_count": 8
+    },
+    {
+      "id": 176,
+      "key": "item_ethereal_blade",
+      "name": "Ethereal Blade",
+      "note_count": 2
+    },
+    {
+      "id": 160,
+      "key": "item_skadi",
+      "name": "Eye of Skadi",
+      "note_count": 4
+    },
+    {
+      "id": 102,
+      "key": "item_force_staff",
+      "name": "Force Staff",
+      "note_count": 1
+    },
+    {
+      "id": 263,
+      "key": "item_hurricane_pike",
+      "name": "Hurricane Pike",
+      "note_count": 2
+    },
+    {
+      "id": 94,
+      "key": "item_headdress",
+      "name": "Headdress",
+      "note_count": 1
+    },
+    {
+      "id": 210,
+      "key": "item_heavens_halberd",
+      "name": "Heaven's Halberd",
+      "note_count": 11
+    },
+    {
+      "id": 635,
+      "key": "item_helm_of_the_overlord",
+      "name": "Helm of the Overlord",
+      "note_count": 1
+    },
+    {
+      "id": 259,
+      "key": "item_kaya",
+      "name": "Kaya",
+      "note_count": 2
+    },
+    {
+      "id": 273,
+      "key": "item_kaya_and_sange",
+      "name": "Kaya and Sange",
+      "note_count": 4
+    },
+    {
+      "id": 223,
+      "key": "item_meteor_hammer",
+      "name": "Meteor Hammer",
+      "note_count": 9
+    },
+    {
+      "id": 123,
+      "key": "item_sphere",
+      "name": "Linken's Sphere",
+      "note_count": 1
+    },
+    {
+      "id": 166,
+      "key": "item_maelstrom",
+      "name": "Maelstrom",
+      "note_count": 4
+    },
+    {
+      "id": 158,
+      "key": "item_mjollnir",
+      "name": "Mjollnir",
+      "note_count": 1
+    },
+    {
+      "id": 598,
+      "key": "item_mage_slayer",
+      "name": "Mage Slayer",
+      "note_count": 2
+    },
+    {
+      "id": 172,
+      "key": "item_mask_of_madness",
+      "name": "Mask of Madness",
+      "note_count": 5
+    },
+    {
+      "id": 135,
+      "key": "item_monkey_king_bar",
+      "name": "Monkey King Bar",
+      "note_count": 8
+    },
+    {
+      "id": 225,
+      "key": "item_nullifier",
+      "name": "Nullifier",
+      "note_count": 1
+    },
+    {
+      "id": 77,
+      "key": "item_null_talisman",
+      "name": "Null Talisman",
+      "note_count": 2
+    },
+    {
+      "id": 235,
+      "key": "item_octarine_core",
+      "name": "Octarine Core",
+      "note_count": 1
+    },
+    {
+      "id": 569,
+      "key": "item_orb_of_corrosion",
+      "name": "Orb of Corrosion",
+      "note_count": 6
+    },
+    {
+      "id": 600,
+      "key": "item_overwhelming_blink",
+      "name": "Overwhelming Blink",
+      "note_count": 3
+    },
+    {
+      "id": 1128,
+      "key": "item_pavise",
+      "name": "Pavise",
+      "note_count": 1
+    },
+    {
+      "id": 229,
+      "key": "item_solar_crest",
+      "name": "Solar Crest",
+      "note_count": 3
+    },
+    {
+      "id": 50,
+      "key": "item_phase_boots",
+      "name": "Phase Boots",
+      "note_count": 2
+    },
+    {
+      "id": 1107,
+      "key": "item_phylactery",
+      "name": "Phylactery",
+      "note_count": 4
+    },
+    {
+      "id": 1808,
+      "key": "item_angels_demise",
+      "name": "Khanda",
+      "note_count": 1
+    },
+    {
+      "id": 90,
+      "key": "item_pipe",
+      "name": "Pipe of Insight",
+      "note_count": 2
+    },
+    {
+      "id": 206,
+      "key": "item_rod_of_atos",
+      "name": "Rod of Atos",
+      "note_count": 1
+    },
+    {
+      "id": 1466,
+      "key": "item_gungir",
+      "name": "Gleipnir",
+      "note_count": 4
+    },
+    {
+      "id": 162,
+      "key": "item_sange",
+      "name": "Sange",
+      "note_count": 2
+    },
+    {
+      "id": 154,
+      "key": "item_sange_and_yasha",
+      "name": "Sange and Yasha",
+      "note_count": 3
+    },
+    {
+      "id": 152,
+      "key": "item_invis_sword",
+      "name": "Shadow Blade",
+      "note_count": 1
+    },
+    {
+      "id": 249,
+      "key": "item_silver_edge",
+      "name": "Silver Edge",
+      "note_count": 2
+    },
+    {
+      "id": 119,
+      "key": "item_shivas_guard",
+      "name": "Shiva's Guard",
+      "note_count": 3
+    },
+    {
+      "id": 143,
+      "key": "item_basher",
+      "name": "Skull Basher",
+      "note_count": 1
+    },
+    {
+      "id": 214,
+      "key": "item_tranquil_boots",
+      "name": "Tranquil Boots",
+      "note_count": 3
+    },
+    {
+      "id": 92,
+      "key": "item_urn_of_shadows",
+      "name": "Urn of Shadows",
+      "note_count": 1
+    },
+    {
+      "id": 1852,
+      "key": "item_essence_distiller",
+      "name": "Essence Distiller",
+      "note_count": 2
+    },
+    {
+      "id": 267,
+      "key": "item_spirit_vessel",
+      "name": "Spirit Vessel",
+      "note_count": 1
+    },
+    {
+      "id": 190,
+      "key": "item_veil_of_discord",
+      "name": "Veil of Discord",
+      "note_count": 1
+    },
+    {
+      "id": 121,
+      "key": "item_bloodstone",
+      "name": "Bloodstone",
+      "note_count": 3
+    },
+    {
+      "id": 610,
+      "key": "item_wind_waker",
+      "name": "Wind Waker",
+      "note_count": 1
+    },
+    {
+      "id": 534,
+      "key": "item_witch_blade",
+      "name": "Witch Blade",
+      "note_count": 4
+    },
+    {
+      "id": 1806,
+      "key": "item_devastator",
+      "name": "Parasma",
+      "note_count": 7
+    },
+    {
+      "id": 75,
+      "key": "item_wraith_band",
+      "name": "Wraith Band",
+      "note_count": 1
+    },
+    {
+      "id": 170,
+      "key": "item_yasha",
+      "name": "Yasha",
+      "note_count": 2
+    },
+    {
+      "id": 277,
+      "key": "item_yasha_and_kaya",
+      "name": "Yasha and Kaya",
+      "note_count": 4
+    },
+    {
+      "id": 147,
+      "key": "item_manta",
+      "name": "Manta Style",
+      "note_count": 3
+    }
+  ],
+  "neutral_items": [
+    {
+      "id": 1077,
+      "key": "item_dagger_of_ristul",
+      "name": "Dagger of Ristul",
+      "note_count": 1
+    },
+    {
+      "id": 2097,
+      "key": "item_duelist_gloves",
+      "name": "Duelist Gloves",
+      "note_count": 1
+    },
+    {
+      "id": 947,
+      "key": "item_occult_bracelet",
+      "name": "Occult Bracelet",
+      "note_count": 1
+    },
+    {
+      "id": 1880,
+      "key": "item_red_ledger",
+      "name": "Red Ledger",
+      "note_count": 6
+    },
+    {
+      "id": 1717,
+      "key": "item_ash_legion_shield",
+      "name": "Ash Legion Shield",
+      "note_count": 1
+    },
+    {
+      "id": 565,
+      "key": "item_chipped_vest",
+      "name": "Chipped Vest",
+      "note_count": 1
+    },
+    {
+      "id": 1868,
+      "key": "item_foragers_kit",
+      "name": "Forager's Kit",
+      "note_count": 1
+    },
+    {
+      "id": 1637,
+      "key": "item_kobold_cup",
+      "name": "Kobold Cup",
+      "note_count": 1
+    },
+    {
+      "id": 577,
+      "key": "item_possessed_mask",
+      "name": "Possessed Mask",
+      "note_count": 1
+    },
+    {
+      "id": 1606,
+      "key": "item_polliwog_charm",
+      "name": "Pollywog Charm",
+      "note_count": 1
+    },
+    {
+      "id": 945,
+      "key": "item_seeds_of_serenity",
+      "name": "Seeds of Serenity",
+      "note_count": 3
+    },
+    {
+      "id": 1861,
+      "key": "item_stonefeather_satchel",
+      "name": "Stonefeather Satchel",
+      "note_count": 2
+    },
+    {
+      "id": 840,
+      "key": "item_pogo_stick",
+      "name": "Tumbler's Toy",
+      "note_count": 2
+    },
+    {
+      "id": 1716,
+      "key": "item_weighted_dice",
+      "name": "Weighted Dice",
+      "note_count": 1
+    },
+    {
+      "id": 359,
+      "key": "item_essence_ring",
+      "name": "Essence Ring",
+      "note_count": 1
+    },
+    {
+      "id": 187,
+      "key": "item_medallion_of_courage",
+      "name": "Medallion of Courage",
+      "note_count": 1
+    },
+    {
+      "id": 71,
+      "key": "item_poor_mans_shield",
+      "name": "Poor Man's Shield",
+      "note_count": 1
+    },
+    {
+      "id": 1604,
+      "key": "item_searing_signet",
+      "name": "Searing Signet",
+      "note_count": 1
+    },
+    {
+      "id": 1916,
+      "key": "item_brick",
+      "name": "Brick",
+      "note_count": 6
+    },
+    {
+      "id": 334,
+      "key": "item_imp_claw",
+      "name": "Imp Claw",
+      "note_count": 2
+    },
+    {
+      "id": 1157,
+      "key": "item_safety_bubble",
+      "name": "Safety Bubble",
+      "note_count": 2
+    },
+    {
+      "id": 1601,
+      "key": "item_crippling_crossbow",
+      "name": "Crippling Crossbow",
+      "note_count": 2
+    },
+    {
+      "id": 950,
+      "key": "item_defiant_shell",
+      "name": "Defiant Shell",
+      "note_count": 1
+    },
+    {
+      "id": 1603,
+      "key": "item_gunpowder_gauntlets",
+      "name": "Gunpowder Gauntlet",
+      "note_count": 4
+    },
+    {
+      "id": 1640,
+      "key": "item_jidi_pollen_bag",
+      "name": "Jidi Pollen Bag",
+      "note_count": 2
+    },
+    {
+      "id": 1599,
+      "key": "item_mana_draught",
+      "name": "Mana Draught",
+      "note_count": 1
+    },
+    {
+      "id": 1719,
+      "key": "item_metamorphic_mandible",
+      "name": "Metamorphic Mandible",
+      "note_count": 4
+    },
+    {
+      "id": 1873,
+      "key": "item_partisans_brand",
+      "name": "Partisan's Brand",
+      "note_count": 3
+    },
+    {
+      "id": 675,
+      "key": "item_psychic_headband",
+      "name": "Psychic Headband",
+      "note_count": 3
+    },
+    {
+      "id": 1859,
+      "key": "item_spellslinger",
+      "name": "Spellslinger",
+      "note_count": 2
+    },
+    {
+      "id": 574,
+      "key": "item_cloak_of_flames",
+      "name": "Cloak of Flames",
+      "note_count": 1
+    },
+    {
+      "id": 1917,
+      "key": "item_balmhook",
+      "name": "Balmhook",
+      "note_count": 2
+    },
+    {
+      "id": 676,
+      "key": "item_ceremonial_robe",
+      "name": "Ceremonial Robe",
+      "note_count": 2
+    },
+    {
+      "id": 911,
+      "key": "item_revenants_brooch",
+      "name": "Revenant's Brooch",
+      "note_count": 2
+    },
+    {
+      "id": 1882,
+      "key": "item_vile_phial",
+      "name": "Vile Phial",
+      "note_count": 4
+    },
+    {
+      "id": 2190,
+      "key": "item_dandelion_amulet",
+      "name": "Dandelion Amulet",
+      "note_count": 2
+    },
+    {
+      "id": 1862,
+      "key": "item_enchanters_bauble",
+      "name": "Enchanter's Bauble",
+      "note_count": 1
+    },
+    {
+      "id": 1863,
+      "key": "item_harmonizer",
+      "name": "Harmonizer",
+      "note_count": 3
+    },
+    {
+      "id": 1720,
+      "key": "item_idol_of_screeauk",
+      "name": "Idol of Scree'auk",
+      "note_count": 3
+    },
+    {
+      "id": 1860,
+      "key": "item_prophets_pendulum",
+      "name": "Prophet's Pendulum",
+      "note_count": 2
+    },
+    {
+      "id": 1168,
+      "key": "item_rattlecage",
+      "name": "Rattlecage",
+      "note_count": 3
+    },
+    {
+      "id": 1605,
+      "key": "item_serrated_shiv",
+      "name": "Serrated Shiv",
+      "note_count": 5
+    },
+    {
+      "id": 585,
+      "key": "item_stormcrafter",
+      "name": "Stormcrafter",
+      "note_count": 2
+    },
+    {
+      "id": 1721,
+      "key": "item_flayers_bota",
+      "name": "Flayer's Bota",
+      "note_count": 1
+    },
+    {
+      "id": 1643,
+      "key": "item_giant_maul",
+      "name": "Giant's Maul",
+      "note_count": 1
+    },
+    {
+      "id": 1598,
+      "key": "item_unrelenting_eye",
+      "name": "Unrelenting Eye",
+      "note_count": 1
+    },
+    {
+      "id": 326,
+      "key": "item_spider_legs",
+      "name": "Spider Legs",
+      "note_count": 1
+    },
+    {
+      "id": 292,
+      "key": "item_stygian_desolator",
+      "name": "Stygian Desolator",
+      "note_count": 1
+    },
+    {
+      "id": 335,
+      "key": "item_flicker",
+      "name": "Flicker",
+      "note_count": 2
+    },
+    {
+      "id": 678,
+      "key": "item_giants_ring",
+      "name": "Giant's Ring",
+      "note_count": 2
+    },
+    {
+      "id": 1911,
+      "key": "item_helm_of_the_hivemind",
+      "name": "Helm of the Hivemind",
+      "note_count": 4
+    },
+    {
+      "id": 309,
+      "key": "item_mind_breaker",
+      "name": "Mind Breaker",
+      "note_count": 3
+    },
+    {
+      "id": 370,
+      "key": "item_demonicon",
+      "name": "Book of the Dead",
+      "note_count": 2
+    },
+    {
+      "id": 1864,
+      "key": "item_conjurers_catalyst",
+      "name": "Conjurer's Catalyst",
+      "note_count": 1
+    },
+    {
+      "id": 1642,
+      "key": "item_dezun_bloodrite",
+      "name": "Dezun Bloodrite",
+      "note_count": 2
+    },
+    {
+      "id": 1644,
+      "key": "item_divine_regalia",
+      "name": "Divine Regalia",
+      "note_count": 3
+    },
+    {
+      "id": 371,
+      "key": "item_fallen_sky",
+      "name": "Fallen Sky",
+      "note_count": 2
+    },
+    {
+      "id": 377,
+      "key": "item_minotaur_horn",
+      "name": "Minotaur Horn",
+      "note_count": 3
+    },
+    {
+      "id": 1718,
+      "key": "item_riftshadow_prism",
+      "name": "Riftshadow Prism",
+      "note_count": 4
+    },
+    {
+      "id": 837,
+      "key": "item_heavy_blade",
+      "name": "Witchbane",
+      "note_count": 2
+    },
+    {
+      "id": 1865,
+      "key": "item_enhancement_vital",
+      "name": "Vital",
+      "note_count": 2
+    },
+    {
+      "id": 1584,
+      "key": "item_enhancement_alert",
+      "name": "Alert",
+      "note_count": 4
+    },
+    {
+      "id": 1585,
+      "key": "item_enhancement_brawny",
+      "name": "Brawny",
+      "note_count": 5
+    },
+    {
+      "id": 1583,
+      "key": "item_enhancement_mystical",
+      "name": "Mystical",
+      "note_count": 4
+    },
+    {
+      "id": 1577,
+      "key": "item_enhancement_quickened",
+      "name": "Quickened",
+      "note_count": 4
+    },
+    {
+      "id": 1586,
+      "key": "item_enhancement_tough",
+      "name": "Tough",
+      "note_count": 4
+    },
+    {
+      "id": 1589,
+      "key": "item_enhancement_crude",
+      "name": "Crude",
+      "note_count": 3
+    },
+    {
+      "id": 1593,
+      "key": "item_enhancement_greedy",
+      "name": "Greedy",
+      "note_count": 4
+    },
+    {
+      "id": 1595,
+      "key": "item_enhancement_keen_eyed",
+      "name": "Keen-eyed",
+      "note_count": 4
+    },
+    {
+      "id": 1874,
+      "key": "item_enhancement_nimble",
+      "name": "Nimble",
+      "note_count": 5
+    },
+    {
+      "id": 1597,
+      "key": "item_enhancement_titanic",
+      "name": "Titanic",
+      "note_count": 3
+    },
+    {
+      "id": 1596,
+      "key": "item_enhancement_evolved",
+      "name": "Evolved",
+      "note_count": 4
+    },
+    {
+      "id": 1592,
+      "key": "item_enhancement_timeless",
+      "name": "Timeless",
+      "note_count": 3
+    },
+    {
+      "id": 1581,
+      "key": "item_enhancement_audacious",
+      "name": "Audacious",
+      "note_count": 1
+    },
+    {
+      "id": 1587,
+      "key": "item_enhancement_feverish",
+      "name": "Feverish",
+      "note_count": 1
+    },
+    {
+      "id": 1588,
+      "key": "item_enhancement_fleetfooted",
+      "name": "Fleetfooted",
+      "note_count": 1
+    },
+    {
+      "id": 1866,
+      "key": "item_enhancement_hulking",
+      "name": "Hulking",
+      "note_count": 1
+    },
+    {
+      "id": 1867,
+      "key": "item_enhancement_manic",
+      "name": "Manic",
+      "note_count": 1
+    },
+    {
+      "id": 1594,
+      "key": "item_enhancement_vampiric",
+      "name": "Vampiric",
+      "note_count": 1
+    }
+  ]
+}

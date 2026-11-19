@@ -1,0 +1,61 @@
+.rankings-header { justify-content: flex-start; }
+.rankings-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 20px; font-size: 13px; }
+.rankings-nav a { text-decoration: none; color: var(--muted); white-space: nowrap; }
+.rankings-nav a:hover, .rankings-nav a[aria-current] { color: var(--ink); }
+.rankings-nav a[aria-current] { box-shadow: 0 2px var(--accent); }
+.rankings-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); flex-basis: min(32%, 350px); }
+.ranking-role-tabs { margin-bottom: 13px; }
+.ranking-role-tabs .role-tab { display: inline-flex; text-decoration: none; align-items: center; }
+.ranking-role-tabs .role-tab[aria-current] { color: #ffad97; background: var(--accent-soft); border-color: #603d35; }
+.ranking-status { color: var(--muted); padding: 8px 0; font-size: 13px; }
+.ranking-status:empty { display: none; }
+.rankings-layout { display: grid; grid-template-columns: minmax(210px, 280px) minmax(0, 1fr); align-items: start; gap: 13px; }
+.ranking-method { padding: 15px; min-width: 0; font-size: 13px; }
+.ranking-method h2 { font-size: 16px; }
+.ranking-weight-summary { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 5px; color: var(--muted); font-size: 12px; }
+.ranking-weight-summary strong { color: #f1aa96; font-variant-numeric: tabular-nums; }
+.ranking-weights { margin: 11px 0 9px; }
+.ranking-weights div { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; border-top: 1px solid var(--line-soft); }
+.ranking-weights dd { color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ranking-method .subtle { margin: 7px 0 0; line-height: 1.45; }
+.ranking-method-details { margin-top: 9px; }
+.ranking-method-details summary { cursor: pointer; color: #e8b8a9; font-size: 12px; }
+.ranking-method-details ul { color: var(--muted); padding-left: 18px; margin: 7px 0 0; line-height: 1.5; }
+.ranking-method-details li + li { margin-top: 5px; }
+.rankings-board { min-width: 0; }
+.rankings-board .text-link { font-size: 12px; }
+.role-ranking-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.role-ranking-table th, .role-ranking-table td { padding: 8px 9px; text-align: start; vertical-align: top; border-top: 1px solid var(--line-soft); }
+.role-ranking-table th:first-child, .role-ranking-table td:first-child { padding-left: 14px; }
+.role-ranking-table th:last-child, .role-ranking-table td:last-child { padding-right: 14px; }
+.role-ranking-table thead { color: var(--muted); font-size: 11px; }
+.role-ranking-table tbody th { color: var(--ink); background: transparent; font-size: 13px; font-weight: 650; white-space: normal; }
+.ranking-index { font-variant-numeric: tabular-nums; color: var(--muted); width: 7%; }
+.ranking-hero { width: min(26%, 230px); }
+.ranking-score-cell { font-variant-numeric: tabular-nums; min-width: 86px; }
+.ranking-score-cell strong { display: block; color: #f3b5a4; }
+.ranking-score-cell progress { appearance: none; display: block; width: 68px; height: 4px; border: 0; border-radius: 4px; margin: 4px 0 0; background: #302629; }
+.ranking-score-cell progress::-webkit-progress-bar { background: #302629; border-radius: 4px; }
+.ranking-score-cell progress::-webkit-progress-value { background: #d78b77; border-radius: 4px; }
+.ranking-score-cell progress::-moz-progress-bar { background: #d78b77; border-radius: 4px; }
+.ranking-note, .ranking-note-mobile { color: var(--muted); line-height: 1.4; }
+.ranking-note-mobile { display: none; }
+.ranking-hero details { margin-top: 2px; font-weight: 400; }
+.ranking-hero summary { cursor: pointer; width: fit-content; font-size: 11px; color: #e8b8a9; }
+.ranking-hero details p { margin-top: 4px; font-size: 11px; line-height: 1.45; color: var(--muted); }
+.ranking-hero details .text-link { display: inline-block; margin-top: 3px; font-size: 11px; white-space: normal; }
+.ranking-hero a { color: #f0c3b3; }
+@media (max-width: 850px) {
+  .rankings-header { flex-wrap: wrap; padding: 9px 0; gap: 6px 14px; min-height: 57px; }
+  .rankings-nav { gap: 5px 12px; }
+  .rankings-layout { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .ranking-weights { display: grid; gap: 0 12px; grid-template-columns: repeat(auto-fit, minmax(min(205px, 100%), 1fr)); }
+}
+@media (max-width: 580px) {
+  .rankings-nav { font-size: 12px; }
+  .rankings-intro { gap: 8px; }
+  .rankings-stats { flex-basis: auto; }
+  .ranking-note { display: none; }
+  .ranking-note-mobile { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; }
+  .ranking-hero { width: auto; }
+}

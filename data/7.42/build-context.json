@@ -1,0 +1,111 @@
+{
+  "patch": "7.42",
+  "provenance": {
+    "reportTitle": "Dota 2 Patch 7.42: Heróis, itens, Item Potency e interações de build",
+    "reportDate": "2026-11-18",
+    "baselinePatch": "7.41f",
+    "baselineLabel": "Dota2ProTracker 7.41f professional and high-MMR build examples reported in the PDF",
+    "patchUrl": "https://www.dota2.com/patches/7.42"
+  },
+  "usage": "Use these report-backed hypotheses to compare ability interactions, team utility and upgrades alongside the Legend right-click projections. The pre-patch examples supply build context. Affordability uses the selected Legend role budgets.",
+  "notes": [
+    {
+      "heroId": 81,
+      "heroName": "Chaos Knight",
+      "role": "carry",
+      "label": "Phantasm and mana burn",
+      "summary": "Phantasm illusions attack at 100% Item Potency. Armlet was a common pre-patch purchase in the report's examples. Test how much mana the Phantasms remove with an added Diffusal while they can keep attacking. Repeated Desolator applications use the strongest source.",
+      "itemKeys": ["armlet", "diffusal_blade", "desolator"],
+      "exampleBuildKeys": ["armlet", "diffusal_blade"],
+      "reportPages": [3, 9, 10]
+    },
+    {
+      "heroId": 120,
+      "heroName": "Pangolier",
+      "role": "mid",
+      "label": "Diffusal on Swashbuckle",
+      "summary": "Swashbuckle has four slashes at 60% Item Potency. Diffusal already appears in the report's pre-patch build. Compare mana removed when all four hits land on one target and account for how much mana the target starts with.",
+      "itemKeys": ["diffusal_blade", "blink", "desolator"],
+      "exampleBuildKeys": ["diffusal_blade"],
+      "reportPages": [3, 9, 10]
+    },
+    {
+      "heroId": 54,
+      "heroName": "Lifestealer",
+      "role": "carry",
+      "label": "Phase and Armlet into Sabatons",
+      "summary": "The report's pre-patch build bought Phase Boots, Radiance, and Armlet. Sabatons combines Phase and Armlet in one slot. For a player who already owns both, the 2,000g recipe is the incremental cost. Value the freed slot separately from the minute's modeled damage.",
+      "itemKeys": ["phase_boots", "radiance", "armlet", "berserkers_sabatons"],
+      "exampleBuildKeys": ["berserkers_sabatons"],
+      "reportPages": [6, 9, 10]
+    },
+    {
+      "heroId": 89,
+      "heroName": "Naga Siren",
+      "role": "carry",
+      "label": "Manta and Diffusal",
+      "summary": "Manta illusions use 35% Item Potency, above the default 20% for ordinary illusions. Test the additional mana burn from the Manta copies and the uptime of a Skadi debuff in fights where copies can reach the target.",
+      "itemKeys": ["manta", "diffusal_blade", "skadi"],
+      "exampleBuildKeys": ["manta", "diffusal_blade"],
+      "reportPages": [3, 11]
+    },
+    {
+      "heroId": 12,
+      "heroName": "Phantom Lancer",
+      "role": "carry",
+      "label": "Mana burn across copies",
+      "summary": "Compare Diffusal or Disperser across the hero's ordinary illusions and Manta copies at their respective potencies. Count the hits that reach the target and cap total burn at available mana.",
+      "itemKeys": ["manta", "diffusal_blade", "disperser", "skadi"],
+      "exampleBuildKeys": ["manta", "diffusal_blade"],
+      "reportPages": [3, 11]
+    },
+    {
+      "heroId": 38,
+      "heroName": "Beastmaster",
+      "role": "offlane",
+      "label": "Ristul for grouped pushes",
+      "summary": "Ristul's Devotion is a Vladmir's Offering upgrade that gives the group damage, sustain and armor. With Helm of the Overlord removed, compare the aura's value during coordinated pushes and evaluate creep control separately.",
+      "itemKeys": ["vladmir", "ristuls_devotion", "helm_of_the_dominator"],
+      "exampleBuildKeys": ["ristuls_devotion"],
+      "reportPages": [6, 9, 11]
+    },
+    {
+      "heroId": 51,
+      "heroName": "Clockwerk",
+      "role": "soft-support",
+      "label": "Bloodslinger for rotations",
+      "summary": "The report highlights Clockwerk's pickoff potential and Bloodslinger's long-range grenade for supports. Test whether the cheap catch and held health and mana stats help Clockwerk start fights while saving toward a larger purchase.",
+      "itemKeys": ["bloodslinger"],
+      "exampleBuildKeys": ["bloodslinger"],
+      "reportPages": [6, 7, 12]
+    },
+    {
+      "heroId": 50,
+      "heroName": "Dazzle",
+      "role": "hard-support",
+      "label": "Force Staff into Caduceus",
+      "summary": "Caduceus combines a Force Staff upgrade path with distinct enemy and ally spell triggers. Compare the ally heal and movement option against keeping Force Staff and spending the remaining budget on a separate support item.",
+      "itemKeys": ["force_staff", "caduceus"],
+      "exampleBuildKeys": ["caduceus"],
+      "reportPages": [6, 11, 12]
+    },
+    {
+      "heroId": 67,
+      "heroName": "Spectre",
+      "role": "carry",
+      "label": "Haunt and Shadow Step use different potency",
+      "summary": "Haunt illusions use 40% Item Potency and Shadow Step illusions use 25%. Inspect Skadi or Diffusal per attack source and account for which illusion attacks the target.",
+      "itemKeys": ["skadi", "diffusal_blade"],
+      "reportPages": [3, 11]
+    },
+    {
+      "heroId": 20,
+      "heroName": "Vengeful Spirit",
+      "role": "hard-support",
+      "label": "Scepter illusion's item effects",
+      "summary": "The Scepter illusion uses 100% Item Potency. Compare a landed item effect after death with the same effect on Vengeful Spirit, and measure separately how often the illusion gets a chance to attack.",
+      "itemKeys": ["ultimate_scepter", "desolator"],
+      "reportPages": [3, 11]
+    }
+  ]
+}

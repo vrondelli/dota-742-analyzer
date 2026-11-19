@@ -1,0 +1,126 @@
+{
+  "patch": "7.42",
+  "roles": [
+    {
+      "key": "offlane",
+      "headline": "Start fights, hold ground, and turn control into objectives",
+      "criteria": [
+        {
+          "key": "initiation",
+          "label": "Initiation and lockdown",
+          "weight": 28,
+          "description": "Starts or turns fights. Consider target access, reliability, number of targets controlled, and the key spell's downtime.",
+          "conditions": ["control", "kite", "illusions"]
+        },
+        {
+          "key": "frontline",
+          "label": "Frontline and space",
+          "weight": 22,
+          "description": "Can stand in dangerous space while allies position. Consider damage reduction, sustain, and which enemy damage the hero can take.",
+          "conditions": ["physical-burst", "magic-burst", "illusions"]
+        },
+        {
+          "key": "team-protection",
+          "label": "Team protection",
+          "weight": 18,
+          "description": "Uses the hero's kit to save allies, remove disables, or reduce damage reaching the team. Purchased auras are shown in the buy paths.",
+          "conditions": ["physical-burst", "magic-burst", "control"]
+        },
+        {
+          "key": "objective-pressure",
+          "label": "Wave and objective pressure",
+          "weight": 18,
+          "description": "Keeps lanes moving and turns an opening into tower or Roshan pressure through wave clear, summons, or objective-enabling abilities.",
+          "conditions": ["summons"]
+        },
+        {
+          "key": "low-gold",
+          "label": "Impact on low gold",
+          "weight": 14,
+          "description": "Can still perform a meaningful job through early ability levels and modest items when a major purchase is delayed.",
+          "conditions": []
+        }
+      ],
+      "profiles": [
+        {
+          "heroId": 2,
+          "ratings": {
+            "initiation": { "value": 3, "reason": "Berserker's Call forces attacks from enemies in an area. Blink gives him a way to place Call on a cluster." },
+            "frontline": { "value": 2, "reason": "Call briefly adds armor and Counter Helix punishes repeated attacks. Long-range magic and damage after Call ends are still threats." },
+            "team-protection": { "value": 1, "reason": "Call can peel attackers off an ally when Axe can reach them." },
+            "objective-pressure": { "value": 2, "reason": "Counter Helix can help clear waves. In 7.42, attacks that miss Axe still advance its counter." },
+            "low-gold": { "value": 1, "reason": "Call can stop enemies who approach him, but starting a reliable fight from outside melee usually needs Blink." }
+          },
+          "milestones": { "bad": "blink", "good": "blink", "easy": "blink" },
+          "milestoneReasons": {
+            "bad": "Finish Blink after basic boots to bring Call to fights while recovering farm.",
+            "good": "Phase Boots help Axe move and survive before Blink opens stronger Call angles.",
+            "easy": "Keep the Blink timing and spend the extra gold on follow-up and protection."
+          },
+          "sources": [
+            { "label": "Valve Axe abilities", "url": "https://www.dota2.com/hero/axe" },
+            { "label": "Valve 7.42 changes", "url": "https://www.dota2.com/patches/7.42" }
+          ]
+        },
+        {
+          "heroId": 104,
+          "ratings": {
+            "initiation": { "value": 2, "reason": "Duel holds one target for allied damage. Its limited reach and enemy saves can decide whether the pickoff works." },
+            "frontline": { "value": 2, "reason": "Moment of Courage counterattacks provide lifesteal when Legion is allowed to hit. Hard control or burst can interrupt that sustain." },
+            "team-protection": { "value": 2, "reason": "Press the Attack applies a strong dispel and helps one ally recover or rejoin the fight." },
+            "objective-pressure": { "value": 2, "reason": "Overwhelming Odds helps push a wave, and a successful Duel can create space to take a nearby objective." },
+            "low-gold": { "value": 1, "reason": "Press the Attack can contribute early. Starting Duels from fog still depends heavily on a Blink timing and allied follow-up." }
+          },
+          "milestones": { "bad": "blink", "good": "blink", "easy": "blink" },
+          "milestoneReasons": {
+            "bad": "Buy Blink ahead of Blade Mail when teammates can finish the Duel target.",
+            "good": "Blade Mail comes first on this route when it helps contest the lane. Blink completes your pickoff entry.",
+            "easy": "Blade Mail and Blink establish the Duel timing. Faster farm can add the later upgrade."
+          },
+          "sources": [
+            { "label": "Valve Legion Commander abilities", "url": "https://www.dota2.com/hero/legioncommander" }
+          ]
+        },
+        {
+          "heroId": 29,
+          "ratings": {
+            "initiation": { "value": 3, "reason": "Ravage can stun several nearby enemies. Its long cooldown and dispersed enemy positioning limit the openings." },
+            "frontline": { "value": 3, "reason": "Kraken Shell blocks attack damage and cleanses eligible debuffs after enough damage. Anchor Smash weakens nearby enemy attacks." },
+            "team-protection": { "value": 2, "reason": "Anchor Smash lowers the attacks of nearby enemies, and Ravage can interrupt a dive on allies." },
+            "objective-pressure": { "value": 2, "reason": "Anchor Smash helps clear waves, and Gush lowers enemy armor for physical follow-up. Tidehunter can hold ground near an objective." },
+            "low-gold": { "value": 2, "reason": "Kraken Shell and Anchor Smash let him contest close ground on basic items. Ravage can counter-initiate before Blink." }
+          },
+          "milestones": { "bad": "blink", "good": "blink", "easy": "blink" },
+          "milestoneReasons": {
+            "bad": "Use basic boots to reach Blink sooner and turn an enemy approach into a Ravage.",
+            "good": "Arcane Boots support team mana before Blink expands the angles for Ravage.",
+            "easy": "Blink remains the entry timing. Extra gold can fund the later teamfight items."
+          },
+          "sources": [
+            { "label": "Valve Tidehunter abilities", "url": "https://www.dota2.com/hero/tidehunter" }
+          ]
+        },
+        {
+          "heroId": 38,
+          "ratings": {
+            "initiation": { "value": 2, "reason": "Primal Roar holds a priority target. It still needs cast access and a teammate or controlled unit able to follow up." },
+            "frontline": { "value": 1, "reason": "Controlled bodies can occupy space. Beastmaster himself is easier to force back than an offlaner with dedicated damage reduction." },
+            "team-protection": { "value": 1, "reason": "Roar and the boar's slow can peel an attacker. Group protection in this guide comes mainly from purchased items." },
+            "objective-pressure": { "value": 3, "reason": "Wild Axes manage waves while controlled units and their Inner Beast attack speed help pressure buildings." },
+            "low-gold": { "value": 2, "reason": "Roar, boar slows, and Wild Axes all provide jobs before the first expensive item. Extra levels and unit survival still matter." }
+          },
+          "milestones": { "bad": "vladmir", "good": "helm_of_the_dominator", "easy": "ristuls_devotion" },
+          "milestoneReasons": {
+            "bad": "Vladmir's Offering provides a team aura when the first job is to hold or contest an objective.",
+            "good": "Helm of the Dominator brings a controlled creep into the push before Blink. Check which creep ability the team needs.",
+            "easy": "Ristul's Devotion brings group damage and sustain when the team can play together early."
+          },
+          "sources": [
+            { "label": "Valve Beastmaster abilities", "url": "https://www.dota2.com/hero/beastmaster" },
+            { "label": "Valve 7.42 changes", "url": "https://www.dota2.com/patches/7.42" }
+          ]
+        }
+      ]
+    }
+  ]
+}

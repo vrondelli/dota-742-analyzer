@@ -1,0 +1,2373 @@
+{
+  "patch": "7.42",
+  "bracket": "Legend average, Ranked All Pick",
+  "sample": {
+    "publicMatches": 15008,
+    "positionInferredReplayMatches": 49,
+    "source": "Saved snapshot and fixed-window OpenDota requery"
+  },
+  "scoring": {
+    "scale": "0–100",
+    "ratingAnchors": [
+      "Little direct contribution",
+      "Conditional",
+      "Repeatable",
+      "Defining"
+    ],
+    "criteriaWeights": {
+      "carry": {
+        "benchmarkDps": 35,
+        "scaling": 25,
+        "farm": 20,
+        "access": 15,
+        "pooledWins": 5
+      },
+      "mid": {
+        "benchmarkCast": 20,
+        "wave": 25,
+        "rotation": 30,
+        "reliability": 20,
+        "pooledWins": 5
+      },
+      "offlane": {
+        "initiation": 26.6,
+        "frontline": 20.9,
+        "protection": 17.1,
+        "pressure": 17.1,
+        "lowGold": 13.3,
+        "pooledWins": 5
+      },
+      "soft-support": {
+        "catch": 28.5,
+        "tempo": 23.75,
+        "lane": 19,
+        "counterplay": 14.25,
+        "lowGold": 9.5,
+        "pooledWins": 5
+      },
+      "hard-support": {
+        "protection": 28.5,
+        "lane": 23.75,
+        "control": 19,
+        "lowGold": 14.25,
+        "wave": 9.5,
+        "pooledWins": 5
+      }
+    },
+    "pooledWinPoints": "5 × lower 95% Wilson bound as a fraction",
+    "carryBenchmark": "Average of best modeled DPS across three role gold budgets, level 12, 10 target armor, up to two items. Scaled against highest mean in the carry candidate list.",
+    "midBenchmark": "One strongest supported spell at level 12 and 25% target magic resistance, scaled against highest mapped cast among mid candidates. Missing cases use the mapped mid median, reported separately.",
+    "eligibility": "Candidate positions are suggested from the hero kit and conventional role fit. Observed positions are counted separately.",
+    "goldBudgets": {
+      "carry": [
+        {
+          "key": "bad",
+          "budget": 6182,
+          "sampleSize": 98
+        },
+        {
+          "key": "good",
+          "budget": 7282,
+          "sampleSize": 98
+        },
+        {
+          "key": "easy",
+          "budget": 8491,
+          "sampleSize": 98
+        }
+      ],
+      "mid": [
+        {
+          "key": "bad",
+          "budget": 5921,
+          "sampleSize": 98
+        },
+        {
+          "key": "good",
+          "budget": 6551,
+          "sampleSize": 98
+        },
+        {
+          "key": "easy",
+          "budget": 8447,
+          "sampleSize": 98
+        }
+      ],
+      "offlane": [
+        {
+          "key": "bad",
+          "budget": 5443,
+          "sampleSize": 98
+        },
+        {
+          "key": "good",
+          "budget": 6338,
+          "sampleSize": 98
+        },
+        {
+          "key": "easy",
+          "budget": 7790,
+          "sampleSize": 98
+        }
+      ],
+      "soft-support": [
+        {
+          "key": "bad",
+          "budget": 3033,
+          "sampleSize": 98
+        },
+        {
+          "key": "good",
+          "budget": 3537,
+          "sampleSize": 98
+        },
+        {
+          "key": "easy",
+          "budget": 4711,
+          "sampleSize": 98
+        }
+      ],
+      "hard-support": [
+        {
+          "key": "bad",
+          "budget": 2674,
+          "sampleSize": 98
+        },
+        {
+          "key": "good",
+          "budget": 3376,
+          "sampleSize": 98
+        },
+        {
+          "key": "easy",
+          "budget": 4494,
+          "sampleSize": 98
+        }
+      ]
+    }
+  },
+  "sources": {
+    "patchNotes": "https://www.dota2.com/patches/7.42",
+    "matchData": "https://docs.opendota.com/"
+  },
+  "roles": {
+    "carry": {
+      "diagnostics": {
+        "eligible": 32,
+        "seenInRole": 26,
+        "unobservedTop20": 4,
+        "maxBenchmark": 243.43132278649614,
+        "midpoint": 192.37518580146204,
+        "covered": 32,
+        "withoutWinFirst": [
+          "Anti-Mage"
+        ],
+        "top20MembershipWithoutWin": [],
+        "farmFirst": [
+          [
+            "Slow",
+            "Anti-Mage"
+          ],
+          [
+            "Steady",
+            "Anti-Mage"
+          ],
+          [
+            "Fast",
+            "Anti-Mage"
+          ]
+        ]
+      },
+      "rankings": [
+        {
+          "rank": 1,
+          "heroId": 1,
+          "name": "Anti-Mage",
+          "score": 87.71829217179638,
+          "mechanicsPoints": 85.42336200729967,
+          "winPoints": 2.2949301644967046,
+          "ratings": {
+            "scaling": 3,
+            "farm": 2,
+            "access": 3
+          },
+          "mechanic": "Blink accesses targets and camps while Mana Break scales with enemy mana; wave clear usually comes from a purchased item.",
+          "observedPicksInRole": 8,
+          "pooledMatchCount": 2365,
+          "pooledWins": 1133,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=1&language=english",
+          "dpsByFarmScenario": [
+            196.40892857142862,
+            231.55147321428575,
+            241.61543778801848
+          ],
+          "dpsMean": 223.1919465245776
+        },
+        {
+          "rank": 2,
+          "heroId": 109,
+          "name": "Terrorblade",
+          "score": 86.86312115569447,
+          "mechanicsPoints": 84.73948269184972,
+          "winPoints": 2.123638463844761,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 1
+          },
+          "mechanic": "Conjure Image farms separately and Metamorphosis gives a ranged damage window; the window and shared unit management constrain execution.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 565,
+          "pooledWins": 263,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=109&language=english",
+          "dpsByFarmScenario": [
+            217.67117117117115,
+            249.83750000000003,
+            257.34946236559136
+          ],
+          "dpsMean": 241.61937784558754
+        },
+        {
+          "rank": 3,
+          "heroId": 12,
+          "name": "Phantom Lancer",
+          "score": 86.73278345962012,
+          "mechanicsPoints": 84.24559732959821,
+          "winPoints": 2.4871861300219043,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 2
+          },
+          "mechanic": "Juxtapose creates extra attacking units, Doppelganger can dodge or reposition, and single-target attacks from copies scale beyond the hero-only benchmark.",
+          "observedPicksInRole": 7,
+          "pooledMatchCount": 3081,
+          "pooledWins": 1587,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=12&language=english",
+          "dpsByFarmScenario": [
+            182.30794912559617,
+            210.60875,
+            217.30853889943072
+          ],
+          "dpsMean": 203.40841267500898
+        },
+        {
+          "rank": 4,
+          "heroId": 46,
+          "name": "Templar Assassin",
+          "score": 86.59002373500087,
+          "mechanicsPoints": 84.39717437071327,
+          "winPoints": 2.192849364287598,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 2
+          },
+          "mechanic": "Psi Blades spill attacks onto units behind the target, Meld adds armor reduction, and Refraction protects against discrete damage instances.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 635,
+          "pooledWins": 303,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=46&language=english",
+          "dpsByFarmScenario": [
+            180.69903927364868,
+            211.77986328125002,
+            220.90907258064516
+          ],
+          "dpsMean": 204.46265837851465
+        },
+        {
+          "rank": 5,
+          "heroId": 72,
+          "name": "Gyrocopter",
+          "score": 85.62720079652878,
+          "mechanicsPoints": 83.58088734690295,
+          "winPoints": 2.046313449625827,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 2
+          },
+          "mechanic": "Flak Cannon applies attacks across nearby targets, and Homing Missile adds delayed control. Flak count and combat area determine output.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 567,
+          "pooledWins": 255,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=72&language=english",
+          "dpsByFarmScenario": [
+            179.78267090620034,
+            205.6957536764706,
+            210.87727941176473
+          ],
+          "dpsMean": 198.7852346648119
+        },
+        {
+          "rank": 6,
+          "heroId": 8,
+          "name": "Juggernaut",
+          "score": 85.13221595945753,
+          "mechanicsPoints": 82.73397981208974,
+          "winPoints": 2.3982361473677796,
+          "ratings": {
+            "scaling": 3,
+            "farm": 2,
+            "access": 2
+          },
+          "mechanic": "Blade Dance adds crits, Blade Fury can clear waves, and Omnislash adds attacks. Basic attacks during Blade Fury require Scepter in 7.42.",
+          "observedPicksInRole": 6,
+          "pooledMatchCount": 2739,
+          "pooledWins": 1365,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=8&language=english",
+          "dpsByFarmScenario": [
+            215.72528957528962,
+            248.36330357142862,
+            253.69953917050694
+          ],
+          "dpsMean": 239.26271077240838
+        },
+        {
+          "rank": 7,
+          "heroId": 10,
+          "name": "Morphling",
+          "score": 83.82605031981785,
+          "mechanicsPoints": 81.66666666666667,
+          "winPoints": 2.1593836531511816,
+          "ratings": {
+            "scaling": 3,
+            "farm": 1,
+            "access": 3
+          },
+          "mechanic": "Attribute Shift changes offensive and defensive stats, and Waveform gives reach or escape. Most farm outside Waveform comes from attacks.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 992,
+          "pooledWins": 459,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=10&language=english",
+          "dpsByFarmScenario": [
+            219.9277815315315,
+            251.74554166666667,
+            258.62064516129027
+          ],
+          "dpsMean": 243.43132278649614
+        },
+        {
+          "rank": 8,
+          "heroId": 89,
+          "name": "Naga Siren",
+          "score": 83.36489788238808,
+          "mechanicsPoints": 81.30667444471197,
+          "winPoints": 2.0582234376761037,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 2
+          },
+          "mechanic": "Mirror Image splits farm and creates attack copies; Song can reset a fight but does not guarantee the next damaging window.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 543,
+          "pooledWins": 246,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=89&language=english",
+          "dpsByFarmScenario": [
+            162.233386327504,
+            190.09961397058822,
+            196.57001897533206
+          ],
+          "dpsMean": 182.9676730911414
+        },
+        {
+          "rank": 9,
+          "heroId": 18,
+          "name": "Sven",
+          "score": 82.67634636534176,
+          "mechanicsPoints": 80.11594518692428,
+          "winPoints": 2.5604011784174805,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 2
+          },
+          "mechanic": "Great Cleave clears waves and clusters, God's Strength adds a burst window, and Storm Hammer helps Sven make contact.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 1338,
+          "pooledWins": 721,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=18&language=english",
+          "dpsByFarmScenario": [
+            150.28115131578943,
+            180.9196957236842,
+            192.856960950764
+          ],
+          "dpsMean": 174.68593599674588
+        },
+        {
+          "rank": 10,
+          "heroId": 53,
+          "name": "Nature's Prophet",
+          "score": 82.04989443017216,
+          "mechanicsPoints": 80.41002808240194,
+          "winPoints": 1.639866347770229,
+          "ratings": {
+            "scaling": 2,
+            "farm": 3,
+            "access": 3
+          },
+          "mechanic": "Teleportation connects farm and push across lanes, and treants add separately controlled pressure; neither counts as personal attack DPS.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 1272,
+          "pooledWins": 450,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=53&language=english",
+          "dpsByFarmScenario": [
+            170.64530175,
+            207.55578593750002,
+            221.5447258064516
+          ],
+          "dpsMean": 199.91527116465053
+        },
+        {
+          "rank": 11,
+          "heroId": 42,
+          "name": "Wraith King",
+          "score": 81.35141959249374,
+          "mechanicsPoints": 78.66176846393509,
+          "winPoints": 2.689651128558647,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 2
+          },
+          "mechanic": "Bone Guard skeletons farm or push, Mortal Strike adds a crit, and Reincarnation gives a second life when ready and paid for.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 2402,
+          "pooledWins": 1340,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=42&language=english",
+          "dpsByFarmScenario": [
+            141.5887736111111,
+            168.993515625,
+            183.13333333333333
+          ],
+          "dpsMean": 164.5718741898148
+        },
+        {
+          "rank": 12,
+          "heroId": 11,
+          "name": "Shadow Fiend",
+          "score": 80.79189247508533,
+          "mechanicsPoints": 78.64810751601861,
+          "winPoints": 2.1437849590667195,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 1
+          },
+          "mechanic": "Shadowrazes clear waves and armor reduction supports physical damage; front-loaded spells and attacks require positioning.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 1698,
+          "pooledWins": 768,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=11&language=english",
+          "dpsByFarmScenario": [
+            177.95891047297297,
+            207.0092578125,
+            212.79012096774193
+          ],
+          "dpsMean": 199.25276308440496
+        },
+        {
+          "rank": 13,
+          "heroId": 145,
+          "name": "Kez",
+          "score": 80.76429734560604,
+          "mechanicsPoints": 78.59959140353898,
+          "winPoints": 2.164705942067054,
+          "ratings": {
+            "scaling": 3,
+            "farm": 2,
+            "access": 3
+          },
+          "mechanic": "Katana and sai stances have different attack cadence, and Grappling Claw enables a targeted approach; stance sequencing matters.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 526,
+          "pooledWins": 250,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=145&language=english",
+          "dpsByFarmScenario": [
+            156.4661495376956,
+            182.05972450657896,
+            188.66829371816638
+          ],
+          "dpsMean": 175.731389254147
+        },
+        {
+          "rank": 14,
+          "heroId": 44,
+          "name": "Phantom Assassin",
+          "score": 80.5192925565511,
+          "mechanicsPoints": 77.9026435715736,
+          "winPoints": 2.61664898497749,
+          "ratings": {
+            "scaling": 3,
+            "farm": 2,
+            "access": 2
+          },
+          "mechanic": "Coup de Grace supplies critical attack spikes and Phantom Strike bridges distance. Farming typically accelerates after a purchased cleave item.",
+          "observedPicksInRole": 8,
+          "pooledMatchCount": 2031,
+          "pooledWins": 1107,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=44&language=english",
+          "dpsByFarmScenario": [
+            183.55135135135134,
+            212.6799448529412,
+            220.7483870967742
+          ],
+          "dpsMean": 205.65989443368892
+        },
+        {
+          "rank": 15,
+          "heroId": 114,
+          "name": "Monkey King",
+          "score": 80.20219367322515,
+          "mechanicsPoints": 78.16769874046778,
+          "winPoints": 2.034494932757373,
+          "ratings": {
+            "scaling": 3,
+            "farm": 2,
+            "access": 2
+          },
+          "mechanic": "Jingu Mastery rewards committing hits, Tree Dance offers access, and Wukong's Command supplies extra attacks inside a fixed area.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 777,
+          "pooledWins": 343,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=114&language=english",
+          "dpsByFarmScenario": [
+            182.5201594172297,
+            214.61005371093748,
+            225.37998991935476
+          ],
+          "dpsMean": 207.50340101584064
+        },
+        {
+          "rank": 16,
+          "heroId": 94,
+          "name": "Medusa",
+          "score": 80.13813421460463,
+          "mechanicsPoints": 77.76824817308446,
+          "winPoints": 2.36988604152017,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 1
+          },
+          "mechanic": "Split Shot converts sustained attacks into multi-target pressure, and Mana Shield buys durability; Medusa has limited target pursuit.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 466,
+          "pooledWins": 242,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=94&language=english",
+          "dpsByFarmScenario": [
+            171.01240063593002,
+            200.07139705882352,
+            208.31574952561667
+          ],
+          "dpsMean": 193.13318240679007
+        },
+        {
+          "rank": 17,
+          "heroId": 54,
+          "name": "Lifestealer",
+          "score": 80.07008332981263,
+          "mechanicsPoints": 77.6243642971364,
+          "winPoints": 2.445719032676238,
+          "ratings": {
+            "scaling": 3,
+            "farm": 2,
+            "access": 3
+          },
+          "mechanic": "Feast rewards sustained contact, and Rage helps him stay on a target through eligible disables; farming has limited native area damage.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 2328,
+          "pooledWins": 1186,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=54&language=english",
+          "dpsByFarmScenario": [
+            145.46723966613672,
+            178.33578125,
+            183.042504743833
+          ],
+          "dpsMean": 168.94850855332322
+        },
+        {
+          "rank": 18,
+          "heroId": 48,
+          "name": "Luna",
+          "score": 79.45714545867713,
+          "mechanicsPoints": 77.07310133291175,
+          "winPoints": 2.384044125765387,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 1
+          },
+          "mechanic": "Moon Glaives make farm and pressure scale across nearby units; short-ranged attacks still depend on spacing.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 1263,
+          "pooledWins": 637,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=48&language=english",
+          "dpsByFarmScenario": [
+            166.39817170111286,
+            195.2451470588235,
+            203.25161290322578
+          ],
+          "dpsMean": 188.2983105543874
+        },
+        {
+          "rank": 19,
+          "heroId": 95,
+          "name": "Troll Warlord",
+          "score": 78.68684807692121,
+          "mechanicsPoints": 76.0549278702724,
+          "winPoints": 2.6319202066488168,
+          "ratings": {
+            "scaling": 3,
+            "farm": 2,
+            "access": 2
+          },
+          "mechanic": "Fervor rewards staying on the same unit, while Whirling Axes and attack-form switching help contact. Changing targets interrupts the Fervor payoff.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 378,
+          "pooledWins": 218,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=95&language=english",
+          "dpsByFarmScenario": [
+            170.3338086248013,
+            199.67724724264707,
+            208.41503795066413
+          ],
+          "dpsMean": 192.80869793937083
+        },
+        {
+          "rank": 20,
+          "heroId": 6,
+          "name": "Drow Ranger",
+          "score": 78.39047844875678,
+          "mechanicsPoints": 76.0627157120673,
+          "winPoints": 2.3277627366894733,
+          "ratings": {
+            "scaling": 3,
+            "farm": 3,
+            "access": 1
+          },
+          "mechanic": "Multishot hits waves and Marksmanship rewards spacing; the client lists a 300-unit disable radius.",
+          "observedPicksInRole": 7,
+          "pooledMatchCount": 1864,
+          "pooledWins": 910,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=6&language=english",
+          "dpsByFarmScenario": [
+            159.42862678855326,
+            188.1770404411765,
+            196.2070208728653
+          ],
+          "dpsMean": 181.27089603419836
+        }
+      ]
+    },
+    "mid": {
+      "diagnostics": {
+        "eligible": 34,
+        "seenInRole": 28,
+        "unobservedTop20": 4,
+        "maxBenchmark": 393.75,
+        "midpoint": 240,
+        "covered": 23,
+        "withoutWinFirst": [
+          "Lina"
+        ],
+        "top20MembershipWithoutWin": []
+      },
+      "rankings": [
+        {
+          "rank": 1,
+          "heroId": 25,
+          "name": "Lina",
+          "score": 90.51315185530277,
+          "mechanicsPoints": 88.33333333333333,
+          "winPoints": 2.1798185219694357,
+          "ratings": {
+            "wave": 3,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Dragon Slave clears waves, Fiery Soul stacks movement speed, and delayed Light Strike Array is easier to land with setup.",
+          "observedPicksInRole": 4,
+          "pooledMatchCount": 1492,
+          "pooledWins": 688,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=25&language=english",
+          "spellBenchmark": {
+            "label": "Laguna Blade",
+            "damage": 393.75
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 2,
+          "heroId": 13,
+          "name": "Puck",
+          "score": 87.71183902283154,
+          "mechanicsPoints": 85.66666666666667,
+          "winPoints": 2.0451723561648754,
+          "ratings": {
+            "wave": 3,
+            "rotation": 3,
+            "reliability": 3
+          },
+          "mechanic": "Illusory Orb and Waning Rift clear and reposition; Dream Coil restrains a cluster, and Phase Shift helps survive counterplay.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 472,
+          "pooledWins": 214,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=13&language=english",
+          "spellBenchmark": {
+            "label": "Illusory Orb",
+            "damage": 210
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 3,
+          "heroId": 39,
+          "name": "Queen of Pain",
+          "score": 83.8202905674061,
+          "mechanicsPoints": 81.47619047619047,
+          "winPoints": 2.3441000912156404,
+          "ratings": {
+            "wave": 3,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Scream of Pain clears nearby units and Blink reaches side lanes; Sonic Wave adds burst, with limited prolonged control.",
+          "observedPicksInRole": 4,
+          "pooledMatchCount": 1506,
+          "pooledWins": 744,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=39&language=english",
+          "spellBenchmark": {
+            "label": "Scream of Pain",
+            "damage": 258.75
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 4,
+          "heroId": 137,
+          "name": "Primal Beast",
+          "score": 82.7556064940936,
+          "mechanicsPoints": 80.52380952380952,
+          "winPoints": 2.231796970284078,
+          "ratings": {
+            "wave": 3,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Trample and Onslaught clear and reach fights; Pulverize adds focused control that depends on completing its channel.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 451,
+          "pooledWins": 222,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=137&language=english",
+          "spellBenchmark": null,
+          "imputedSpellDamage": 240
+        },
+        {
+          "rank": 5,
+          "heroId": 120,
+          "name": "Pangolier",
+          "score": 82.39908239097016,
+          "mechanicsPoints": 80.52380952380952,
+          "winPoints": 1.87527286716064,
+          "ratings": {
+            "wave": 3,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Swashbuckle clears and carries 60% Item Potency. Rolling Thunder gives mobile repeated stuns that depend on terrain and approach angle.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 400,
+          "pooledWins": 169,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=120&language=english",
+          "spellBenchmark": null,
+          "imputedSpellDamage": 240
+        },
+        {
+          "rank": 6,
+          "heroId": 17,
+          "name": "Storm Spirit",
+          "score": 81.24681718371548,
+          "mechanicsPoints": 79,
+          "winPoints": 2.246817183715474,
+          "ratings": {
+            "wave": 3,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Static Remnant clears waves, Electric Vortex catches a target, and Ball Lightning brings gap close at a mana cost.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 802,
+          "pooledWins": 388,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=17&language=english",
+          "spellBenchmark": {
+            "label": "Static Remnant",
+            "damage": 210
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 7,
+          "heroId": 23,
+          "name": "Kunkka",
+          "score": 77.856975781196,
+          "mechanicsPoints": 75.47619047619048,
+          "winPoints": 2.380785305005513,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Tidebringer clears and pressures through waves; X Marks the Spot helps time Torrent or Ghostship.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 817,
+          "pooledWins": 417,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=23&language=english",
+          "spellBenchmark": {
+            "label": "Ghostship",
+            "damage": 337.5
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 8,
+          "heroId": 106,
+          "name": "Ember Spirit",
+          "score": 77.50724431970326,
+          "mechanicsPoints": 75.38095238095238,
+          "winPoints": 2.1262919387508825,
+          "ratings": {
+            "wave": 3,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Sleight of Fist and Flame Guard clear and pressure, while Fire Remnant plus Searing Chains creates rotation reach.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 679,
+          "pooledWins": 314,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=106&language=english",
+          "spellBenchmark": {
+            "label": "Fire Remnant",
+            "damage": 138.75
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 9,
+          "heroId": 22,
+          "name": "Zeus",
+          "score": 76.76505707184455,
+          "mechanicsPoints": 74.52380952380952,
+          "winPoints": 2.241247548035034,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Arc Lightning clears repeated waves and Thundergod's Wrath contributes globally; early native hard lockdown is limited.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 1630,
+          "pooledWins": 770,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=22&language=english",
+          "spellBenchmark": {
+            "label": "Thundergod's Wrath",
+            "damage": 318.75
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 10,
+          "heroId": 126,
+          "name": "Void Spirit",
+          "score": 75.66691433438635,
+          "mechanicsPoints": 73.14285714285715,
+          "winPoints": 2.5240571915291947,
+          "ratings": {
+            "wave": 2,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Resonant Pulse and Dissimilate clear nearby units, while Astral Step and Aether Remnant enable catches and repositioning.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 797,
+          "pooledWins": 430,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=126&language=english",
+          "spellBenchmark": {
+            "label": "Dissimilate",
+            "damage": 258.75
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 11,
+          "heroId": 74,
+          "name": "Invoker",
+          "score": 74.687356630971,
+          "mechanicsPoints": 72.1904761904762,
+          "winPoints": 2.496880440494796,
+          "ratings": {
+            "wave": 2,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Invoker combines Tornado and Cold Snap for rotations, with wave clearing and execution varying by orb investment and spell order.",
+          "observedPicksInRole": 11,
+          "pooledMatchCount": 3270,
+          "pooledWins": 1689,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=74&language=english",
+          "spellBenchmark": null,
+          "imputedSpellDamage": 240
+        },
+        {
+          "rank": 12,
+          "heroId": 107,
+          "name": "Earth Spirit",
+          "score": 74.43191877185018,
+          "mechanicsPoints": 72.1904761904762,
+          "winPoints": 2.241442581373976,
+          "ratings": {
+            "wave": 2,
+            "rotation": 3,
+            "reliability": 2
+          },
+          "mechanic": "Rolling Boulder gives reach and Geomagnetic Grip or Boulder Smash can stop follow-up; spell geometry and Remnants condition reliability.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 498,
+          "pooledWins": 245,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=107&language=english",
+          "spellBenchmark": {
+            "label": "Boulder Smash",
+            "damage": 240
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 13,
+          "heroId": 19,
+          "name": "Tiny",
+          "score": 74.21572931234299,
+          "mechanicsPoints": 72.04761904761905,
+          "winPoints": 2.1681102647239396,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Avalanche and Toss burst units in an area, while Toss offers displacement; reliable starts at range often depend on Blink.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 534,
+          "pooledWins": 254,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=19&language=english",
+          "spellBenchmark": {
+            "label": "Toss",
+            "damage": 270
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 14,
+          "heroId": 98,
+          "name": "Timbersaw",
+          "score": 72.7956527384925,
+          "mechanicsPoints": 70.52380952380952,
+          "winPoints": 2.271843214682995,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Whirling Death and Chakram clear waves; Timber Chain gives terrain-dependent movement and Reactive Armor improves persistence under attacks.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 677,
+          "pooledWins": 333,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=98&language=english",
+          "spellBenchmark": null,
+          "imputedSpellDamage": 240
+        },
+        {
+          "rank": 15,
+          "heroId": 43,
+          "name": "Death Prophet",
+          "score": 72.75286752105704,
+          "mechanicsPoints": 70.71428571428572,
+          "winPoints": 2.0385818067713206,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Crypt Swarm clears waves, Silence controls an area, and Exorcism converts objective windows when ready.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 1398,
+          "pooledWins": 606,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=43&language=english",
+          "spellBenchmark": {
+            "label": "Carrion Swarm",
+            "damage": 243.75
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 16,
+          "heroId": 45,
+          "name": "Pugna",
+          "score": 72.73178333031365,
+          "mechanicsPoints": 70.52380952380952,
+          "winPoints": 2.2079738065041314,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Nether Blast clears quickly and hits buildings; Decrepify and Life Drain give powerful but situational fight options.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 1135,
+          "pooledWins": 534,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=45&language=english",
+          "spellBenchmark": {
+            "label": "Nether Blast",
+            "damage": 240
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 17,
+          "heroId": 46,
+          "name": "Templar Assassin",
+          "score": 72.71665888809711,
+          "mechanicsPoints": 70.52380952380952,
+          "winPoints": 2.192849364287598,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Psi Blades clears through a wave, Refraction protects discrete hits, and traps give scouting and a delayed slow.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 635,
+          "pooledWins": 303,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=46&language=english",
+          "spellBenchmark": null,
+          "imputedSpellDamage": 240
+        },
+        {
+          "rank": 18,
+          "heroId": 49,
+          "name": "Dragon Knight",
+          "score": 71.3017401084438,
+          "mechanicsPoints": 68.85714285714286,
+          "winPoints": 2.444597251300934,
+          "ratings": {
+            "wave": 2,
+            "rotation": 2,
+            "reliability": 3
+          },
+          "mechanic": "Breathe Fire clears in a line, Dragon Tail is point-target control, and Elder Dragon Form adds building pressure.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 1635,
+          "pooledWins": 839,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=49&language=english",
+          "spellBenchmark": {
+            "label": "Breathe Fire",
+            "damage": 240
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 19,
+          "heroId": 11,
+          "name": "Shadow Fiend",
+          "score": 71.14378495906672,
+          "mechanicsPoints": 69,
+          "winPoints": 2.1437849590667195,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Shadowraze clears waves and stacks debuffs, but spacing several casts and setting up Requiem matter for fight conversion.",
+          "observedPicksInRole": 4,
+          "pooledMatchCount": 1698,
+          "pooledWins": 768,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=11&language=english",
+          "spellBenchmark": {
+            "label": "Shadowraze",
+            "damage": 210
+          },
+          "imputedSpellDamage": null
+        },
+        {
+          "rank": 20,
+          "heroId": 52,
+          "name": "Leshrac",
+          "score": 71.00442212118416,
+          "mechanicsPoints": 69,
+          "winPoints": 2.004422121184163,
+          "ratings": {
+            "wave": 3,
+            "rotation": 2,
+            "reliability": 2
+          },
+          "mechanic": "Split Earth provides delayed control; Pulse Nova clears waves and Diabolic Edict hits buildings, with resource and proximity costs.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 347,
+          "pooledWins": 157,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=52&language=english",
+          "spellBenchmark": {
+            "label": "Split Earth",
+            "damage": 210
+          },
+          "imputedSpellDamage": null
+        }
+      ]
+    },
+    "offlane": {
+      "diagnostics": {
+        "eligible": 31,
+        "seenInRole": 24,
+        "unobservedTop20": 4,
+        "midpoint": null,
+        "covered": 0,
+        "withoutWinFirst": [
+          "Centaur Warrunner"
+        ],
+        "top20MembershipWithoutWin": []
+      },
+      "rankings": [
+        {
+          "rank": 1,
+          "heroId": 96,
+          "name": "Centaur Warrunner",
+          "score": 85.88328622608967,
+          "mechanicsPoints": 83.6,
+          "winPoints": 2.283286226089665,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 3,
+            "protection": 2,
+            "pressure": 2,
+            "lowGold": 3
+          },
+          "mechanic": "Maxed Hoof Stomp stuns 2.2s in a 325 radius every 12s. Strength and Retaliate help hold melee ground. Stampede gives global team movement for 3.5–4.5s.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 659,
+          "pooledWins": 326,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=96&language=english"
+        },
+        {
+          "rank": 2,
+          "heroId": 29,
+          "name": "Tidehunter",
+          "score": 81.66519118246843,
+          "mechanicsPoints": 79.16666666666666,
+          "winPoints": 2.4985245158017824,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 3,
+            "protection": 2,
+            "pressure": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Ravage provides a 1,250-radius area stun with a 150/145/140s cooldown. Kraken Shell blocks attack damage and can strong-dispel, while Anchor Smash lowers enemy attacks.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 1581,
+          "pooledWins": 829,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=29&language=english"
+        },
+        {
+          "rank": 3,
+          "heroId": 97,
+          "name": "Magnus",
+          "score": 80.39081483781041,
+          "mechanicsPoints": 77.9,
+          "winPoints": 2.490814837810405,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 2,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Reverse Polarity groups and stuns, Skewer displaces, and Empower lets a melee ally cleave waves and farm. Reliable fog entry often needs Blink.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 1876,
+          "pooledWins": 977,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=97&language=english"
+        },
+        {
+          "rank": 4,
+          "heroId": 55,
+          "name": "Dark Seer",
+          "score": 80.08291031226602,
+          "mechanicsPoints": 77.9,
+          "winPoints": 2.182910312266021,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 2,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Maxed Vacuum displaces in a 550 radius every 26s in 7.42. Ion Shell pushes, Surge enables entry or escape, and Wall replicas have 60% Item Potency.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 363,
+          "pooledWins": 177,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=55&language=english"
+        },
+        {
+          "rank": 5,
+          "heroId": 49,
+          "name": "Dragon Knight",
+          "score": 78.44459725130093,
+          "mechanicsPoints": 76,
+          "winPoints": 2.444597251300934,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 3,
+            "protection": 2,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Dragon Tail gives a primary-target stun with nearby splash control. Dragon Blood supplies armor and regeneration, Breathe Fire lowers enemy attack damage, and Dragon Form pressures towers.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 1635,
+          "pooledWins": 839,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=49&language=english"
+        },
+        {
+          "rank": 6,
+          "heroId": 135,
+          "name": "Dawnbreaker",
+          "score": 77.01600727269509,
+          "mechanicsPoints": 74.73333333333335,
+          "winPoints": 2.282673939361746,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 2,
+            "protection": 3,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Solar Guardian joins a distant ally with healing and a landing stun. Luminosity supports sustain and Starbreaker sweeps waves; interrupting her windup limits the save.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 1137,
+          "pooledWins": 552,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=135&language=english"
+        },
+        {
+          "rank": 7,
+          "heroId": 108,
+          "name": "Underlord",
+          "score": 75.68088468362352,
+          "mechanicsPoints": 73.46666666666667,
+          "winPoints": 2.2142180169568477,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 2,
+            "protection": 2,
+            "pressure": 3,
+            "lowGold": 3
+          },
+          "mechanic": "Pit of Malice constrains a zone, Firestorm clears waves, Atrophy reduces enemy base attack damage, and Fiend's Gate enables team repositioning.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 588,
+          "pooledWins": 284,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=108&language=english"
+        },
+        {
+          "rank": 8,
+          "heroId": 16,
+          "name": "Sand King",
+          "score": 74.57126982423401,
+          "mechanicsPoints": 72.20000000000002,
+          "winPoints": 2.371269824233984,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 1,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Burrowstrike combines repositioning with a line stun. Caustic Finale and Sand Storm clear waves, though detection limits Sand Storm protection.",
+          "observedPicksInRole": 4,
+          "pooledMatchCount": 810,
+          "pooledWins": 412,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=16&language=english"
+        },
+        {
+          "rank": 9,
+          "heroId": 129,
+          "name": "Mars",
+          "score": 74.5488527342192,
+          "mechanicsPoints": 72.2,
+          "winPoints": 2.3488527342191996,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 2,
+            "pressure": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Arena constrains a fight and blocks eligible ranged attacks. Spear can pin against terrain, Bulwark mitigates frontal attacks, and Rebuke clears waves.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 910,
+          "pooledWins": 457,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=129&language=english"
+        },
+        {
+          "rank": 10,
+          "heroId": 28,
+          "name": "Slardar",
+          "score": 74.48076332878551,
+          "mechanicsPoints": 72.20000000000002,
+          "winPoints": 2.2807633287855005,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 1,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Sprint and area Crush give entry and control. Bash rewards uninterrupted attacks. Corrosive Haze reduces target armor and gives follow-up vision.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 820,
+          "pooledWins": 402,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=28&language=english"
+        },
+        {
+          "rank": 11,
+          "heroId": 137,
+          "name": "Primal Beast",
+          "score": 74.4317969702841,
+          "mechanicsPoints": 72.20000000000002,
+          "winPoints": 2.231796970284078,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 1,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Onslaught covers ground and knocks targets back. Pulverize repeatedly controls a target. Trample is mobile area wave clear, while enemy disables interrupt follow-through.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 451,
+          "pooledWins": 222,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=137&language=english"
+        },
+        {
+          "rank": 12,
+          "heroId": 120,
+          "name": "Pangolier",
+          "score": 74.07527286716065,
+          "mechanicsPoints": 72.2,
+          "winPoints": 1.87527286716064,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 2,
+            "pressure": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Rolling Thunder chains stuns and disrupts clustered fights. Shield Crash gives survivability, and Swashbuckle supplies wave clear and movement. Narrow routes and interruptions matter.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 400,
+          "pooledWins": 169,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=120&language=english"
+        },
+        {
+          "rank": 13,
+          "heroId": 23,
+          "name": "Kunkka",
+          "score": 71.41411863833885,
+          "mechanicsPoints": 69.03333333333333,
+          "winPoints": 2.380785305005513,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 2,
+            "protection": 2,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "X sets up Torrent or Ghostship and can move an ally back to its return location. Ship's rum delays damage, and Tidebringer clears clustered waves.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 817,
+          "pooledWins": 417,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=23&language=english"
+        },
+        {
+          "rank": 14,
+          "heroId": 42,
+          "name": "Wraith King",
+          "score": 68.55631779522533,
+          "mechanicsPoints": 65.86666666666667,
+          "winPoints": 2.689651128558647,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 3,
+            "protection": 1,
+            "pressure": 3,
+            "lowGold": 1
+          },
+          "mechanic": "Wraithfire Blast stuns, skeletons push lanes, and Reincarnation extends frontlining when available. Position 3 leaves less room for a greedy item path.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 2402,
+          "pooledWins": 1340,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=42&language=english"
+        },
+        {
+          "rank": 15,
+          "heroId": 102,
+          "name": "Abaddon",
+          "score": 68.31526974735483,
+          "mechanicsPoints": 65.86666666666667,
+          "winPoints": 2.448603080688153,
+          "ratings": {
+            "initiation": 1,
+            "frontline": 3,
+            "protection": 3,
+            "pressure": 1,
+            "lowGold": 3
+          },
+          "mechanic": "Aphotic Shield absorbs damage and strong-dispels an ally on cast. Mist Coil heals, and Borrowed Time gives durability. Native hard entry and lane clear are limited.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 673,
+          "pooledWins": 355,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=102&language=english"
+        },
+        {
+          "rank": 16,
+          "heroId": 78,
+          "name": "Brewmaster",
+          "score": 68.05733582837854,
+          "mechanicsPoints": 65.86666666666666,
+          "winPoints": 2.1906691617118814,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 3,
+            "protection": 2,
+            "pressure": 2,
+            "lowGold": 1
+          },
+          "mechanic": "Primal Split replaces direct exposure with controllable bodies and adds stun or Cyclone options. Those jobs require split uptime and good unit control.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 263,
+          "pooledWins": 131,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=78&language=english"
+        },
+        {
+          "rank": 17,
+          "heroId": 33,
+          "name": "Enigma",
+          "score": 67.75820559245636,
+          "mechanicsPoints": 65.23333333333335,
+          "winPoints": 2.5248722591230206,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 1,
+            "protection": 1,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Black Hole is an area disable that pierces debuff immunity. Eidolons push waves and buildings. Channel interruptions and ultimate downtime leave gaps.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 467,
+          "pooledWins": 257,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=33&language=english"
+        },
+        {
+          "rank": 18,
+          "heroId": 92,
+          "name": "Visage",
+          "score": 66.19786105677102,
+          "mechanicsPoints": 63.333333333333336,
+          "winPoints": 2.8645277234376882,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 2,
+            "protection": 1,
+            "pressure": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Two Familiars add attacks, Stone Form stuns and tower pressure. Grave Chill boosts nearby Familiars and Cloak protects nearby units. This specialist pick depends on unit control.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 264,
+          "pooledWins": 167,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=92&language=english"
+        },
+        {
+          "rank": 19,
+          "heroId": 60,
+          "name": "Night Stalker",
+          "score": 65.65916844116323,
+          "mechanicsPoints": 63.33333333333333,
+          "winPoints": 2.3258351078299095,
+          "ratings": {
+            "initiation": 2,
+            "frontline": 2,
+            "protection": 2,
+            "pressure": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Crippling Fear silences nearby casters. Dark Ascension gives night, movement and scouting access for picks. His frontlining and reach depend on the night cycle and opponents.",
+          "observedPicksInRole": 4,
+          "pooledMatchCount": 1179,
+          "pooledWins": 582,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=60&language=english"
+        },
+        {
+          "rank": 20,
+          "heroId": 2,
+          "name": "Axe",
+          "score": 64.50134522899828,
+          "mechanicsPoints": 62.06666666666668,
+          "winPoints": 2.4346785623315945,
+          "ratings": {
+            "initiation": 3,
+            "frontline": 2,
+            "protection": 1,
+            "pressure": 2,
+            "lowGold": 1
+          },
+          "mechanic": "Maxed Berserker's Call is a 3s taunt in a 315 radius on a 12s cooldown and pierces debuff immunity. Blink solves melee entry; in 7.42, missed attacks advance Counter Helix.",
+          "observedPicksInRole": 8,
+          "pooledMatchCount": 2596,
+          "pooledWins": 1314,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=2&language=english"
+        }
+      ]
+    },
+    "soft-support": {
+      "diagnostics": {
+        "eligible": 30,
+        "seenInRole": 22,
+        "unobservedTop20": 5,
+        "midpoint": null,
+        "covered": 0,
+        "withoutWinFirst": [
+          "Tusk"
+        ],
+        "top20MembershipWithoutWin": [
+          "Grimstroke"
+        ]
+      },
+      "rankings": [
+        {
+          "rank": 1,
+          "heroId": 100,
+          "name": "Tusk",
+          "score": 86.2174340230204,
+          "mechanicsPoints": 83.91666666666667,
+          "winPoints": 2.300767356353731,
+          "ratings": {
+            "catch": 3,
+            "tempo": 2,
+            "lane": 3,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Snowball can bring allies in or protect them briefly; Ice Shards blocks paths and Walrus Punch interrupts at melee range.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 744,
+          "pooledWins": 369,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=100&language=english"
+        },
+        {
+          "rank": 2,
+          "heroId": 87,
+          "name": "Disruptor",
+          "score": 83.25453354647263,
+          "mechanicsPoints": 80.75,
+          "winPoints": 2.504533546472633,
+          "ratings": {
+            "catch": 3,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 3
+          },
+          "mechanic": "Glimpse punishes recent repositioning; Kinetic Field and Static Storm hold and silence an area in combination.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 1231,
+          "pooledWins": 651,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=87&language=english"
+        },
+        {
+          "rank": 3,
+          "heroId": 20,
+          "name": "Vengeful Spirit",
+          "score": 83.2147589215817,
+          "mechanicsPoints": 80.75,
+          "winPoints": 2.4647589215817107,
+          "ratings": {
+            "catch": 3,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 3
+          },
+          "mechanic": "Magic Missile starts a catch; Nether Swap repositions an ally or enemy and Wave of Terror supports physical follow-up.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 1434,
+          "pooledWins": 744,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=20&language=english"
+        },
+        {
+          "rank": 4,
+          "heroId": 136,
+          "name": "Marci",
+          "score": 83.20196936126108,
+          "mechanicsPoints": 80.75,
+          "winPoints": 2.4519693612610767,
+          "ratings": {
+            "catch": 3,
+            "tempo": 3,
+            "lane": 2,
+            "counterplay": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Rebound jumps via an ally, then Dispose repositions targets; her early impact depends on an ally anchor and follow-up.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 678,
+          "pooledWins": 358,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=136&language=english"
+        },
+        {
+          "rank": 5,
+          "heroId": 107,
+          "name": "Earth Spirit",
+          "score": 82.99144258137397,
+          "mechanicsPoints": 80.75,
+          "winPoints": 2.241442581373976,
+          "ratings": {
+            "catch": 3,
+            "tempo": 3,
+            "lane": 2,
+            "counterplay": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Rolling Boulder closes distance and stuns, with greater reach through a Stone Remnant; remnant management governs follow-up control.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 498,
+          "pooledWins": 245,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=107&language=english"
+        },
+        {
+          "rank": 6,
+          "heroId": 51,
+          "name": "Clockwerk",
+          "score": 82.88855784885347,
+          "mechanicsPoints": 80.75,
+          "winPoints": 2.138557848853471,
+          "ratings": {
+            "catch": 3,
+            "tempo": 3,
+            "lane": 2,
+            "counterplay": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Hookshot extends initiation range, Power Cogs separates targets, and Rocket Flare checks distant areas.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 368,
+          "pooledWins": 176,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=51&language=english"
+        },
+        {
+          "rank": 7,
+          "heroId": 71,
+          "name": "Spirit Breaker",
+          "score": 79.96372663831997,
+          "mechanicsPoints": 77.58333333333334,
+          "winPoints": 2.3803933049866193,
+          "ratings": {
+            "catch": 3,
+            "tempo": 3,
+            "lane": 1,
+            "counterplay": 2,
+            "lowGold": 3
+          },
+          "mechanic": "Charge of Darkness reaches visible units across the map and Nether Strike extends the catch; allies need time to follow.",
+          "observedPicksInRole": 6,
+          "pooledMatchCount": 2331,
+          "pooledWins": 1157,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=71&language=english"
+        },
+        {
+          "rank": 8,
+          "heroId": 14,
+          "name": "Pudge",
+          "score": 79.95213739639215,
+          "mechanicsPoints": 77.58333333333333,
+          "winPoints": 2.36880406305882,
+          "ratings": {
+            "catch": 3,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Meat Hook pulls a target, including an ally in reach, and Dismember holds a target at melee range.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 4345,
+          "pooledWins": 2123,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=14&language=english"
+        },
+        {
+          "rank": 9,
+          "heroId": 58,
+          "name": "Enchantress",
+          "score": 79.52927358433374,
+          "mechanicsPoints": 77.58333333333333,
+          "winPoints": 1.9459402510004042,
+          "ratings": {
+            "catch": 2,
+            "tempo": 3,
+            "lane": 3,
+            "counterplay": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Enchant turns an available neutral creep into lane or rotation utility; additional control depends on the creep taken.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 211,
+          "pooledWins": 96,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=58&language=english"
+        },
+        {
+          "rank": 10,
+          "heroId": 45,
+          "name": "Pugna",
+          "score": 75.04130713983746,
+          "mechanicsPoints": 72.83333333333333,
+          "winPoints": 2.2079738065041314,
+          "ratings": {
+            "catch": 1,
+            "tempo": 3,
+            "lane": 3,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Nether Blast pressures waves and towers; Decrepify changes physical and magical exposure, and Nether Ward punishes spell casts.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 1135,
+          "pooledWins": 534,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=45&language=english"
+        },
+        {
+          "rank": 11,
+          "heroId": 9,
+          "name": "Mirana",
+          "score": 73.74306620768299,
+          "mechanicsPoints": 71.24999999999999,
+          "winPoints": 2.493066207683002,
+          "ratings": {
+            "catch": 2,
+            "tempo": 3,
+            "lane": 2,
+            "counterplay": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Sacred Arrow reaches far and rewards allied setup; Leap and Moonlight Shadow provide mobility and team movement.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 1217,
+          "pooledWins": 641,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=9&language=english"
+        },
+        {
+          "rank": 12,
+          "heroId": 40,
+          "name": "Venomancer",
+          "score": 73.65620383079845,
+          "mechanicsPoints": 71.25,
+          "winPoints": 2.4062038307984412,
+          "ratings": {
+            "catch": 1,
+            "tempo": 3,
+            "lane": 3,
+            "counterplay": 2,
+            "lowGold": 3
+          },
+          "mechanic": "Plague Wards secure routes and pressure waves on low gold; Gale and Poison Sting slow rather than instantly lock targets.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 1181,
+          "pooledWins": 602,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=40&language=english"
+        },
+        {
+          "rank": 13,
+          "heroId": 79,
+          "name": "Shadow Demon",
+          "score": 73.55132643334959,
+          "mechanicsPoints": 71.25,
+          "winPoints": 2.301326433349583,
+          "ratings": {
+            "catch": 2,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 3
+          },
+          "mechanic": "Disruption banishes an ally or sets up an enemy; Demonic Purge slows and removes enemy buffs.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 300,
+          "pooledWins": 155,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=79&language=english"
+        },
+        {
+          "rank": 14,
+          "heroId": 88,
+          "name": "Nyx Assassin",
+          "score": 72.08087272029842,
+          "mechanicsPoints": 69.66666666666667,
+          "winPoints": 2.4142060536317467,
+          "ratings": {
+            "catch": 2,
+            "tempo": 3,
+            "lane": 1,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Vendetta enables roams, Impale stuns in a line, and Spiked Carapace punishes predictable incoming damage.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 1302,
+          "pooledWins": 664,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=88&language=english"
+        },
+        {
+          "rank": 15,
+          "heroId": 105,
+          "name": "Techies",
+          "score": 72.01848205950336,
+          "mechanicsPoints": 69.66666666666667,
+          "winPoints": 2.351815392836686,
+          "ratings": {
+            "catch": 2,
+            "tempo": 2,
+            "lane": 3,
+            "counterplay": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Sticky Bomb supplies ranged lane pressure, Blast Off! punishes clustered targets, and Proximity Mines secure routes.",
+          "observedPicksInRole": 6,
+          "pooledMatchCount": 1918,
+          "pooledWins": 945,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=105&language=english"
+        },
+        {
+          "rank": 16,
+          "heroId": 128,
+          "name": "Snapfire",
+          "score": 71.78992365841496,
+          "mechanicsPoints": 69.66666666666667,
+          "winPoints": 2.123256991748291,
+          "ratings": {
+            "catch": 2,
+            "tempo": 2,
+            "lane": 3,
+            "counterplay": 2,
+            "lowGold": 2
+          },
+          "mechanic": "Scatterblast wins close trades, Firesnap Cookie jumps an ally into a stun, and Mortimer Kisses contributes from range.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 1348,
+          "pooledWins": 608,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=128&language=english"
+        },
+        {
+          "rank": 17,
+          "heroId": 7,
+          "name": "Earthshaker",
+          "score": 70.63288570187524,
+          "mechanicsPoints": 68.08333333333333,
+          "winPoints": 2.5495523685419172,
+          "ratings": {
+            "catch": 2,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Fissure reaches across terrain and blocks retreat; Echo Slam punishes clustered fights, with Blink important for close-range delivery.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 2795,
+          "pooledWins": 1477,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=7&language=english"
+        },
+        {
+          "rank": 18,
+          "heroId": 121,
+          "name": "Grimstroke",
+          "score": 70.62935894961709,
+          "mechanicsPoints": 68.08333333333333,
+          "winPoints": 2.5460256162837576,
+          "ratings": {
+            "catch": 2,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Ink Swell accelerates an allied initiator into a stun, Stroke covers waves, and Soulbind punishes enemies who stay close.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 1309,
+          "pooledWins": 702,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=121&language=english"
+        },
+        {
+          "rank": 19,
+          "heroId": 110,
+          "name": "Phoenix",
+          "score": 70.50971115893257,
+          "mechanicsPoints": 68.08333333333333,
+          "winPoints": 2.4263778255992414,
+          "ratings": {
+            "catch": 2,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Icarus Dive brings slows across an area, Sun Ray can heal allies, and Supernova forces enemy attention.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 830,
+          "pooledWins": 431,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=110&language=english"
+        },
+        {
+          "rank": 20,
+          "heroId": 19,
+          "name": "Tiny",
+          "score": 70.25144359805726,
+          "mechanicsPoints": 68.08333333333333,
+          "winPoints": 2.1681102647239396,
+          "ratings": {
+            "catch": 2,
+            "tempo": 2,
+            "lane": 2,
+            "counterplay": 3,
+            "lowGold": 2
+          },
+          "mechanic": "Avalanche interrupts in an area, and Toss can deliver or reposition a nearby unit; Blink improves target selection and access.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 534,
+          "pooledWins": 254,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=19&language=english"
+        }
+      ]
+    },
+    "hard-support": {
+      "diagnostics": {
+        "eligible": 30,
+        "seenInRole": 22,
+        "unobservedTop20": 6,
+        "midpoint": null,
+        "covered": 0,
+        "withoutWinFirst": [
+          "Vengeful Spirit"
+        ],
+        "top20MembershipWithoutWin": []
+      },
+      "rankings": [
+        {
+          "rank": 1,
+          "heroId": 20,
+          "name": "Vengeful Spirit",
+          "score": 86.38142558824838,
+          "mechanicsPoints": 83.91666666666667,
+          "winPoints": 2.4647589215817107,
+          "ratings": {
+            "protection": 3,
+            "lane": 2,
+            "control": 3,
+            "lowGold": 3,
+            "wave": 2
+          },
+          "mechanic": "Nether Swap can extract a threatened ally or displace an enemy; Magic Missile and Wave of Terror deliver follow-up.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 1434,
+          "pooledWins": 744,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=20&language=english"
+        },
+        {
+          "rank": 2,
+          "heroId": 37,
+          "name": "Warlock",
+          "score": 84.68410492645648,
+          "mechanicsPoints": 82.33333333333333,
+          "winPoints": 2.350771593123151,
+          "ratings": {
+            "protection": 2,
+            "lane": 3,
+            "control": 3,
+            "lowGold": 3,
+            "wave": 2
+          },
+          "mechanic": "Shadow Word sustains the lane; Fatal Bonds shares damage and Chaotic Offering interrupts an area from range on a long cooldown.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 899,
+          "pooledWins": 452,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=37&language=english"
+        },
+        {
+          "rank": 3,
+          "heroId": 66,
+          "name": "Chen",
+          "score": 82.80336304837306,
+          "mechanicsPoints": 80.75,
+          "winPoints": 2.0533630483730563,
+          "ratings": {
+            "protection": 3,
+            "lane": 3,
+            "control": 2,
+            "lowGold": 2,
+            "wave": 2
+          },
+          "mechanic": "Hand of God supplies global team sustain, while Holy Persuasion grants neutral-creep pressure and creep-dependent control.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 138,
+          "pooledWins": 68,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=66&language=english"
+        },
+        {
+          "rank": 4,
+          "heroId": 83,
+          "name": "Treant Protector",
+          "score": 82.78578170662857,
+          "mechanicsPoints": 80.75000000000001,
+          "winPoints": 2.035781706628552,
+          "ratings": {
+            "protection": 3,
+            "lane": 2,
+            "control": 3,
+            "lowGold": 3,
+            "wave": 1
+          },
+          "mechanic": "Living Armor can protect at a distance, and Overgrowth restrains clustered enemies; his wave defense depends on reaching a suitable cast angle.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 305,
+          "pooledWins": 141,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=83&language=english"
+        },
+        {
+          "rank": 5,
+          "heroId": 111,
+          "name": "Oracle",
+          "score": 80.03048569327,
+          "mechanicsPoints": 77.58333333333333,
+          "winPoints": 2.4471523599366694,
+          "ratings": {
+            "protection": 3,
+            "lane": 2,
+            "control": 2,
+            "lowGold": 3,
+            "wave": 2
+          },
+          "mechanic": "False Promise delays damage and applies a strong dispel; Fortune’s End roots, and Fate’s Edict changes an ally’s magic exposure.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 697,
+          "pooledWins": 367,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=111&language=english"
+        },
+        {
+          "rank": 6,
+          "heroId": 79,
+          "name": "Shadow Demon",
+          "score": 79.88465976668292,
+          "mechanicsPoints": 77.58333333333333,
+          "winPoints": 2.301326433349583,
+          "ratings": {
+            "protection": 3,
+            "lane": 2,
+            "control": 2,
+            "lowGold": 3,
+            "wave": 2
+          },
+          "mechanic": "Disruption removes a threatened ally from the fight briefly; Demonic Purge pressures buffs and Shadow Poison pushes from range.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 300,
+          "pooledWins": 155,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=79&language=english"
+        },
+        {
+          "rank": 7,
+          "heroId": 50,
+          "name": "Dazzle",
+          "score": 78.69529748576076,
+          "mechanicsPoints": 76.00000000000001,
+          "winPoints": 2.695297485760749,
+          "ratings": {
+            "protection": 3,
+            "lane": 3,
+            "control": 1,
+            "lowGold": 3,
+            "wave": 1
+          },
+          "mechanic": "Shallow Grave delays an ally’s death and Shadow Wave heals; Axe’s Culling Blade can still kill through Grave.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 1405,
+          "pooledWins": 794,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=50&language=english"
+        },
+        {
+          "rank": 8,
+          "heroId": 31,
+          "name": "Lich",
+          "score": 78.5209712027374,
+          "mechanicsPoints": 75.99999999999999,
+          "winPoints": 2.5209712027374085,
+          "ratings": {
+            "protection": 2,
+            "lane": 3,
+            "control": 2,
+            "lowGold": 3,
+            "wave": 2
+          },
+          "mechanic": "Frost Shield reduces incoming attack damage, Frost Blast trades in lane, and Sinister Gaze can interrupt an attacker.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 1792,
+          "pooledWins": 945,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=31&language=english"
+        },
+        {
+          "rank": 9,
+          "heroId": 102,
+          "name": "Abaddon",
+          "score": 78.44860308068817,
+          "mechanicsPoints": 76.00000000000001,
+          "winPoints": 2.448603080688153,
+          "ratings": {
+            "protection": 3,
+            "lane": 3,
+            "control": 1,
+            "lowGold": 3,
+            "wave": 1
+          },
+          "mechanic": "Aphotic Shield strong dispels and absorbs damage; Mist Coil sustains an ally while Borrowed Time improves Abaddon’s own survival.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 673,
+          "pooledWins": 355,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=102&language=english"
+        },
+        {
+          "rank": 10,
+          "heroId": 3,
+          "name": "Bane",
+          "score": 78.3386301804721,
+          "mechanicsPoints": 76,
+          "winPoints": 2.338630180472097,
+          "ratings": {
+            "protection": 2,
+            "lane": 3,
+            "control": 3,
+            "lowGold": 3,
+            "wave": 0
+          },
+          "mechanic": "Nightmare can protect an ally briefly and Fiend’s Grip holds a dangerous target while channeled; few tools clear a wave.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 350,
+          "pooledWins": 182,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=3&language=english"
+        },
+        {
+          "rank": 11,
+          "heroId": 131,
+          "name": "Ringmaster",
+          "score": 78.26397138972781,
+          "mechanicsPoints": 75.99999999999999,
+          "winPoints": 2.2639713897278293,
+          "ratings": {
+            "protection": 2,
+            "lane": 3,
+            "control": 2,
+            "lowGold": 3,
+            "wave": 2
+          },
+          "mechanic": "Escape Act puts an ally into a protective box, while Tame the Beasts supplies lane pressure and delayed fear.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 811,
+          "pooledWins": 395,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=131&language=english"
+        },
+        {
+          "rank": 12,
+          "heroId": 45,
+          "name": "Pugna",
+          "score": 76.62464047317079,
+          "mechanicsPoints": 74.41666666666666,
+          "winPoints": 2.2079738065041314,
+          "ratings": {
+            "protection": 2,
+            "lane": 3,
+            "control": 2,
+            "lowGold": 2,
+            "wave": 3
+          },
+          "mechanic": "Nether Blast clears waves and pressures structures; Decrepify can protect against attacks but changes magic vulnerability.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 1135,
+          "pooledWins": 534,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=45&language=english"
+        },
+        {
+          "rank": 13,
+          "heroId": 85,
+          "name": "Undying",
+          "score": 75.2036543404508,
+          "mechanicsPoints": 72.83333333333333,
+          "winPoints": 2.3703210071174707,
+          "ratings": {
+            "protection": 2,
+            "lane": 3,
+            "control": 2,
+            "lowGold": 3,
+            "wave": 1
+          },
+          "mechanic": "Decay wins early strength trades, Soul Rip can heal an ally, and Tombstone forces attention or restricts an area.",
+          "observedPicksInRole": 3,
+          "pooledMatchCount": 2318,
+          "pooledWins": 1146,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=85&language=english"
+        },
+        {
+          "rank": 14,
+          "heroId": 112,
+          "name": "Winter Wyvern",
+          "score": 75.03073278981597,
+          "mechanicsPoints": 72.83333333333334,
+          "winPoints": 2.1973994564826267,
+          "ratings": {
+            "protection": 2,
+            "lane": 2,
+            "control": 3,
+            "lowGold": 2,
+            "wave": 3
+          },
+          "mechanic": "Cold Embrace blocks physical damage but holds the ally in place; Winter’s Curse controls clustered enemies and Splinter Blast clears waves.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 697,
+          "pooledWins": 332,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=112&language=english"
+        },
+        {
+          "rank": 15,
+          "heroId": 27,
+          "name": "Shadow Shaman",
+          "score": 73.81048697680727,
+          "mechanicsPoints": 71.25,
+          "winPoints": 2.5604869768072716,
+          "ratings": {
+            "protection": 1,
+            "lane": 3,
+            "control": 3,
+            "lowGold": 2,
+            "wave": 3
+          },
+          "mechanic": "Hex and channeled Shackles chain lockdown; Mass Serpent Ward creates tower pressure and Ether Shock clears waves.",
+          "observedPicksInRole": 5,
+          "pooledMatchCount": 2331,
+          "pooledWins": 1241,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=27&language=english"
+        },
+        {
+          "rank": 16,
+          "heroId": 121,
+          "name": "Grimstroke",
+          "score": 73.79602561628376,
+          "mechanicsPoints": 71.25,
+          "winPoints": 2.5460256162837576,
+          "ratings": {
+            "protection": 2,
+            "lane": 2,
+            "control": 2,
+            "lowGold": 3,
+            "wave": 3
+          },
+          "mechanic": "Stroke of Fate defends waves and Ink Swell supports an allied jump; Soulbind disrupts enemy movement and targeting.",
+          "observedPicksInRole": 2,
+          "pooledMatchCount": 1309,
+          "pooledWins": 702,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=121&language=english"
+        },
+        {
+          "rank": 17,
+          "heroId": 30,
+          "name": "Witch Doctor",
+          "score": 73.75108228904273,
+          "mechanicsPoints": 71.24999999999999,
+          "winPoints": 2.5010822890427438,
+          "ratings": {
+            "protection": 2,
+            "lane": 3,
+            "control": 2,
+            "lowGold": 2,
+            "wave": 2
+          },
+          "mechanic": "Voodoo Restoration sustains nearby allies, Paralyzing Cask bounces between targets, and Death Ward requires a protected channel.",
+          "observedPicksInRole": 11,
+          "pooledMatchCount": 3019,
+          "pooledWins": 1564,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=30&language=english"
+        },
+        {
+          "rank": 18,
+          "heroId": 57,
+          "name": "Omniknight",
+          "score": 73.52015642428033,
+          "mechanicsPoints": 71.25,
+          "winPoints": 2.270156424280332,
+          "ratings": {
+            "protection": 3,
+            "lane": 2,
+            "control": 1,
+            "lowGold": 3,
+            "wave": 2
+          },
+          "mechanic": "Purification heals an ally and damages nearby enemies; Guardian Angel protects against physical damage.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 333,
+          "pooledWins": 169,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=57&language=english"
+        },
+        {
+          "rank": 19,
+          "heroId": 110,
+          "name": "Phoenix",
+          "score": 72.09304449226592,
+          "mechanicsPoints": 69.66666666666667,
+          "winPoints": 2.4263778255992414,
+          "ratings": {
+            "protection": 2,
+            "lane": 2,
+            "control": 3,
+            "lowGold": 2,
+            "wave": 2
+          },
+          "mechanic": "Sun Ray can heal allies, and Supernova can turn an area fight when the team can protect the egg.",
+          "observedPicksInRole": 0,
+          "pooledMatchCount": 830,
+          "pooledWins": 431,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=110&language=english"
+        },
+        {
+          "rank": 20,
+          "heroId": 64,
+          "name": "Jakiro",
+          "score": 72.02473407618947,
+          "mechanicsPoints": 69.66666666666666,
+          "winPoints": 2.3580674095228105,
+          "ratings": {
+            "protection": 1,
+            "lane": 3,
+            "control": 2,
+            "lowGold": 3,
+            "wave": 3
+          },
+          "mechanic": "Dual Breath pressures lanes and waves, Ice Path zones approaches, and Liquid Fire pressures structures; no direct ally save.",
+          "observedPicksInRole": 1,
+          "pooledMatchCount": 1223,
+          "pooledWins": 611,
+          "heroData": "https://www.dota2.com/datafeed/herodata?hero_id=64&language=english"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+.playwright-cli/
+output/playwright/
+output/legend-742-top-20-by-role.json
+data/7.42/client-6978.zip

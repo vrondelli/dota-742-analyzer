@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <title>GPM build projections | Dota 2 Analyzer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/gpm-builds.css">
+  <script src="/gpm-builds.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to GPM projections</a>
+  <header class="topbar">
+    <div class="shell topbar-content gpm-top">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <nav class="gpm-nav" aria-label="Analyzer views">
+        <a href="/">Match results</a>
+        <a href="/efficiency">Build efficiency</a>
+        <a href="/legend-builds">Legend builds</a>
+        <a href="/gpm-builds" aria-current="page">GPM builds</a>
+        <a href="/draft-guide">Draft guide</a>
+      </nav>
+      <div class="topbar-meta"><span class="patch-label"><span class="patch-dot" aria-hidden="true"></span> Patch 7.42</span></div>
+    </div>
+  </header>
+
+  <main class="shell gpm-main" id="main">
+    <section class="intro gpm-intro" aria-labelledby="gpm-title">
+      <div>
+        <p class="eyebrow">Legend · Ranked All Pick</p>
+        <h1 id="gpm-title">GPM build projections</h1>
+        <p class="intro-subtitle">Compare the items and right-click DPS each hero can reach in a bad, good, or easy game.</p>
+      </div>
+      <dl class="dataset-stats" aria-label="Legend data coverage">
+        <div><dt>Legend replays</dt><dd id="gpm-match-count">—</dd></div>
+        <div><dt>Economy samples</dt><dd id="gpm-sample-count">—</dd></div>
+        <div><dt>Heroes ranked</dt><dd id="gpm-hero-count">—</dd></div>
+      </dl>
+    </section>
+
+    <div class="dataset-note">Item budgets use projected gold earned minus the reserve. Actual wallet gold and existing inventory depend on purchases and game events.</div>
+
+    <section class="surface gpm-controls" aria-labelledby="gpm-controls-title">
+      <form id="gpm-settings">
+        <h2 class="sr-only" id="gpm-controls-title">Projection settings</h2>
+        <div class="gpm-fields">
+          <label class="gpm-field gpm-role" for="gpm-role">Legend role
+            <select class="select" id="gpm-role" name="role" required><option value="all">All observed roles</option></select>
+          </label>
+          <label class="gpm-field" for="gpm-minute">Game minute
+            <input id="gpm-minute" name="targetMinute" type="number" min="1" max="90" step="1" value="20" required>
+          </label>
+          <label class="gpm-field" for="gpm-level">Hero level
+            <select class="select" id="gpm-level" name="level" required><option value="12">12</option></select>
+          </label>
+          <label class="gpm-field" for="gpm-reserve">Gold reserve
+            <input id="gpm-reserve" name="reserveGold" type="number" min="0" max="100000" step="1" value="1500" required>
+          </label>
+          <label class="gpm-field" for="gpm-armor">Target armor
+            <input id="gpm-armor" name="targetArmor" type="number" min="-300" max="300" step="any" value="10" required>
+          </label>
+          <label class="gpm-field" for="gpm-max-items">Build size
+            <select class="select" id="gpm-max-items" name="maxItems">
+              <option value="1">One item</option>
+              <option value="2" selected>Up to two</option>
+            </select>
+          </label>
+          <button class="gpm-run" id="gpm-run" type="submit" disabled>Project builds</button>
+        </div>
+      </form>
+    </section>
+
+    <details class="surface reading-note gpm-economy" id="gpm-economy" hidden>
+      <summary>GPM and budget by role <span aria-hidden="true">+</span></summary>
+      <div class="gpm-economy-body" id="gpm-economy-body"></div>
+    </details>
+
+    <details class="surface gpm-context" id="gpm-context">
+      <summary>Item Potency and patch builds <span aria-hidden="true">+</span></summary>
+      <div class="gpm-context-body" id="gpm-context-body" aria-live="polite"></div>
+    </details>
+
+    <section class="surface gpm-results" aria-labelledby="gpm-results-title">
+      <div class="section-heading gpm-results-heading">
+        <div>
+          <h2 id="gpm-results-title">Top 20 heroes</h2>
+          <p class="subtle" id="gpm-results-scenario">Ranked by mean modeled DPS across the three scenarios.</p>
+        </div>
+        <div class="gpm-result-actions">
+          <label class="gpm-field" for="gpm-display">Show scenarios
+            <select class="select" id="gpm-display">
+              <option value="all">All three</option>
+              <option value="bad">Bad game</option>
+              <option value="good">Good game</option>
+              <option value="easy">Easy game</option>
+            </select>
+          </label>
+          <a id="gpm-export" class="text-link" href="/api/gpm-builds.csv" hidden>Download CSV <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <p class="gpm-status" id="gpm-status" role="status"></p>
+      <div id="gpm-result-body" aria-busy="true"><div class="gpm-empty">Loading Legend projections…</div></div>
+    </section>
+
+    <details class="surface reading-note gpm-method">
+      <summary>Projection assumptions <span aria-hidden="true">+</span></summary>
+      <div id="gpm-assumptions">
+        <p>Bad, Good, and Easy represent the 25th, 50th, and 85th percentile of the observed role economy. Good is the median.</p>
+        <p>The build model uses sustained attacks against the selected armor. Role assignment comes from inferred positions in Legend-average replays.</p>
+      </div>
+    </details>
+
+    <footer>
+      <span id="gpm-snapshot">OpenDota economy samples · Valve mechanics</span>
+      <a class="text-link" id="gpm-legend-link" href="/legend-builds">Compare fixed gold budgets <span aria-hidden="true">↗</span></a>
+    </footer>
+  </main>
+</body>
+</html>

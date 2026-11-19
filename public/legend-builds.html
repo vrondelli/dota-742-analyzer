@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <title>Legend build rankings | Dota 2 Analyzer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/legend-builds.css">
+  <script src="/legend-builds.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to Legend builds</a>
+  <header class="topbar">
+    <div class="shell topbar-content legend-top">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <nav class="legend-nav" aria-label="Analyzer views">
+        <a href="/">Match results</a>
+        <a href="/efficiency">Build efficiency</a>
+        <a href="/legend-builds" aria-current="page">Legend builds</a>
+        <a href="/gpm-builds">GPM projections</a>
+        <a href="/draft-guide">Draft guide</a>
+      </nav>
+      <div class="topbar-meta"><span class="patch-label"><span class="patch-dot" aria-hidden="true"></span> Patch 7.42</span></div>
+    </div>
+  </header>
+
+  <main class="shell legend-main" id="main">
+    <section class="intro legend-intro" aria-labelledby="legend-title">
+      <div>
+        <p class="eyebrow">Legend · Ranked All Pick</p>
+        <h1 id="legend-title">Legend build rankings</h1>
+        <p class="intro-subtitle">Compare hero and item combinations by damage gained per 1,000 gold.</p>
+      </div>
+      <dl class="dataset-stats" aria-label="Legend evidence">
+        <div><dt>Legend matches</dt><dd id="legend-matches">—</dd></div>
+        <div><dt>Replays with roles</dt><dd id="legend-replays">—</dd></div>
+        <div><dt id="legend-roster-label">Modeled heroes</dt><dd id="legend-roster-count">—</dd></div>
+      </dl>
+    </section>
+
+    <div class="dataset-note" id="legend-note">Role eligibility comes from Legend-average replays with inferred positions. Damage comes from the 7.42 mechanics model.</div>
+
+    <section class="surface legend-controls" aria-labelledby="legend-controls-title">
+      <form id="legend-settings">
+        <h2 class="sr-only" id="legend-controls-title">Comparison settings</h2>
+        <div class="legend-controls-main">
+          <fieldset class="legend-choice">
+            <legend>Damage metric</legend>
+            <div class="legend-segments">
+              <label><input name="metric" type="radio" value="physicalDps" checked><span>Right-click DPS</span></label>
+              <label><input name="metric" type="radio" value="magicalDamage"><span>Magic damage</span></label>
+              <label><input name="metric" type="radio" value="abilityDamage"><span>Ability damage</span></label>
+            </div>
+          </fieldset>
+          <label class="legend-field" for="legend-level">Hero level
+            <select id="legend-level" name="level" class="select"></select>
+          </label>
+          <label class="legend-field legend-budget" for="legend-budgets">Gold ceilings
+            <input id="legend-budgets" name="budgets" type="text" value="1000, 3000, 5000" aria-describedby="budget-help" autocomplete="off" required>
+            <span class="sr-only" id="budget-help">Separate each spend ceiling with a comma, in increasing order.</span>
+          </label>
+          <label class="legend-field" for="legend-slots">Build size
+            <select id="legend-slots" name="maxItems" class="select">
+              <option value="1">One item</option>
+              <option value="2" selected>Up to two</option>
+            </select>
+          </label>
+          <button class="legend-run" id="legend-run" type="submit" disabled>Compare builds</button>
+        </div>
+        <details class="legend-advanced">
+          <summary>Combat assumptions and eligibility <span aria-hidden="true">+</span></summary>
+          <div class="legend-advanced-fields">
+            <label class="legend-field" for="legend-min-picks">Min. picks per role
+              <input id="legend-min-picks" name="minReplayPicks" type="number" min="1" max="10000" step="1" value="1" required>
+            </label>
+            <label class="legend-field" for="legend-coverage">Item coverage
+              <select id="legend-coverage" name="coverage" class="select"><option value="all">All modeled builds</option><option value="flat">Flat stats only</option></select>
+            </label>
+            <label class="legend-field" for="legend-limit">Rows per band
+              <select id="legend-limit" name="limit" class="select"><option value="10">Top 10</option><option value="25">Top 25</option><option value="127">All eligible heroes</option></select>
+            </label>
+            <label class="legend-field" for="legend-target-armor">Target armor
+              <input id="legend-target-armor" name="targetArmor" type="number" min="-300" max="300" step="any" value="10" required>
+            </label>
+            <label class="legend-field" for="legend-target-mr">Target magic resist (%)
+              <input id="legend-target-mr" name="targetMagicResistance" type="number" min="-100" max="99.9" step="any" value="25" required>
+            </label>
+            <label class="legend-field" for="legend-window">Magic window (sec)
+              <input id="legend-window" name="windowSeconds" type="number" min="0.1" max="120" step="any" value="10" required>
+            </label>
+            <label class="legend-field" for="legend-procs">Attack procs
+              <select id="legend-procs" name="includeOnHit" class="select"><option value="true">Include procs and crits</option><option value="false">Exclude procs and crits</option></select>
+            </label>
+          </div>
+        </details>
+      </form>
+    </section>
+
+    <section aria-labelledby="legend-results-title">
+      <div class="legend-results-head">
+        <div>
+          <h2 id="legend-results-title">Role leaderboard</h2>
+          <p class="subtle" id="legend-scenario">Preparing matchup assumptions…</p>
+        </div>
+        <div id="legend-tabs" class="role-tabs legend-tabs" role="group" aria-label="Leaderboard scope"></div>
+      </div>
+      <p class="legend-status" id="legend-status" role="status"></p>
+      <div class="legend-ability-context" id="legend-ability-context" hidden></div>
+      <div class="legend-results" id="legend-results" aria-busy="true">
+        <div class="surface legend-empty">Loading comparison…</div>
+      </div>
+    </section>
+
+    <section class="surface legend-interactions" id="legend-interactions" aria-labelledby="interaction-heading" hidden>
+      <div class="section-heading">
+        <div><h2 id="interaction-heading">Ability interactions</h2><p class="subtle" id="interaction-summary"></p></div>
+      </div>
+      <div id="interaction-list"></div>
+    </section>
+
+    <details class="surface reading-note legend-method">
+      <summary>How these rankings work <span aria-hidden="true">+</span></summary>
+      <div>
+        <p>Gain per 1,000g divides modeled damage gained over the same hero without items by the build’s cost, then scales it to 1,000 gold. Each build belongs to one spend band and must improve on cheaper choices for that hero.</p>
+        <p>A Legend role leaderboard uses heroes assigned to that position in eligible replays. Patch membership may be inferred from the match start time. The full roster view compares all hero profiles without that position filter.</p>
+        <p>Magic models one cast of the strongest supported learned direct spell, with eligible item damage over the selected window. Exclude attack procs to compare casts without effects such as Monkey King Bar. Item-only results use a zero-spell baseline and have their own ranking.</p>
+        <p>Ability damage ranks gains per cast. Omnislash projects whole hits against one stationary target, starting with an immediate hit and counting the remaining hits before the cast window ends.</p>
+        <p>Partial coverage means the item projection includes only the modeled effects. Legend picks describe the evidence for the hero and role. Damage estimates describe the selected game scenario.</p>
+      </div>
+    </details>
+
+    <footer>
+      <span id="legend-snapshot">OpenDota role observations · Valve mechanics</span>
+      <a class="text-link" href="https://www.dota2.com/patches/7.42" target="_blank" rel="noreferrer">Valve patch notes <span aria-hidden="true">↗</span></a>
+    </footer>
+  </main>
+</body>
+</html>

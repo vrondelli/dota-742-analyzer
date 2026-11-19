@@ -1,0 +1,3182 @@
+{
+  "patch": "7.42",
+  "clientBuild": 6978,
+  "mode": "supported_raw_one_cast_magical_damage",
+  "sources": {
+    "archiveSha256": "d51efb64ae87552291eb89efec53a6137c3a851fb559b0d7e1fd010588bfe3ec",
+    "definitions": "https://github.com/SteamTracking/GameTracking-Dota2/tree/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes",
+    "patch": "https://www.dota2.com/datafeed/patchnotes?version=7.42&language=english"
+  },
+  "model": {
+    "target": "One enemy hero successfully hit by one supported cast.",
+    "damage": "Raw magical damage of the explicitly identified damage instance, before target resistance.",
+    "coverage": "Curated damage components with checked 7.42 values. Unsupported means this catalog has no eligible spell profile for the hero.",
+    "exclusions": "Spell damage amplification, talents, upgrades, conditional stacks, variable damage, additional hits, damage over time, other targets, and actual skill distributions."
+  },
+  "heroes": [
+    {
+      "id": 1,
+      "key": "npc_dota_hero_antimage",
+      "name": "Anti-Mage",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 2,
+      "key": "npc_dota_hero_axe",
+      "name": "Axe",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 3,
+      "key": "npc_dota_hero_bane",
+      "name": "Bane",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 4,
+      "key": "npc_dota_hero_bloodseeker",
+      "name": "Bloodseeker",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 5,
+      "key": "npc_dota_hero_crystal_maiden",
+      "name": "Crystal Maiden",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "crystal_maiden_crystal_nova",
+          "name": "Crystal Nova",
+          "damageByRank": [
+            110.0,
+            160.0,
+            210.0,
+            260.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.nova_damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "key": "npc_dota_hero_drow_ranger",
+      "name": "Drow Ranger",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 7,
+      "key": "npc_dota_hero_earthshaker",
+      "name": "Earthshaker",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "earthshaker_fissure",
+          "name": "Fissure",
+          "damageByRank": [
+            100.0,
+            160.0,
+            220.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.fissure_damage",
+          "notes": []
+        },
+        {
+          "key": "earthshaker_echo_slam",
+          "name": "Echo Slam",
+          "damageByRank": [
+            100.0,
+            140.0,
+            180.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.echo_slam_initial_damage",
+          "notes": [
+            "Initial impact only. Echoes are outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "key": "npc_dota_hero_juggernaut",
+      "name": "Juggernaut",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 9,
+      "key": "npc_dota_hero_mirana",
+      "name": "Mirana",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "mirana_starfall",
+          "name": "Starstorm",
+          "damageByRank": [
+            75.0,
+            150.0,
+            225.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Primary star only."
+          ]
+        },
+        {
+          "key": "mirana_arrow",
+          "name": "Sacred Arrow",
+          "damageByRank": [
+            60.0,
+            160.0,
+            260.0,
+            360.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": [
+            "Base damage. Distance bonus is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "key": "npc_dota_hero_morphling",
+      "name": "Morphling",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "morphling_waveform",
+          "name": "Waveform",
+          "damageByRank": [
+            75.0,
+            150.0,
+            225.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "key": "npc_dota_hero_nevermore",
+      "name": "Shadow Fiend",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "nevermore_shadowraze3",
+          "name": "Shadowraze",
+          "damageByRank": [
+            85.0,
+            150.0,
+            215.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.shadowraze_damage",
+          "notes": [
+            "One hit with no pre-existing Shadowraze stacks."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "key": "npc_dota_hero_phantom_lancer",
+      "name": "Phantom Lancer",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "phantom_lancer_spirit_lance",
+          "name": "Spirit Lance",
+          "damageByRank": [
+            100.0,
+            160.0,
+            220.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.lance_damage",
+          "notes": [
+            "Direct lance hit only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "key": "npc_dota_hero_puck",
+      "name": "Puck",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "puck_illusory_orb",
+          "name": "Illusory Orb",
+          "damageByRank": [
+            70.0,
+            140.0,
+            210.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Projectile hit only."
+          ]
+        },
+        {
+          "key": "puck_waning_rift",
+          "name": "Waning Rift",
+          "damageByRank": [
+            60.0,
+            120.0,
+            180.0,
+            240.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        },
+        {
+          "key": "puck_dream_coil",
+          "name": "Dream Coil",
+          "damageByRank": [
+            175.0,
+            250.0,
+            325.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.coil_initial_damage",
+          "notes": [
+            "Initial hit only. Coil break damage is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "key": "npc_dota_hero_pudge",
+      "name": "Pudge",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 15,
+      "key": "npc_dota_hero_razor",
+      "name": "Razor",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 16,
+      "key": "npc_dota_hero_sand_king",
+      "name": "Sand King",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "sandking_burrowstrike",
+          "name": "Burrowstrike",
+          "damageByRank": [
+            80.0,
+            150.0,
+            220.0,
+            290.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "key": "npc_dota_hero_storm_spirit",
+      "name": "Storm Spirit",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "storm_spirit_static_remnant",
+          "name": "Static Remnant",
+          "damageByRank": [
+            100.0,
+            160.0,
+            220.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.static_remnant_damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "key": "npc_dota_hero_sven",
+      "name": "Sven",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "sven_storm_bolt",
+          "name": "Storm Hammer",
+          "damageByRank": [
+            80.0,
+            160.0,
+            240.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "key": "npc_dota_hero_tiny",
+      "name": "Tiny",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "tiny_toss",
+          "name": "Toss",
+          "damageByRank": [
+            90.0,
+            180.0,
+            270.0,
+            360.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.toss_damage",
+          "notes": [
+            "Base landing damage."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "key": "npc_dota_hero_vengefulspirit",
+      "name": "Vengeful Spirit",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "vengefulspirit_magic_missile",
+          "name": "Magic Missile",
+          "damageByRank": [
+            100.0,
+            180.0,
+            260.0,
+            340.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.magic_missile_damage",
+          "notes": []
+        },
+        {
+          "key": "vengefulspirit_wave_of_terror",
+          "name": "Wave of Terror",
+          "damageByRank": [
+            60.0,
+            80.0,
+            100.0,
+            120.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        },
+        {
+          "key": "vengefulspirit_nether_swap",
+          "name": "Nether Swap",
+          "damageByRank": [
+            150.0,
+            300.0,
+            450.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Enemy-target cast."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "key": "npc_dota_hero_windrunner",
+      "name": "Windranger",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 22,
+      "key": "npc_dota_hero_zuus",
+      "name": "Zeus",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "zuus_arc_lightning",
+          "name": "Arc Lightning",
+          "damageByRank": [
+            105.0,
+            130.0,
+            155.0,
+            180.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.arc_damage",
+          "notes": [
+            "First target. Secondary bounces and additional health-based effects are outside this benchmark."
+          ]
+        },
+        {
+          "key": "zuus_lightning_bolt",
+          "name": "Lightning Bolt",
+          "damageByRank": [
+            140.0,
+            220.0,
+            300.0,
+            380.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        },
+        {
+          "key": "zuus_heavenly_jump",
+          "name": "Heavenly Jump",
+          "damageByRank": [
+            25.0,
+            50.0,
+            75.0,
+            100.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Assumes the selected enemy is hit."
+          ]
+        },
+        {
+          "key": "zuus_thundergods_wrath",
+          "name": "Thundergod's Wrath",
+          "damageByRank": [
+            275.0,
+            425.0,
+            575.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "One affected enemy."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "key": "npc_dota_hero_kunkka",
+      "name": "Kunkka",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "kunkka_ghostship",
+          "name": "Ghostship",
+          "damageByRank": [
+            350.0,
+            450.0,
+            550.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "key": "npc_dota_hero_lina",
+      "name": "Lina",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "lina_dragon_slave",
+          "name": "Dragon Slave",
+          "damageByRank": [
+            65.0,
+            125.0,
+            185.0,
+            245.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.dragon_slave_damage",
+          "notes": []
+        },
+        {
+          "key": "lina_light_strike_array",
+          "name": "Light Strike Array",
+          "damageByRank": [
+            80.0,
+            125.0,
+            170.0,
+            215.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.light_strike_array_damage",
+          "notes": []
+        },
+        {
+          "key": "lina_laguna_blade",
+          "name": "Laguna Blade",
+          "damageByRank": [
+            360.0,
+            525.0,
+            690.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "key": "npc_dota_hero_lion",
+      "name": "Lion",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "lion_impale",
+          "name": "Earth Spike",
+          "damageByRank": [
+            105.0,
+            170.0,
+            235.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        },
+        {
+          "key": "lion_finger_of_death",
+          "name": "Finger of Death",
+          "damageByRank": [
+            570.0,
+            685.0,
+            800.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Zero accumulated Finger of Death kills."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "key": "npc_dota_hero_shadow_shaman",
+      "name": "Shadow Shaman",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "shadow_shaman_ether_shock",
+          "name": "Ether Shock",
+          "damageByRank": [
+            125.0,
+            190.0,
+            255.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "One affected enemy."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "key": "npc_dota_hero_slardar",
+      "name": "Slardar",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 29,
+      "key": "npc_dota_hero_tidehunter",
+      "name": "Tidehunter",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "tidehunter_gush",
+          "name": "Gush",
+          "damageByRank": [
+            100.0,
+            160.0,
+            220.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.gush_damage",
+          "notes": []
+        },
+        {
+          "key": "tidehunter_ravage",
+          "name": "Ravage",
+          "damageByRank": [
+            275.0,
+            365.0,
+            455.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "key": "npc_dota_hero_witch_doctor",
+      "name": "Witch Doctor",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "witch_doctor_paralyzing_cask",
+          "name": "Paralyzing Cask",
+          "damageByRank": [
+            55.0,
+            70.0,
+            85.0,
+            100.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.base_damage",
+          "notes": [
+            "First hit only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "key": "npc_dota_hero_lich",
+      "name": "Lich",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "lich_chain_frost",
+          "name": "Chain Frost",
+          "damageByRank": [
+            250.0,
+            375.0,
+            500.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "First hit only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "key": "npc_dota_hero_riki",
+      "name": "Riki",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 33,
+      "key": "npc_dota_hero_enigma",
+      "name": "Enigma",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 34,
+      "key": "npc_dota_hero_tinker",
+      "name": "Tinker",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "tinker_deploy_turrets",
+          "name": "Deploy Turrets",
+          "damageByRank": [
+            40.0,
+            80.0,
+            120.0,
+            160.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.drop_damage",
+          "notes": [
+            "Initial drop damage. Turret missiles are outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "key": "npc_dota_hero_sniper",
+      "name": "Sniper",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "sniper_assassinate",
+          "name": "Assassinate",
+          "damageByRank": [
+            300.0,
+            400.0,
+            500.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Base magical impact."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "key": "npc_dota_hero_necrolyte",
+      "name": "Necrophos",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "necrolyte_death_pulse",
+          "name": "Death Pulse",
+          "damageByRank": [
+            100.0,
+            160.0,
+            220.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "key": "npc_dota_hero_warlock",
+      "name": "Warlock",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 38,
+      "key": "npc_dota_hero_beastmaster",
+      "name": "Beastmaster",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "beastmaster_primal_roar",
+          "name": "Primal Roar",
+          "damageByRank": [
+            150.0,
+            225.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Primary enemy target."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "key": "npc_dota_hero_queenofpain",
+      "name": "Queen of Pain",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "queenofpain_shadow_strike",
+          "name": "Shadow Strike",
+          "damageByRank": [
+            50.0,
+            80.0,
+            110.0,
+            140.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.strike_damage",
+          "notes": [
+            "Initial strike only."
+          ]
+        },
+        {
+          "key": "queenofpain_scream_of_pain",
+          "name": "Scream of Pain",
+          "damageByRank": [
+            90.0,
+            175.0,
+            260.0,
+            345.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "key": "npc_dota_hero_venomancer",
+      "name": "Venomancer",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "venomancer_venomous_gale",
+          "name": "Venomous Gale",
+          "damageByRank": [
+            25.0,
+            50.0,
+            75.0,
+            100.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.strike_damage",
+          "notes": [
+            "Initial projectile hit only."
+          ]
+        },
+        {
+          "key": "venomancer_snakebite",
+          "name": "Snakebite",
+          "damageByRank": [
+            40.0,
+            70.0,
+            100.0,
+            130.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.base_damage",
+          "notes": [
+            "Initial hit only."
+          ]
+        },
+        {
+          "key": "venomancer_noxious_plague",
+          "name": "Noxious Plague",
+          "damageByRank": [
+            150.0,
+            200.0,
+            250.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.impact_damage",
+          "notes": [
+            "Impact only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "key": "npc_dota_hero_faceless_void",
+      "name": "Faceless Void",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 42,
+      "key": "npc_dota_hero_skeleton_king",
+      "name": "Wraith King",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "skeleton_king_hellfire_blast",
+          "name": "Wraithfire Blast",
+          "damageByRank": [
+            80.0,
+            100.0,
+            120.0,
+            140.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Initial damage only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "key": "npc_dota_hero_death_prophet",
+      "name": "Death Prophet",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "death_prophet_carrion_swarm",
+          "name": "Carrion Swarm",
+          "damageByRank": [
+            100.0,
+            175.0,
+            250.0,
+            325.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "key": "npc_dota_hero_phantom_assassin",
+      "name": "Phantom Assassin",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 45,
+      "key": "npc_dota_hero_pugna",
+      "name": "Pugna",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "pugna_nether_blast",
+          "name": "Nether Blast",
+          "damageByRank": [
+            95.0,
+            170.0,
+            245.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.blast_damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "key": "npc_dota_hero_templar_assassin",
+      "name": "Templar Assassin",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 47,
+      "key": "npc_dota_hero_viper",
+      "name": "Viper",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 48,
+      "key": "npc_dota_hero_luna",
+      "name": "Luna",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "luna_lucent_beam",
+          "name": "Lucent Beam",
+          "damageByRank": [
+            75.0,
+            150.0,
+            225.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.beam_damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "key": "npc_dota_hero_dragon_knight",
+      "name": "Dragon Knight",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "dragon_knight_breathe_fire",
+          "name": "Breathe Fire",
+          "damageByRank": [
+            80.0,
+            160.0,
+            240.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        },
+        {
+          "key": "dragon_knight_dragon_tail",
+          "name": "Dragon Tail",
+          "damageByRank": [
+            60.0,
+            90.0,
+            120.0,
+            150.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "key": "npc_dota_hero_dazzle",
+      "name": "Dazzle",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 51,
+      "key": "npc_dota_hero_rattletrap",
+      "name": "Clockwerk",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "rattletrap_rocket_flare",
+          "name": "Rocket Flare",
+          "damageByRank": [
+            80.0,
+            120.0,
+            160.0,
+            200.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        },
+        {
+          "key": "rattletrap_hookshot",
+          "name": "Hookshot",
+          "damageByRank": [
+            75.0,
+            175.0,
+            275.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "key": "npc_dota_hero_leshrac",
+      "name": "Leshrac",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "leshrac_split_earth",
+          "name": "Split Earth",
+          "damageByRank": [
+            115.0,
+            170.0,
+            225.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        },
+        {
+          "key": "leshrac_lightning_storm",
+          "name": "Lightning Storm",
+          "damageByRank": [
+            90.0,
+            140.0,
+            190.0,
+            240.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "First target only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "key": "npc_dota_hero_furion",
+      "name": "Nature's Prophet",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "furion_wrath_of_nature",
+          "name": "Wrath of Nature",
+          "damageByRank": [
+            100.0,
+            140.0,
+            180.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "First target only. Bounce bonuses are outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "key": "npc_dota_hero_life_stealer",
+      "name": "Lifestealer",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 55,
+      "key": "npc_dota_hero_dark_seer",
+      "name": "Dark Seer",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "dark_seer_vacuum",
+          "name": "Vacuum",
+          "damageByRank": [
+            70.0,
+            130.0,
+            190.0,
+            250.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "key": "npc_dota_hero_clinkz",
+      "name": "Clinkz",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 57,
+      "key": "npc_dota_hero_omniknight",
+      "name": "Omniknight",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 58,
+      "key": "npc_dota_hero_enchantress",
+      "name": "Enchantress",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 59,
+      "key": "npc_dota_hero_huskar",
+      "name": "Huskar",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "huskar_inner_fire",
+          "name": "Inner Fire",
+          "damageByRank": [
+            110.0,
+            180.0,
+            250.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "key": "npc_dota_hero_night_stalker",
+      "name": "Night Stalker",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "night_stalker_void",
+          "name": "Void",
+          "damageByRank": [
+            80.0,
+            160.0,
+            240.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "key": "npc_dota_hero_broodmother",
+      "name": "Broodmother",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "broodmother_spawn_spiderlings",
+          "name": "Spawn Spiderlings",
+          "damageByRank": [
+            220.0,
+            320.0,
+            420.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Immediate damage only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "key": "npc_dota_hero_bounty_hunter",
+      "name": "Bounty Hunter",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "bounty_hunter_shuriken_toss",
+          "name": "Shuriken Toss",
+          "damageByRank": [
+            100.0,
+            170.0,
+            240.0,
+            310.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.bonus_damage",
+          "notes": [
+            "First target only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "key": "npc_dota_hero_weaver",
+      "name": "Weaver",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "weaver_shukuchi",
+          "name": "Shukuchi",
+          "damageByRank": [
+            100.0,
+            130.0,
+            160.0,
+            190.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "One contact with the target."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "key": "npc_dota_hero_jakiro",
+      "name": "Jakiro",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 65,
+      "key": "npc_dota_hero_batrider",
+      "name": "Batrider",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "batrider_flamebreak",
+          "name": "Flamebreak",
+          "damageByRank": [
+            30.0,
+            60.0,
+            90.0,
+            120.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage_impact",
+          "notes": [
+            "Initial impact only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "key": "npc_dota_hero_chen",
+      "name": "Chen",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 67,
+      "key": "npc_dota_hero_spectre",
+      "name": "Spectre",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "spectre_spectral_dagger",
+          "name": "Spectral Dagger",
+          "damageByRank": [
+            80.0,
+            120.0,
+            160.0,
+            200.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "key": "npc_dota_hero_ancient_apparition",
+      "name": "Ancient Apparition",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "ancient_apparition_ice_blast",
+          "name": "Ice Blast",
+          "damageByRank": [
+            200.0,
+            300.0,
+            400.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityDamage",
+          "notes": [
+            "Impact only. Damage over time and shatter are outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "key": "npc_dota_hero_doom_bringer",
+      "name": "Doom",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 70,
+      "key": "npc_dota_hero_ursa",
+      "name": "Ursa",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "ursa_earthshock",
+          "name": "Earthshock",
+          "damageByRank": [
+            80.0,
+            140.0,
+            200.0,
+            260.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "key": "npc_dota_hero_spirit_breaker",
+      "name": "Spirit Breaker",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "spirit_breaker_nether_strike",
+          "name": "Nether Strike",
+          "damageByRank": [
+            150.0,
+            250.0,
+            350.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Spell damage alone. Greater Bash is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "key": "npc_dota_hero_gyrocopter",
+      "name": "Gyrocopter",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "gyrocopter_homing_missile",
+          "name": "Homing Missile",
+          "damageByRank": [
+            90.0,
+            180.0,
+            270.0,
+            360.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.hit_damage",
+          "notes": [
+            "Assumes the missile survives to hit the target."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "key": "npc_dota_hero_alchemist",
+      "name": "Alchemist",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 74,
+      "key": "npc_dota_hero_invoker",
+      "name": "Invoker",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 75,
+      "key": "npc_dota_hero_silencer",
+      "name": "Silencer",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "silencer_curse_of_the_silent",
+          "name": "Arcane Curse",
+          "damageByRank": [
+            20.0,
+            40.0,
+            60.0,
+            80.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.application_damage",
+          "notes": [
+            "Application only. Subsequent damage is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "key": "npc_dota_hero_obsidian_destroyer",
+      "name": "Outworld Destroyer",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "obsidian_destroyer_astral_imprisonment",
+          "name": "Astral Imprisonment",
+          "damageByRank": [
+            90.0,
+            180.0,
+            270.0,
+            360.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Release damage only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "key": "npc_dota_hero_lycan",
+      "name": "Lycan",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 78,
+      "key": "npc_dota_hero_brewmaster",
+      "name": "Brewmaster",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "brewmaster_thunder_clap",
+          "name": "Thunder Clap",
+          "damageByRank": [
+            80.0,
+            160.0,
+            240.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "key": "npc_dota_hero_shadow_demon",
+      "name": "Shadow Demon",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "shadow_demon_shadow_poison",
+          "name": "Shadow Poison",
+          "damageByRank": [
+            24.0,
+            36.0,
+            48.0,
+            60.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.hit_damage",
+          "notes": [
+            "Projectile hit only. Stack release is outside this benchmark."
+          ]
+        },
+        {
+          "key": "shadow_demon_demonic_purge",
+          "name": "Demonic Purge",
+          "damageByRank": [
+            300.0,
+            425.0,
+            550.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.purge_damage",
+          "notes": [
+            "Completion damage with no upgrades."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "key": "npc_dota_hero_lone_druid",
+      "name": "Lone Druid",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 81,
+      "key": "npc_dota_hero_chaos_knight",
+      "name": "Chaos Knight",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 82,
+      "key": "npc_dota_hero_meepo",
+      "name": "Meepo",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 83,
+      "key": "npc_dota_hero_treant",
+      "name": "Treant Protector",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 84,
+      "key": "npc_dota_hero_ogre_magi",
+      "name": "Ogre Magi",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "ogre_magi_fireblast",
+          "name": "Fireblast",
+          "damageByRank": [
+            100.0,
+            150.0,
+            200.0,
+            250.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.fireblast_damage",
+          "notes": [
+            "One base cast. Multicast is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "key": "npc_dota_hero_undying",
+      "name": "Undying",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "undying_decay",
+          "name": "Decay",
+          "damageByRank": [
+            20.0,
+            60.0,
+            100.0,
+            140.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.decay_damage",
+          "notes": [
+            "Base magical damage. Strength change is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "key": "npc_dota_hero_rubick",
+      "name": "Rubick",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "rubick_fade_bolt",
+          "name": "Fade Bolt",
+          "damageByRank": [
+            85.0,
+            165.0,
+            245.0,
+            325.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "First target only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "key": "npc_dota_hero_disruptor",
+      "name": "Disruptor",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 88,
+      "key": "npc_dota_hero_nyx_assassin",
+      "name": "Nyx Assassin",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "nyx_assassin_impale",
+          "name": "Impale",
+          "damageByRank": [
+            100.0,
+            160.0,
+            220.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.impale_damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "key": "npc_dota_hero_naga_siren",
+      "name": "Naga Siren",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 90,
+      "key": "npc_dota_hero_keeper_of_the_light",
+      "name": "Keeper of the Light",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "keeper_of_the_light_blinding_light",
+          "name": "Blinding Light",
+          "damageByRank": [
+            90.0,
+            140.0,
+            190.0,
+            240.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 91,
+      "key": "npc_dota_hero_wisp",
+      "name": "Io",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 92,
+      "key": "npc_dota_hero_visage",
+      "name": "Visage",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 93,
+      "key": "npc_dota_hero_slark",
+      "name": "Slark",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 94,
+      "key": "npc_dota_hero_medusa",
+      "name": "Medusa",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "medusa_mystic_snake",
+          "name": "Mystic Snake",
+          "damageByRank": [
+            90.0,
+            140.0,
+            190.0,
+            240.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.snake_damage",
+          "notes": [
+            "First target only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 95,
+      "key": "npc_dota_hero_troll_warlord",
+      "name": "Troll Warlord",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "troll_warlord_whirling_axes_ranged",
+          "name": "Whirling Axes (Ranged)",
+          "damageByRank": [
+            60.0,
+            80.0,
+            100.0,
+            120.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.axe_damage",
+          "notes": [
+            "Ranged stance. One enemy hit."
+          ]
+        },
+        {
+          "key": "troll_warlord_whirling_axes_melee",
+          "name": "Whirling Axes (Melee)",
+          "damageByRank": [
+            75.0,
+            120.0,
+            165.0,
+            210.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Melee stance. One enemy hit."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 96,
+      "key": "npc_dota_hero_centaur",
+      "name": "Centaur Warrunner",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "centaur_hoof_stomp",
+          "name": "Hoof Stomp",
+          "damageByRank": [
+            70.0,
+            140.0,
+            210.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.stomp_damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 97,
+      "key": "npc_dota_hero_magnataur",
+      "name": "Magnus",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "magnataur_shockwave",
+          "name": "Shockwave",
+          "damageByRank": [
+            90.0,
+            160.0,
+            230.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.shock_damage",
+          "notes": []
+        },
+        {
+          "key": "magnataur_reverse_polarity",
+          "name": "Reverse Polarity",
+          "damageByRank": [
+            100.0,
+            200.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.polarity_damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 98,
+      "key": "npc_dota_hero_shredder",
+      "name": "Timbersaw",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 99,
+      "key": "npc_dota_hero_bristleback",
+      "name": "Bristleback",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 100,
+      "key": "npc_dota_hero_tusk",
+      "name": "Tusk",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "tusk_ice_shards",
+          "name": "Ice Shards",
+          "damageByRank": [
+            75.0,
+            150.0,
+            225.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.shard_damage",
+          "notes": []
+        },
+        {
+          "key": "tusk_snowball",
+          "name": "Snowball",
+          "damageByRank": [
+            80.0,
+            140.0,
+            200.0,
+            260.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.snowball_damage",
+          "notes": [
+            "Base impact with no additional passengers."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "key": "npc_dota_hero_skywrath_mage",
+      "name": "Skywrath Mage",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "skywrath_mage_concussive_shot",
+          "name": "Concussive Shot",
+          "damageByRank": [
+            120.0,
+            180.0,
+            240.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "key": "npc_dota_hero_abaddon",
+      "name": "Abaddon",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "abaddon_death_coil",
+          "name": "Mist Coil",
+          "damageByRank": [
+            95.0,
+            170.0,
+            245.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage_heal",
+          "notes": [
+            "Enemy-target cast."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "key": "npc_dota_hero_elder_titan",
+      "name": "Elder Titan",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 104,
+      "key": "npc_dota_hero_legion_commander",
+      "name": "Legion Commander",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 105,
+      "key": "npc_dota_hero_techies",
+      "name": "Techies",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "techies_sticky_bomb",
+          "name": "Sticky Bomb",
+          "damageByRank": [
+            95.0,
+            170.0,
+            245.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "One explosion."
+          ]
+        },
+        {
+          "key": "techies_suicide",
+          "name": "Blast Off!",
+          "damageByRank": [
+            200.0,
+            300.0,
+            400.0,
+            500.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": 106,
+      "key": "npc_dota_hero_ember_spirit",
+      "name": "Ember Spirit",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "ember_spirit_fire_remnant",
+          "name": "Fire Remnant",
+          "damageByRank": [
+            100.0,
+            185.0,
+            270.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "One remnant consumed. Additional remnants are outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 107,
+      "key": "npc_dota_hero_earth_spirit",
+      "name": "Earth Spirit",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "earth_spirit_boulder_smash",
+          "name": "Boulder Smash",
+          "damageByRank": [
+            110.0,
+            180.0,
+            250.0,
+            320.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.rock_damage",
+          "notes": [
+            "One hit from a Stone Remnant."
+          ]
+        },
+        {
+          "key": "earth_spirit_geomagnetic_grip",
+          "name": "Geomagnetic Grip",
+          "damageByRank": [
+            75.0,
+            150.0,
+            225.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.rock_damage",
+          "notes": [
+            "One hit from a Stone Remnant."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "key": "npc_dota_hero_abyssal_underlord",
+      "name": "Underlord",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 109,
+      "key": "npc_dota_hero_terrorblade",
+      "name": "Terrorblade",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 110,
+      "key": "npc_dota_hero_phoenix",
+      "name": "Phoenix",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 111,
+      "key": "npc_dota_hero_oracle",
+      "name": "Oracle",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "oracle_purifying_flames",
+          "name": "Purifying Flames",
+          "damageByRank": [
+            90.0,
+            180.0,
+            270.0,
+            360.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Initial magical damage. Later healing is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 112,
+      "key": "npc_dota_hero_winter_wyvern",
+      "name": "Winter Wyvern",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 113,
+      "key": "npc_dota_hero_arc_warden",
+      "name": "Arc Warden",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "arc_warden_spark_wraith",
+          "name": "Spark Wraith",
+          "damageByRank": [
+            100.0,
+            170.0,
+            240.0,
+            310.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.spark_damage_base",
+          "notes": [
+            "One wraith triggered."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 114,
+      "key": "npc_dota_hero_monkey_king",
+      "name": "Monkey King",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 119,
+      "key": "npc_dota_hero_dark_willow",
+      "name": "Dark Willow",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 120,
+      "key": "npc_dota_hero_pangolier",
+      "name": "Pangolier",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 121,
+      "key": "npc_dota_hero_grimstroke",
+      "name": "Grimstroke",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "grimstroke_dark_artistry",
+          "name": "Stroke of Fate",
+          "damageByRank": [
+            100.0,
+            160.0,
+            220.0,
+            280.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "First unit hit."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 123,
+      "key": "npc_dota_hero_hoodwink",
+      "name": "Hoodwink",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 126,
+      "key": "npc_dota_hero_void_spirit",
+      "name": "Void Spirit",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "void_spirit_aether_remnant",
+          "name": "Aether Remnant",
+          "damageByRank": [
+            90.0,
+            140.0,
+            190.0,
+            240.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.impact_damage",
+          "notes": []
+        },
+        {
+          "key": "void_spirit_dissimilate",
+          "name": "Dissimilate",
+          "damageByRank": [
+            105.0,
+            185.0,
+            265.0,
+            345.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityDamage",
+          "notes": []
+        },
+        {
+          "key": "void_spirit_resonant_pulse",
+          "name": "Resonant Pulse",
+          "damageByRank": [
+            60.0,
+            110.0,
+            160.0,
+            210.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": []
+        },
+        {
+          "key": "void_spirit_astral_step",
+          "name": "Astral Step",
+          "damageByRank": [
+            130.0,
+            230.0,
+            330.0
+          ],
+          "rankUnlockLevels": [
+            6,
+            12,
+            18
+          ],
+          "source": "AbilityValues.pop_damage",
+          "notes": [
+            "Mark detonation only. Attack damage is outside this benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 128,
+      "key": "npc_dota_hero_snapfire",
+      "name": "Snapfire",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "snapfire_firesnap_cookie",
+          "name": "Firesnap Cookie",
+          "damageByRank": [
+            60.0,
+            130.0,
+            200.0,
+            270.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.impact_damage",
+          "notes": [
+            "Landing damage."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 129,
+      "key": "npc_dota_hero_mars",
+      "name": "Mars",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "mars_spear",
+          "name": "Spear of Mars",
+          "damageByRank": [
+            100.0,
+            175.0,
+            250.0,
+            325.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "One projectile hit."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 131,
+      "key": "npc_dota_hero_ringmaster",
+      "name": "Ringmaster",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "ringmaster_impalement",
+          "name": "Impalement Arts",
+          "damageByRank": [
+            20.0,
+            40.0,
+            60.0,
+            80.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage_impact",
+          "notes": [
+            "Initial hit only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 135,
+      "key": "npc_dota_hero_dawnbreaker",
+      "name": "Dawnbreaker",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "dawnbreaker_celestial_hammer",
+          "name": "Celestial Hammer",
+          "damageByRank": [
+            50.0,
+            80.0,
+            110.0,
+            140.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.hammer_damage",
+          "notes": [
+            "Outbound hammer hit only."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 136,
+      "key": "npc_dota_hero_marci",
+      "name": "Marci",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "marci_grapple",
+          "name": "Dispose",
+          "damageByRank": [
+            60.0,
+            150.0,
+            240.0,
+            330.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.impact_damage",
+          "notes": [
+            "Impact damage."
+          ]
+        },
+        {
+          "key": "marci_companion_run",
+          "name": "Rebound",
+          "damageByRank": [
+            75.0,
+            150.0,
+            225.0,
+            300.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.impact_damage",
+          "notes": [
+            "Landing damage."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 137,
+      "key": "npc_dota_hero_primal_beast",
+      "name": "Primal Beast",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 138,
+      "key": "npc_dota_hero_muerta",
+      "name": "Muerta",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "muerta_dead_shot",
+          "name": "Dead Shot",
+          "damageByRank": [
+            100.0,
+            175.0,
+            250.0,
+            325.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "First enemy hit."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 145,
+      "key": "npc_dota_hero_kez",
+      "name": "Kez",
+      "status": "unsupported",
+      "notes": [
+        "No direct magical spell has been mapped for this benchmark."
+      ],
+      "spells": []
+    },
+    {
+      "id": 155,
+      "key": "npc_dota_hero_largo",
+      "name": "Largo",
+      "status": "supported",
+      "notes": [],
+      "spells": [
+        {
+          "key": "largo_catchy_lick",
+          "name": "Catchy Lick",
+          "damageByRank": [
+            85.0,
+            170.0,
+            255.0,
+            340.0
+          ],
+          "rankUnlockLevels": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "source": "AbilityValues.damage",
+          "notes": [
+            "Enemy-target cast."
+          ]
+        }
+      ]
+    }
+  ]
+}

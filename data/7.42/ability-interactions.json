@@ -1,0 +1,799 @@
+{
+  "patch": "7.42",
+  "clientBuild": 6978,
+  "sources": {
+    "patch": "https://www.dota2.com/patches/7.42",
+    "client": "https://github.com/SteamTracking/GameTracking-Dota2/tree/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc",
+    "archiveSha256": "d51efb64ae87552291eb89efec53a6137c3a851fb559b0d7e1fd010588bfe3ec"
+  },
+  "scope": "Pinned mechanics and proposed calibration for heroes found in the Legend role sample. The current snapshot determines replay counts independently.",
+  "interactions": [
+    {
+      "heroId": 8,
+      "heroName": "Juggernaut",
+      "key": "juggernaut_omni_slash",
+      "name": "Omnislash",
+      "modelStatus": "implemented",
+      "itemStats": [
+        "Attack speed",
+        "Agility",
+        "Attack damage",
+        "Armor reduction",
+        "Item critical strikes"
+      ],
+      "exampleItemKeys": [
+        "gloves",
+        "quarterstaff",
+        "desolator",
+        "greater_crit"
+      ],
+      "mechanic": "Attack speed changes the time between slashes. An item can add a whole hit when it crosses a timing breakpoint. Attack damage changes the damage of each modeled slash.",
+      "parameters": [
+        {
+          "name": "Rate multiplier",
+          "value": 1.4
+        },
+        {
+          "name": "Bonus attack speed",
+          "value": 40
+        },
+        {
+          "name": "Bonus damage by rank",
+          "value": [
+            25,
+            30,
+            35
+          ]
+        },
+        {
+          "name": "Duration by rank (seconds)",
+          "value": [
+            3,
+            3.25,
+            3.5
+          ]
+        },
+        {
+          "name": "Search radius",
+          "value": 425
+        },
+        {
+          "name": "Modeled first hit (seconds)",
+          "value": 0
+        },
+        {
+          "name": "Modeled hit count",
+          "value": "Ceiling of duration times slash rate, counting only hits strictly before expiry"
+        }
+      ],
+      "limitations": [
+        "The build metric assumes one continuously eligible target and estimates physical cast damage. Item crits and armor reduction are optional and armor reduction is treated as already applied.",
+        "Bladeform, Blade Dance, magic item procs, and the duration talent are outside this estimate. The exact first-hit and expiry timing still needs a combat-log test."
+      ],
+      "demoCheck": "Compare combat-log hits immediately below and above one modeled attack-speed breakpoint against a single stationary target.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_juggernaut.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=8&language=english"
+        },
+        {
+          "label": "Valve’s original normal-attack rework",
+          "url": "https://www.dota2.com/720/"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 70,
+      "heroName": "Ursa",
+      "key": "ursa_overpower",
+      "name": "Overpower + Fury Swipes",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Attack speed",
+        "Attack damage",
+        "Armor reduction",
+        "On-hit effects"
+      ],
+      "exampleItemKeys": [
+        "gloves",
+        "hyperstone",
+        "desolator"
+      ],
+      "mechanic": "Overpower gives a fixed budget of accelerated attacks. Fury Swipes makes successive hits on the same target stronger. Attack speed helps deliver the attack budget sooner, while the target's stack history changes the value of each hit.",
+      "parameters": [
+        {
+          "name": "Overpower attack budget by rank",
+          "value": [
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "Overpower bonus attack speed",
+          "value": 400
+        },
+        {
+          "name": "Overpower duration (seconds)",
+          "value": 20
+        },
+        {
+          "name": "Fury Swipes damage per stack by rank",
+          "value": [
+            12,
+            20,
+            28,
+            36
+          ]
+        },
+        {
+          "name": "Fury Swipes reset by rank (seconds)",
+          "value": [
+            8,
+            12,
+            16,
+            20
+          ]
+        },
+        {
+          "name": "Roshan reset (seconds)",
+          "value": 8
+        }
+      ],
+      "limitations": [
+        "Talent bonuses are excluded. A cast estimate needs the initial target stack count, attack speed limits, and hit timing."
+      ],
+      "demoCheck": "Measure whether the current attack receives the new Fury Swipes stack, then interrupt one chain long enough to reset it.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_ursa.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=70&language=english"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 21,
+      "heroName": "Windranger",
+      "key": "windrunner_focusfire",
+      "name": "Focus Fire",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Attack speed",
+        "Attack damage",
+        "Item Potency",
+        "On-hit proc chance"
+      ],
+      "exampleItemKeys": [
+        "gloves",
+        "desolator",
+        "maelstrom",
+        "monkey_king_bar"
+      ],
+      "mechanic": "Focus Fire speeds up attacks against its selected target and reduces attack damage. It also changes eligible item effects through Item Potency, so the attack packet and item effects need separate scaling.",
+      "parameters": [
+        {
+          "name": "Bonus attack speed by rank",
+          "value": [
+            350,
+            425,
+            500
+          ]
+        },
+        {
+          "name": "Base duration (seconds)",
+          "value": 20
+        },
+        {
+          "name": "Attack damage reduction (%)",
+          "value": 18
+        },
+        {
+          "name": "Item Potency (%)",
+          "value": 75
+        },
+        {
+          "name": "Ability processes procs",
+          "value": true
+        }
+      ],
+      "limitations": [
+        "Single-target Focus Fire without talents. Each item needs its own potency and proc eligibility rule. Actual time spent attacking and any attack-speed cap affect the result."
+      ],
+      "demoCheck": "Measure attack intervals near the attack-speed cap and verify Desolator's armor reduction on the Focus Fire target.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_windrunner.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=21&language=english"
+        },
+        {
+          "label": "Valve 7.42 patch notes",
+          "url": "https://www.dota2.com/patches/7.42"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 120,
+      "heroName": "Pangolier",
+      "key": "pangolier_swashbuckle",
+      "name": "Swashbuckle",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Item Potency",
+        "Armor reduction",
+        "On-hit proc chance",
+        "Attack damage talent"
+      ],
+      "exampleItemKeys": [
+        "desolator",
+        "blight_stone",
+        "maelstrom",
+        "basher"
+      ],
+      "mechanic": "Swashbuckle has a configured strike count and interval. Its strikes can trigger supported on-hit effects at 60% Item Potency. Valve gives Desolator's six armor reduction becoming 3.6 as an explicit example.",
+      "parameters": [
+        {
+          "name": "Strikes",
+          "value": 4
+        },
+        {
+          "name": "Configured interval (seconds)",
+          "value": 0.1
+        },
+        {
+          "name": "Base damage per strike by rank",
+          "value": [
+            25,
+            50,
+            75,
+            100
+          ]
+        },
+        {
+          "name": "Item Potency (%)",
+          "value": 60
+        },
+        {
+          "name": "Desolator armor reduction magnitude in Valve's example",
+          "value": 3.6
+        }
+      ],
+      "limitations": [
+        "Attack speed is outside this fixed strike schedule. The bonus attack-damage talent, item eligibility, proc cooldowns, debuff refresh rules, and target contact each need separate modeling."
+      ],
+      "demoCheck": "Count landed strikes with and without an attack-speed item. Equip Desolator separately and check whether the first strike benefits from the reduction it applies.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_pangolier.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=120&language=english"
+        },
+        {
+          "label": "Valve 7.42 patch notes",
+          "url": "https://www.dota2.com/patches/7.42"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 25,
+      "heroName": "Lina",
+      "key": "lina_fiery_soul",
+      "name": "Fiery Soul",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Attack speed",
+        "Attack damage",
+        "Agility"
+      ],
+      "exampleItemKeys": [
+        "gloves",
+        "quarterstaff",
+        "greater_crit"
+      ],
+      "mechanic": "Spells hitting enemies feed a temporary attack-speed stack state. A right-click comparison needs an explicit stack count so an item can be evaluated with the appropriate base cadence.",
+      "parameters": [
+        {
+          "name": "Attack speed bonus per stack by rank",
+          "value": [
+            7,
+            14,
+            21,
+            28
+          ]
+        },
+        {
+          "name": "Maximum stacks",
+          "value": 7
+        },
+        {
+          "name": "Stack duration (seconds)",
+          "value": 16
+        },
+        {
+          "name": "Rank-four bonus at seven stacks",
+          "value": 196
+        }
+      ],
+      "limitations": [
+        "The pinned values establish the bonus for a given stack count. Stack acquisition, refresh, and uptime depend on the spell and combat sequence."
+      ],
+      "demoCheck": "Cast the same spell into one target and multiple targets and record how many stacks are gained and when they expire.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_lina.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=25&language=english"
+        },
+        {
+          "label": "Valve 7.42 patch notes",
+          "url": "https://www.dota2.com/patches/7.42"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 35,
+      "heroName": "Sniper",
+      "key": "sniper_take_aim",
+      "name": "Take Aim + Headshot",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Attack speed",
+        "Agility",
+        "Attack range",
+        "Attack damage"
+      ],
+      "exampleItemKeys": [
+        "gloves",
+        "dragon_lance",
+        "quarterstaff"
+      ],
+      "mechanic": "During Take Aim, Headshot has 100% configured chance. An attack-speed purchase can add attacks inside that short window, while range can change which attacks land.",
+      "parameters": [
+        {
+          "name": "Active duration (seconds)",
+          "value": 3
+        },
+        {
+          "name": "Base Headshot chance (%)",
+          "value": 40
+        },
+        {
+          "name": "Take Aim Headshot chance (%)",
+          "value": 100
+        },
+        {
+          "name": "Headshot physical damage by rank",
+          "value": [
+            20,
+            50,
+            80,
+            110
+          ]
+        },
+        {
+          "name": "Active bonus attack range by rank",
+          "value": [
+            75,
+            150,
+            225,
+            300
+          ]
+        },
+        {
+          "name": "Cooldown by rank (seconds)",
+          "value": [
+            22,
+            20,
+            18,
+            16
+          ]
+        }
+      ],
+      "limitations": [
+        "This is a normal-attack window. Take Aim has no base attack-speed bonus and an attack-speed talent is separate. Cast timing, initial attack cooldown, projectile travel, and target distance affect landed hit count."
+      ],
+      "demoCheck": "Hold level, ranks and target distance fixed. Count Headshots with and without an attack-speed item inside the same three-second window.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_sniper.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=35&language=english"
+        },
+        {
+          "label": "Valve 7.42 patch notes",
+          "url": "https://www.dota2.com/patches/7.42"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 35,
+      "heroName": "Sniper",
+      "key": "sniper_assassinate",
+      "name": "Assassinate",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Attack damage",
+        "Item Potency",
+        "Armor reduction",
+        "On-hit effects",
+        "Spell amplification"
+      ],
+      "exampleItemKeys": [
+        "desolator",
+        "blight_stone",
+        "monkey_king_bar",
+        "kaya"
+      ],
+      "mechanic": "Assassinate has an attack component with bonus Item Potency and a separate magical damage value. Item-dependent attack effects and the spell damage need separate treatment.",
+      "parameters": [
+        {
+          "name": "Magical damage by rank",
+          "value": [
+            300,
+            400,
+            500
+          ]
+        },
+        {
+          "name": "Bonus Item Potency by rank (%)",
+          "value": [
+            20,
+            35,
+            50
+          ]
+        },
+        {
+          "name": "Cooldown by rank (seconds)",
+          "value": [
+            20,
+            15,
+            10
+          ]
+        }
+      ],
+      "limitations": [
+        "The tooltip and patch identify the two components. Proc eligibility, attack versus magic application order, and debuff timing are unverified in the simulator."
+      ],
+      "demoCheck": "Cast without and with Orb of Blight and examine the combat log for the attack component, the spell component, and the applied armor debuff.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_sniper.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=35&language=english"
+        },
+        {
+          "label": "Valve 7.42 patch notes",
+          "url": "https://www.dota2.com/patches/7.42"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 2,
+      "heroName": "Axe",
+      "key": "axe_counter_helix",
+      "name": "Counter Helix",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Aghanim upgrade",
+        "Attack speed",
+        "Enemy attack cadence"
+      ],
+      "exampleItemKeys": [
+        "ultimate_scepter",
+        "gloves",
+        "hyperstone"
+      ],
+      "mechanic": "Counter Helix normally advances from incoming attacks. Aghanim's Scepter removes its cooldown and lets Axe's own attacks advance the counter. That upgrade changes whether his outgoing attack speed contributes to proc cadence.",
+      "parameters": [
+        {
+          "name": "Attacks per proc by rank",
+          "value": [
+            7,
+            6,
+            5,
+            4
+          ]
+        },
+        {
+          "name": "Pure damage by rank",
+          "value": [
+            100,
+            120,
+            140,
+            160
+          ]
+        },
+        {
+          "name": "Base cooldown (seconds)",
+          "value": 0.3
+        },
+        {
+          "name": "Scepter cooldown reduction (seconds)",
+          "value": 0.3
+        },
+        {
+          "name": "Own attacks advance Scepter counter",
+          "value": true
+        }
+      ],
+      "limitations": [
+        "The counter's starting state and qualifying attack rules affect proc count. Axe illusions do not advance the counter by attacking under this upgrade."
+      ],
+      "demoCheck": "Compare proc counts at the same attack speed with Scepter disabled and enabled, first with no incoming hits, then with one attacking enemy.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_axe.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=2&language=english"
+        },
+        {
+          "label": "Valve 7.42 patch notes",
+          "url": "https://www.dota2.com/patches/7.42"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 7,
+      "heroName": "Earthshaker",
+      "key": "earthshaker_enchant_totem",
+      "name": "Enchant Totem",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Strength",
+        "Flat attack damage",
+        "Armor reduction",
+        "Critical strikes"
+      ],
+      "exampleItemKeys": [
+        "gauntlets",
+        "blades_of_attack",
+        "lesser_crit",
+        "desolator"
+      ],
+      "mechanic": "Totem amplifies base attack damage including damage from Earthshaker's primary attribute. Strength therefore raises the portion that Totem amplifies. Flat bonus damage contributes to the hit outside the Totem multiplier.",
+      "parameters": [
+        {
+          "name": "Bonus base attack damage by rank (%)",
+          "value": [
+            100,
+            200,
+            300,
+            400
+          ]
+        },
+        {
+          "name": "Buff duration (seconds)",
+          "value": 14
+        },
+        {
+          "name": "Bonus attack range",
+          "value": 100
+        },
+        {
+          "name": "Rank-four extra raw hit damage from +3 Strength including base gain",
+          "value": 15
+        },
+        {
+          "name": "Raw hit damage added by Blades of Attack",
+          "value": 9
+        }
+      ],
+      "limitations": [
+        "The item comparison is one landed hit without armor, talents, crits, auras, or other modifiers. It does not estimate spell damage from Aftershock or multi-target effects."
+      ],
+      "demoCheck": "Record one rank-four Totem hit on a zero-armor target with Gauntlets and then with Blades, leaving all other inputs fixed.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_earthshaker.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=7&language=english"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 26,
+      "heroName": "Lion",
+      "key": "lion_finger_of_death",
+      "name": "Finger of Death",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Spell amplification",
+        "Aghanim upgrade",
+        "Kill stacks"
+      ],
+      "exampleItemKeys": [
+        "kaya",
+        "ultimate_scepter",
+        "kaya_and_sange"
+      ],
+      "mechanic": "Finger of Death adds permanent damage from qualifying kills and gains separate base damage from Scepter. The cast's magical damage is also sensitive to spell amplification and the target's resistance.",
+      "parameters": [
+        {
+          "name": "Base damage by rank",
+          "value": [
+            570,
+            685,
+            800
+          ]
+        },
+        {
+          "name": "Damage per qualifying kill",
+          "value": 20
+        },
+        {
+          "name": "Scepter bonus damage",
+          "value": 100
+        },
+        {
+          "name": "Scepter splash radius",
+          "value": 325
+        },
+        {
+          "name": "To Hell and Back spell amplification (%)",
+          "value": 15
+        },
+        {
+          "name": "To Hell and Back maximum duration (seconds)",
+          "value": 90
+        }
+      ],
+      "limitations": [
+        "Kill stacks, Scepter, talent choices, and the post-respawn innate are separate inputs. The alternate melee attack and cleave are outside a spell-cast benchmark."
+      ],
+      "demoCheck": "Compare one cast at zero stacks to one after a qualifying kill. Repeat with Scepter while controlling the innate and target resistance.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_lion.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=26&language=english"
+        },
+        {
+          "label": "Valve 7.42 patch notes",
+          "url": "https://www.dota2.com/patches/7.42"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    },
+    {
+      "heroId": 30,
+      "heroName": "Witch Doctor",
+      "key": "witch_doctor_maledict",
+      "name": "Maledict",
+      "modelStatus": "mapped",
+      "itemStats": [
+        "Timed active damage",
+        "Spell amplification",
+        "Target health history",
+        "Health restoration"
+      ],
+      "exampleItemKeys": [
+        "dagon",
+        "kaya",
+        "kaya_and_sange"
+      ],
+      "mechanic": "Maledict has recurring damage and separate bursts tied to health lost since application. An item burst delivered before a Maledict checkpoint can affect later curse damage. A one-hit or steady-DPS model misses that dependency.",
+      "parameters": [
+        {
+          "name": "Base damage per second by rank",
+          "value": [
+            18,
+            22,
+            26,
+            30
+          ]
+        },
+        {
+          "name": "Lost-health damage per 100 HP by rank",
+          "value": [
+            16,
+            24,
+            32,
+            40
+          ]
+        },
+        {
+          "name": "Base burst interval (seconds)",
+          "value": 4
+        },
+        {
+          "name": "Base number of bursts",
+          "value": 3
+        },
+        {
+          "name": "Base duration (seconds)",
+          "value": 12
+        }
+      ],
+      "limitations": [
+        "Target health changes, regeneration, damage timing, target magic resistance, and spell amplification are required for a total. Valve states the burst is zero when the target's health exceeds its health at application."
+      ],
+      "demoCheck": "Cast Maledict on matched targets and deliver the same Dagon burst just before and just after the first four-second checkpoint. Compare the burst events.",
+      "sources": [
+        {
+          "label": "Pinned hero definition",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/heroes/npc_dota_hero_witch_doctor.txt"
+        },
+        {
+          "label": "Valve hero data",
+          "url": "https://www.dota2.com/datafeed/herodata?hero_id=30&language=english"
+        },
+        {
+          "label": "Pinned item definitions",
+          "url": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt"
+        }
+      ]
+    }
+  ]
+}

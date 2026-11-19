@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <title>Build efficiency | Dota 2 Analyzer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/efficiency.css">
+  <script src="/efficiency.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to build efficiency</a>
+  <header class="topbar">
+    <div class="shell topbar-content">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <nav class="efficiency-nav" aria-label="Analyzer views">
+        <a href="/">Match results</a>
+        <a href="/efficiency" aria-current="page">Build efficiency</a>
+        <a href="/draft-guide?arm=impact&amp;role=offlane">Role impact</a>
+      </nav>
+      <div class="topbar-meta"><span class="patch-label"><span class="patch-dot" aria-hidden="true"></span> Patch 7.42</span></div>
+    </div>
+  </header>
+
+  <main class="shell efficiency-main" id="main">
+    <header class="efficiency-intro">
+      <p class="eyebrow">7.42 Mechanics</p>
+      <h1>Build efficiency</h1>
+      <p class="intro-subtitle">Compare items and two-item builds by their modeled stats and gain per gold.</p>
+    </header>
+
+    <div class="dataset-note efficiency-note">Mechanics estimates use 7.42 game data and the scenario below. <a href="/">See observed match results <span aria-hidden="true">↗</span></a></div>
+
+    <div class="efficiency-layout">
+      <section class="surface settings-surface" aria-labelledby="settings-title">
+        <form id="build-settings">
+          <div class="section-heading"><h2 id="settings-title">Build settings</h2></div>
+          <div class="settings-fields">
+            <div class="hero-fields">
+              <label class="eff-field" for="eff-hero">Hero
+                <select class="select" id="eff-hero" name="heroId" required><option value="">Loading roster…</option></select>
+              </label>
+              <label class="eff-field" for="eff-level">Level
+                <select class="select" id="eff-level" name="level"></select>
+              </label>
+            </div>
+            <label class="eff-field" for="eff-budget">Gold budget
+              <span class="gold-input"><input id="eff-budget" name="budget" type="number" min="0" max="100000" step="1" value="3000" required><span>gold</span></span>
+            </label>
+            <fieldset class="eff-choice">
+              <legend class="eff-field-label">Build size</legend>
+              <div class="size-picker">
+                <label><input type="radio" name="maxItems" value="1" checked><span>One item</span></label>
+                <label><input type="radio" name="maxItems" value="2"><span>Up to two</span></label>
+              </div>
+            </fieldset>
+            <label class="eff-field" for="eff-metric">Metric
+              <select class="select" id="eff-metric" name="metric" required><option value="">Loading metrics…</option></select>
+            </label>
+          </div>
+          <details class="scenario-settings">
+            <summary>Combat assumptions <span aria-hidden="true">+</span></summary>
+            <div class="scenario-fields">
+              <label class="eff-field" for="target-armor">Target armor
+                <input id="target-armor" name="targetArmor" type="number" min="-300" max="300" step="any" value="10" required>
+              </label>
+              <label class="eff-field" for="target-mr">Target magic resist (%)
+                <input id="target-mr" name="targetMagicResistance" type="number" min="-100" max="99.9" step="any" value="25" required>
+              </label>
+              <label class="eff-field" for="spell-damage">Base spell damage
+                <input id="spell-damage" name="baseSpellDamage" type="number" min="0" max="100000" step="any" value="300" required>
+              </label>
+              <label class="eff-field" for="spell-window">Window (seconds)
+                <input id="spell-window" name="windowSeconds" type="number" min="0.1" max="120" step="any" value="10" required>
+              </label>
+              <label class="eff-field" for="own-armor">Own baseline armor
+                <input id="own-armor" name="ownArmor" type="number" min="-300" max="300" step="any" placeholder="Hero default">
+              </label>
+              <label class="eff-field" for="own-mr">Own baseline magic resist (%)
+                <input id="own-mr" name="ownMagicResistance" type="number" min="-100" max="99.9" step="any" placeholder="Hero default">
+              </label>
+              <label class="eff-check"><input type="checkbox" name="includeActives" checked> Item actives</label>
+              <label class="eff-check"><input type="checkbox" name="includeOnHit" checked> On-hit and crits</label>
+              <label class="eff-check"><input type="checkbox" name="includeAuras" checked> Auras</label>
+            </div>
+          </details>
+          <details class="scenario-settings manual-settings" id="manual-settings" hidden>
+            <summary>Try specific items <span aria-hidden="true">+</span></summary>
+            <div class="scenario-fields manual-fields">
+              <label class="eff-field" for="manual-first">Item 1
+                <select class="select" id="manual-first" name="itemKey"><option value="">Any item</option></select>
+              </label>
+              <label class="eff-field" for="manual-second">Item 2
+                <select class="select" id="manual-second" name="itemKey"><option value="">No second item</option></select>
+              </label>
+            </div>
+          </details>
+          <div class="settings-action">
+            <button class="apply-button" type="submit" id="build-apply" disabled>Compare builds</button>
+            <p class="subtle" id="settings-status" role="status"></p>
+          </div>
+        </form>
+      </section>
+
+      <div class="efficiency-results" aria-labelledby="results-title">
+        <section class="surface benchmark-surface" aria-label="No-item baseline">
+          <div class="benchmark-figure">
+            <img id="eff-portrait" alt="" hidden>
+            <div class="benchmark-shade"></div>
+            <div class="benchmark-main">
+              <p class="eyebrow" id="benchmark-level">Loading roster</p>
+              <h2 id="benchmark-hero">Build comparison</h2>
+              <p class="subtle" id="benchmark-scenario">Loading mechanics data…</p>
+            </div>
+            <dl class="benchmark-metric"><dt id="benchmark-label">No-item baseline</dt><dd id="benchmark-value">—</dd></dl>
+          </div>
+        </section>
+
+        <section class="surface results-surface" aria-labelledby="results-title">
+          <div class="section-heading results-heading">
+            <div><h2 id="results-title">Ranked builds</h2><p class="subtle" id="result-summary" aria-live="polite">Waiting for build data…</p></div>
+            <label class="result-sort" for="result-sort">Rank by
+              <select id="result-sort" name="sort" class="select" form="build-settings">
+                <option value="efficiency">Gain per 1,000g</option>
+                <option value="gain">Total gain</option>
+              </select>
+            </label>
+          </div>
+          <div id="eff-results"><p class="empty-state">Loading builds…</p></div>
+          <div class="pagination" id="eff-pagination" hidden>
+            <span id="eff-page-count"></span>
+            <div>
+              <button id="eff-previous" class="compact-button" type="button" aria-label="Previous build page">‹</button>
+              <button id="eff-next" class="compact-button" type="button" aria-label="Next build page">›</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="surface frontier-surface" id="frontier-surface" aria-labelledby="frontier-title" hidden>
+          <div class="section-heading"><div><h2 id="frontier-title">Gain vs. gold spent</h2><p class="subtle" id="frontier-summary"></p></div></div>
+          <div class="frontier-chart"><canvas id="frontier-chart" aria-hidden="true"></canvas></div>
+          <details class="item-disclosure"><summary>View chart values</summary><div class="scroll-table" id="frontier-data"></div></details>
+        </section>
+
+        <section class="surface build-detail" id="build-detail" aria-labelledby="build-detail-title" hidden>
+          <div class="section-heading"><div><h2 id="build-detail-title">Build details</h2><p class="subtle" id="build-detail-summary"></p></div></div>
+          <div id="build-detail-content"></div>
+        </section>
+
+        <details class="surface reading-note model-note">
+          <summary>Model coverage <span aria-hidden="true">+</span></summary>
+          <div id="model-coverage"><p>Coverage notes appear after the first comparison.</p></div>
+        </details>
+      </div>
+    </div>
+    <footer>
+      <span>7.42 game mechanics</span>
+      <a class="text-link" href="https://www.dota2.com/patches/7.42" target="_blank" rel="noreferrer">Valve patch notes <span aria-hidden="true">↗</span></a>
+    </footer>
+  </main>
+</body>
+</html>

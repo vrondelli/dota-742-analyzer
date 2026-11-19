@@ -1,0 +1,133 @@
+{
+  "patch": "7.42",
+  "roles": [
+    {
+      "key": "soft-support",
+      "headline": "Position 4 · Make plays across the map",
+      "criteria": [
+        { "key": "catch", "label": "Catch", "weight": 30, "description": "Start a small fight or hold a target long enough for nearby allies to follow up." },
+        { "key": "map-tempo", "label": "Map tempo", "weight": 25, "description": "Rotate between lanes, respond to side-lane threats, or safely push a wave to create time for the team." },
+        { "key": "lane", "label": "Lane contribution", "weight": 20, "description": "Trade, secure space for the offlaner, or turn a lane opening into a credible kill threat." },
+        { "key": "counterplay", "label": "Counterplay", "weight": 15, "description": "Answer a fight already started by the enemy through peel, interruption, or a spell that changes how allies can commit." },
+        { "key": "low-gold", "label": "Low-gold impact", "weight": 10, "description": "Carry out the position's main job with levels and basic purchases while a major item is still out of reach." }
+      ],
+      "profiles": [
+        {
+          "heroId": 86,
+          "ratings": {
+            "catch": { "value": 2, "reason": "Telekinesis reliably lifts a target in range and can stun another enemy with the landing. Starting from outside that reach often takes positioning or Blink." },
+            "map-tempo": { "value": 1, "reason": "Fade Bolt can help push a wave, but a larger rotation usually depends on walking into position or stealing a suitable spell." },
+            "lane": { "value": 2, "reason": "Fade Bolt helps win trades by lowering enemy attack and spell damage. Telekinesis gives the offlaner a chance to follow up." },
+            "counterplay": { "value": 3, "reason": "Telekinesis and Fade Bolt can interrupt a jump or weaken follow-up. Spell Steal can turn a strong enemy spell into a second round of control if Rubick can acquire it safely." },
+            "low-gold": { "value": 2, "reason": "Lift, damage reduction, and stolen spells work before a major item. Safer angles and timely access to an enemy caster improve substantially with positioning items." }
+          },
+          "milestones": { "bad": "pavise", "good": "force_staff", "easy": "blink" },
+          "milestoneReasons": {
+            "bad": "Pavise gives Rubick an ally-targeted physical barrier while bigger positioning items are still out of reach.",
+            "good": "Force Staff gives an ally an escape route or lets Rubick keep a safer Spell Steal angle.",
+            "easy": "Blink opens a faster angle for Telekinesis or a high-value stolen spell."
+          },
+          "sources": ["https://www.dota2.com/datafeed/herodata?hero_id=86&language=english"]
+        },
+        {
+          "heroId": 123,
+          "ratings": {
+            "catch": { "value": 2, "reason": "Bushwhack catches several enemies if a tree is available. Acorn Shot can create a tree, which adds setup and travel time." },
+            "map-tempo": { "value": 3, "reason": "Scurry opens tree-line routes, and Acorn Shot helps push exposed waves from the edge of the fight." },
+            "lane": { "value": 2, "reason": "Ranged Acorn Shot harassment and Bushwhack can turn a good tree-line angle into a favorable trade or all-in." },
+            "counterplay": { "value": 1, "reason": "Bushwhack can interrupt a pursuit and Sharpshooter can break a relevant passive. Both need a setup or angle and are harder to land against a sudden jump." },
+            "low-gold": { "value": 2, "reason": "Stun, slow, and Break remain useful with basic items. Tree placement and a clear Sharpshooter line still determine how much the team gets from them." }
+          },
+          "milestones": { "bad": "bloodslinger", "good": "force_staff", "easy": "maelstrom" },
+          "milestoneReasons": {
+            "bad": "Bloodslinger adds a low-cost ranged follow-up to a catch.",
+            "good": "Force Staff adds an ally reposition for escapes or follow-up.",
+            "easy": "Maelstrom improves wave pressure when teammates already cover saves."
+          },
+          "sources": ["https://www.dota2.com/datafeed/herodata?hero_id=123&language=english"]
+        },
+        {
+          "heroId": 71,
+          "ratings": {
+            "catch": { "value": 3, "reason": "Charge of Darkness can open far from the target, and Nether Strike can extend the lockdown. Allies still need time to arrive, and enemies can interrupt the approach." },
+            "map-tempo": { "value": 3, "reason": "Charge lets Spirit Breaker respond across long distances to visible units and threatens opponents who push separate lanes." },
+            "lane": { "value": 1, "reason": "Charge creates a kill threat with an active partner, while sustained trading is harder against ranged harassment." },
+            "counterplay": { "value": 2, "reason": "Charge and Nether Strike can interrupt an attacker or knock a target away. The approach may take too long against immediate burst." },
+            "low-gold": { "value": 3, "reason": "Charge, Greater Bash, and Nether Strike provide rotations and interruption before a completed fight item. More movement and protection help Spirit Breaker follow through." }
+          },
+          "milestones": { "bad": "urn_of_shadows", "good": "ancient_janggo", "easy": "blade_mail" },
+          "milestoneReasons": {
+            "bad": "Urn spends charges earned near kills on allied sustain or enemy pressure. Coordinate with other Urn or Vessel buyers.",
+            "good": "Drum supports repeat group moves and objectives after a successful Charge.",
+            "easy": "Blade Mail punishes enemies who focus Spirit Breaker when he follows a Charge into the fight."
+          },
+          "sources": ["https://www.dota2.com/datafeed/herodata?hero_id=71&language=english"]
+        }
+      ]
+    },
+    {
+      "key": "hard-support",
+      "headline": "Position 5 · Protect the carry and stabilize fights",
+      "criteria": [
+        { "key": "ally-protection", "label": "Ally protection", "weight": 30, "description": "Prevent a death, reduce incoming damage, or restore a threatened ally's ability to stay in a fight." },
+        { "key": "lane", "label": "Lane contribution", "weight": 25, "description": "Keep the carry safe enough to farm through trading, sustain, or reliable lane control." },
+        { "key": "fight-control", "label": "Fight control", "weight": 20, "description": "Interrupt, stop, or redirect enemy heroes when the team needs time to reset or focus a target." },
+        { "key": "low-gold", "label": "Low-gold impact", "weight": 15, "description": "Deliver protection or disruption with levels and basic purchases while preserving gold for shared support needs." },
+        { "key": "wave-defense", "label": "Wave defense", "weight": 10, "description": "Clear or delay an enemy wave from a position the team can reasonably defend." }
+      ],
+      "profiles": [
+        {
+          "heroId": 50,
+          "ratings": {
+            "ally-protection": { "value": 3, "reason": "Shallow Grave buys time for an ally in danger, and Shadow Wave restores health. Effects such as Axe's Culling Blade can still finish a target through Grave." },
+            "lane": { "value": 3, "reason": "Poison Touch threatens extended trades while Shadow Wave sustains the carry and punishes enemies standing close to allied units." },
+            "fight-control": { "value": 1, "reason": "Poison Touch slows and can hex during Nothl Projection. Dazzle usually needs an ally to provide the first dependable disable." },
+            "low-gold": { "value": 3, "reason": "Grave and Shadow Wave provide core protection before a major item if Dazzle holds a safe angle and stays within range." },
+            "wave-defense": { "value": 1, "reason": "Shadow Wave can punish creeps bunched around allied units. The setup is unreliable from a safe distance once the allied wave disappears." }
+          },
+          "milestones": { "bad": "pavise", "good": "mekansm", "easy": "force_staff" },
+          "milestoneReasons": {
+            "bad": "Pavise absorbs physical hits and can give Dazzle more time to commit Shallow Grave.",
+            "good": "Mekansm restores health to nearby allies after group damage.",
+            "easy": "Force Staff can move a saved ally away from follow-up damage before Grave expires."
+          },
+          "sources": ["https://www.dota2.com/datafeed/herodata?hero_id=50&language=english", "https://www.dota2.com/datafeed/herodata?hero_id=2&language=english"]
+        },
+        {
+          "heroId": 26,
+          "ratings": {
+            "ally-protection": { "value": 1, "reason": "Lion can use Hex or Earth Spike to stop an attacker and can channel Mana Drain on an ally for mana and movement. His protection depends on reaching the attacker or holding the channel." },
+            "lane": { "value": 2, "reason": "Earth Spike and Mana Drain give Lion a way to pressure contested trades and set up his carry." },
+            "fight-control": { "value": 3, "reason": "Hex stops a mobile target in cast range immediately, and Earth Spike can follow up across a line of enemies." },
+            "low-gold": { "value": 2, "reason": "Both disables work before Blink, especially against enemies who approach first. Starting on ranged or mobile targets is harder without a positioning purchase." },
+            "wave-defense": { "value": 1, "reason": "Earth Spike can damage a line of creeps, but repeated wave defense can leave Lion without a key disable when enemies approach." }
+          },
+          "milestones": { "bad": "pavise", "good": "blink", "easy": "blink" },
+          "milestoneReasons": {
+            "bad": "Pavise adds a physical save to bridge a delayed Blink timing.",
+            "good": "Blink lets Lion reach a mobile enemy or a save caster for immediate Hex.",
+            "easy": "Blink preserves the fast Hex angle while Tranquil Boots improve movement between fights."
+          },
+          "sources": ["https://www.dota2.com/datafeed/herodata?hero_id=26&language=english"]
+        },
+        {
+          "heroId": 112,
+          "ratings": {
+            "ally-protection": { "value": 2, "reason": "Cold Embrace blocks physical damage and heals. It holds the ally in place, which gives enemies an opening for magic follow-up." },
+            "lane": { "value": 2, "reason": "Arctic Burn's range and slow create favorable trades. Cold Embrace can restore health when the enemy cannot punish the stationary target." },
+            "fight-control": { "value": 3, "reason": "Winter's Curse can stop a target and redirect clustered enemies. The affected units are immune to most damage from Wyvern's teammates during the Curse." },
+            "low-gold": { "value": 2, "reason": "Cold Embrace and reactive Curse work with basic purchases. An offensive Curse against enemies who spread out often needs a better angle or Blink." },
+            "wave-defense": { "value": 3, "reason": "Splinter Blast lets Wyvern pressure clustered waves from range when a nearby unit can serve as the primary target." }
+          },
+          "milestones": { "bad": "bloodslinger", "good": "glimmer_cape", "easy": "blink" },
+          "milestoneReasons": {
+            "bad": "Bloodslinger adds affordable ranged fight utility while Glimmer Cape is still out of reach.",
+            "good": "Glimmer Cape layers a magic barrier over Cold Embrace's physical protection.",
+            "easy": "Blink opens a better Curse angle or lets Wyvern reach a threatened ally sooner."
+          },
+          "sources": ["https://www.dota2.com/datafeed/herodata?hero_id=112&language=english"]
+        }
+      ]
+    }
+  ]
+}

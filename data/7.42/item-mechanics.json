@@ -1,0 +1,3944 @@
+{
+  "patch": "7.42",
+  "clientBuild": 6978,
+  "sources": {
+    "archiveSha256": "d51efb64ae87552291eb89efec53a6137c3a851fb559b0d7e1fd010588bfe3ec",
+    "definitions": "https://github.com/SteamTracking/GameTracking-Dota2/blob/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt",
+    "patch": "https://www.dota2.com/datafeed/patchnotes?version=7.42&language=english",
+    "armorReductionStacking": "https://www.dota2.com/wanderingwaters",
+    "shopCatalog": "data/7.42/shop-items.json"
+  },
+  "model": {
+    "target": "Real hero attacking a real enemy hero",
+    "potencyPct": 100,
+    "percentageUnits": "percentage points",
+    "flatStats": "Continually active bonuses to the holder while the item is in an active slot.",
+    "friendlyAuras": "Stats apply to allies in radius, including the owner.",
+    "auraStacking": "Stack groups apply per stat. Use the strongest amount per group and suppress groups named by blockedBy when present.",
+    "coverage": "Missing fields are unmodelled. Partial items include only the represented stats, auras or effects."
+  },
+  "items": [
+    {
+      "id": 1,
+      "key": "blink",
+      "name": "Blink Dagger",
+      "cost": 2250,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "blink_range",
+        "blink_damage_cooldown",
+        "blink_range_clamp"
+      ]
+    },
+    {
+      "id": 600,
+      "key": "overwhelming_blink",
+      "name": "Overwhelming Blink",
+      "cost": 6800,
+      "stats": {
+        "strength": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "blink_range",
+        "blink_damage_cooldown",
+        "blink_range_clamp",
+        "radius",
+        "movement_slow",
+        "attack_slow",
+        "duration",
+        "damage_base",
+        "damage_pct_instant",
+        "damage_pct_over_time"
+      ]
+    },
+    {
+      "id": 603,
+      "key": "swift_blink",
+      "name": "Swift Blink",
+      "cost": 6800,
+      "stats": {
+        "agility": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Held agility only. Additional mobility and agility depend on the blink state."
+      ],
+      "unmodelledValues": [
+        "blink_range",
+        "blink_damage_cooldown",
+        "blink_range_clamp",
+        "bonus_movement",
+        "bonus_agi_active",
+        "duration"
+      ]
+    },
+    {
+      "id": 604,
+      "key": "arcane_blink",
+      "name": "Arcane Blink",
+      "cost": 6800,
+      "stats": {
+        "intelligence": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "blink_range",
+        "blink_damage_cooldown",
+        "blink_range_clamp",
+        "heal_amount",
+        "mana_amount"
+      ]
+    },
+    {
+      "id": 2,
+      "key": "blades_of_attack",
+      "name": "Blades of Attack",
+      "cost": 450,
+      "stats": {
+        "attackDamage": 9.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 3,
+      "key": "broadsword",
+      "name": "Broadsword",
+      "cost": 1000,
+      "stats": {
+        "attackDamage": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 4,
+      "key": "chainmail",
+      "name": "Chainmail",
+      "cost": 500,
+      "stats": {
+        "armor": 4.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 1847,
+      "key": "splintmail",
+      "name": "Splintmail",
+      "cost": 950,
+      "stats": {
+        "armor": 7.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 5,
+      "key": "claymore",
+      "name": "Claymore",
+      "cost": 1350,
+      "stats": {
+        "attackDamage": 20.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 6,
+      "key": "helm_of_iron_will",
+      "name": "Helm of Iron Will",
+      "cost": 975,
+      "stats": {
+        "armor": 4.0,
+        "healthRegen": 4.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 8,
+      "key": "mithril_hammer",
+      "name": "Mithril Hammer",
+      "cost": 1600,
+      "stats": {
+        "attackDamage": 24.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 9,
+      "key": "platemail",
+      "name": "Platemail",
+      "cost": 1400,
+      "stats": {
+        "armor": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 10,
+      "key": "quarterstaff",
+      "name": "Quarterstaff",
+      "cost": 900,
+      "stats": {
+        "attackDamage": 10.0,
+        "attackSpeed": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 11,
+      "key": "quelling_blade",
+      "name": "Quelling Blade",
+      "cost": 100,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "damage_bonus",
+        "damage_bonus_ranged"
+      ]
+    },
+    {
+      "id": 237,
+      "key": "faerie_fire",
+      "name": "Faerie Fire",
+      "cost": 65,
+      "stats": {
+        "attackDamage": 2.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "hp_restore"
+      ]
+    },
+    {
+      "id": 265,
+      "key": "infused_raindrop",
+      "name": "Infused Raindrops",
+      "cost": 225,
+      "stats": {
+        "manaRegen": 0.6
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "magic_damage_block",
+        "min_damage",
+        "initial_charges"
+      ]
+    },
+    {
+      "id": 244,
+      "key": "wind_lace",
+      "name": "Wind Lace",
+      "cost": 225,
+      "stats": {
+        "moveSpeed": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 12,
+      "key": "ring_of_protection",
+      "name": "Ring of Protection",
+      "cost": 175,
+      "stats": {
+        "armor": 2.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 247,
+      "key": "moon_shard",
+      "name": "Moon Shard",
+      "cost": 4000,
+      "stats": {
+        "attackSpeed": 140.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Attack speed is for the held item. Consuming it changes the scenario."
+      ],
+      "unmodelledValues": [
+        "bonus_night_vision",
+        "consumed_bonus",
+        "consumed_bonus_night_vision"
+      ]
+    },
+    {
+      "id": 13,
+      "key": "gauntlets",
+      "name": "Gauntlets of Strength",
+      "cost": 140,
+      "stats": {
+        "strength": 3.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 14,
+      "key": "slippers",
+      "name": "Slippers of Agility",
+      "cost": 140,
+      "stats": {
+        "agility": 3.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 15,
+      "key": "mantle",
+      "name": "Mantle of Intelligence",
+      "cost": 140,
+      "stats": {
+        "intelligence": 3.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 16,
+      "key": "branches",
+      "name": "Iron Branch",
+      "cost": 55,
+      "stats": {
+        "strength": 1.0,
+        "agility": 1.0,
+        "intelligence": 1.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "tree_duration"
+      ]
+    },
+    {
+      "id": 17,
+      "key": "belt_of_strength",
+      "name": "Belt of Strength",
+      "cost": 450,
+      "stats": {
+        "strength": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 18,
+      "key": "boots_of_elves",
+      "name": "Band of Elvenskin",
+      "cost": 450,
+      "stats": {
+        "agility": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 19,
+      "key": "robe",
+      "name": "Robe of the Magi",
+      "cost": 450,
+      "stats": {
+        "intelligence": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 20,
+      "key": "circlet",
+      "name": "Circlet",
+      "cost": 155,
+      "stats": {
+        "strength": 2.0,
+        "agility": 2.0,
+        "intelligence": 2.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 261,
+      "key": "crown",
+      "name": "Crown",
+      "cost": 450,
+      "stats": {
+        "strength": 4.0,
+        "agility": 4.0,
+        "intelligence": 4.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 1122,
+      "key": "diadem",
+      "name": "Diadem",
+      "cost": 1000,
+      "stats": {
+        "strength": 6.0,
+        "agility": 6.0,
+        "intelligence": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 21,
+      "key": "ogre_axe",
+      "name": "Ogre Axe",
+      "cost": 1000,
+      "stats": {
+        "strength": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 22,
+      "key": "blade_of_alacrity",
+      "name": "Blade of Alacrity",
+      "cost": 1000,
+      "stats": {
+        "agility": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 23,
+      "key": "staff_of_wizardry",
+      "name": "Staff of Wizardry",
+      "cost": 1000,
+      "stats": {
+        "intelligence": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 24,
+      "key": "ultimate_orb",
+      "name": "Ultimate Orb",
+      "cost": 2800,
+      "stats": {
+        "strength": 15.0,
+        "agility": 15.0,
+        "intelligence": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 25,
+      "key": "gloves",
+      "name": "Gloves of Haste",
+      "cost": 450,
+      "stats": {
+        "attackSpeed": 20.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 485,
+      "key": "blitz_knuckles",
+      "name": "Blitz Knuckles",
+      "cost": 1000,
+      "stats": {
+        "attackSpeed": 35.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 26,
+      "key": "lifesteal",
+      "name": "Morbid Mask",
+      "cost": 900,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "lifesteal_percent"
+      ]
+    },
+    {
+      "id": 473,
+      "key": "voodoo_mask",
+      "name": "Voodoo Mask",
+      "cost": 650,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "spell_lifesteal"
+      ]
+    },
+    {
+      "id": 27,
+      "key": "ring_of_regen",
+      "name": "Ring of Regen",
+      "cost": 175,
+      "stats": {
+        "healthRegen": 1.25
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 28,
+      "key": "sobi_mask",
+      "name": "Sage's Mask",
+      "cost": 175,
+      "stats": {
+        "manaRegen": 0.7
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 29,
+      "key": "boots",
+      "name": "Boots of Speed",
+      "cost": 500,
+      "stats": {
+        "moveSpeed": 45.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 30,
+      "key": "gem",
+      "name": "Gem of True Sight",
+      "cost": 900,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "radius",
+        "active_radius",
+        "duration"
+      ]
+    },
+    {
+      "id": 1848,
+      "key": "shawl",
+      "name": "Shawl",
+      "cost": 450,
+      "stats": {
+        "magicResistance": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 31,
+      "key": "cloak",
+      "name": "Cloak",
+      "cost": 900,
+      "stats": {
+        "magicResistance": 18.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 32,
+      "key": "talisman_of_evasion",
+      "name": "Talisman of Evasion",
+      "cost": 1300,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "bonus_evasion"
+      ]
+    },
+    {
+      "id": 34,
+      "key": "magic_stick",
+      "name": "Magic Stick",
+      "cost": 200,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "max_charges",
+        "charge_radius",
+        "restore_per_charge"
+      ]
+    },
+    {
+      "id": 36,
+      "key": "magic_wand",
+      "name": "Magic Wand",
+      "cost": 460,
+      "stats": {
+        "strength": 3.0,
+        "agility": 3.0,
+        "intelligence": 3.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "max_charges",
+        "charge_radius",
+        "restore_per_charge"
+      ]
+    },
+    {
+      "id": 37,
+      "key": "ghost",
+      "name": "Ghost Scepter",
+      "cost": 1500,
+      "stats": {
+        "strength": 5.0,
+        "agility": 5.0,
+        "intelligence": 5.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "duration",
+        "extra_spell_damage_percent"
+      ]
+    },
+    {
+      "id": 38,
+      "key": "clarity",
+      "name": "Clarity",
+      "cost": 60,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "mana_regen",
+        "buff_duration"
+      ]
+    },
+    {
+      "id": 216,
+      "key": "enchanted_mango",
+      "name": "Enchanted Mango",
+      "cost": 65,
+      "stats": {
+        "healthRegen": 0.4
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "replenish_amount"
+      ]
+    },
+    {
+      "id": 1123,
+      "key": "blood_grenade",
+      "name": "Blood Grenade",
+      "cost": 50,
+      "stats": {
+        "health": 50.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "speed",
+        "radius",
+        "movespeed_slow",
+        "damage_over_time",
+        "impact_damage",
+        "tick_rate",
+        "debuff_duration"
+      ]
+    },
+    {
+      "id": 1942,
+      "key": "bloodslinger",
+      "name": "Bloodslinger",
+      "cost": 925,
+      "stats": {
+        "health": 100.0,
+        "intelligence": 8.0,
+        "manaRegen": 1.25
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-active",
+          "key": "sling-grenade",
+          "name": "Sling Grenade",
+          "damage": 0,
+          "damagePerTick": 15.0,
+          "tickInterval": 1.0,
+          "tickDuration": 5.0,
+          "cooldown": 30.0,
+          "stackGroup": "blood-grenade"
+        }
+      ],
+      "coverage": "partial",
+      "notes": [
+        "Assumes the target is hit and stays affected. Models the confirmed magical damage over time. The impact, health cost, and slow are outside this estimate."
+      ],
+      "unmodelledValues": [
+        "speed",
+        "radius",
+        "movespeed_slow_min",
+        "movespeed_slow_max",
+        "impact_damage"
+      ]
+    },
+    {
+      "id": 39,
+      "key": "flask",
+      "name": "Healing Salve",
+      "cost": 100,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "buff_duration",
+        "health_regen",
+        "break_on_hero_damage"
+      ]
+    },
+    {
+      "id": 40,
+      "key": "dust",
+      "name": "Dust of Appearance",
+      "cost": 80,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "duration",
+        "radius",
+        "movespeed",
+        "damage",
+        "linger_duration"
+      ]
+    },
+    {
+      "id": 41,
+      "key": "bottle",
+      "name": "Bottle",
+      "cost": 675,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "health_restore",
+        "mana_restore",
+        "restore_time",
+        "max_charges",
+        "break_on_hero_damage",
+        "rune_expire_time"
+      ]
+    },
+    {
+      "id": 43,
+      "key": "ward_sentry",
+      "name": "Sentry Ward",
+      "cost": 50,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "lifetime",
+        "true_sight_range",
+        "health"
+      ]
+    },
+    {
+      "id": 44,
+      "key": "tango",
+      "name": "Tango",
+      "cost": 90,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "health_regen",
+        "buff_duration"
+      ]
+    },
+    {
+      "id": 46,
+      "key": "tpscroll",
+      "name": "Town Portal Scroll",
+      "cost": 100,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "minimum_distance",
+        "maximum_distance",
+        "vision_radius"
+      ]
+    },
+    {
+      "id": 48,
+      "key": "travel_boots",
+      "name": "Boots of Travel",
+      "cost": 2500,
+      "stats": {
+        "moveSpeed": 90.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "maximum_distance",
+        "vision_radius",
+        "tp_cooldown"
+      ]
+    },
+    {
+      "id": 220,
+      "key": "travel_boots_2",
+      "name": "Boots of Travel 2",
+      "cost": 4500,
+      "stats": {
+        "moveSpeed": 110.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "maximum_distance",
+        "vision_radius",
+        "tp_cooldown",
+        "tp_channel_time"
+      ]
+    },
+    {
+      "id": 50,
+      "key": "phase_boots",
+      "name": "Phase Boots",
+      "cost": 1450,
+      "stats": {
+        "armor": 4.0,
+        "attackDamage": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Melee and ranged movement bonuses and the Phase active are outside this item model."
+      ],
+      "unmodelledValues": [
+        "bonus_movement_speed_ranged",
+        "bonus_movement_speed_melee",
+        "phase_movement_speed",
+        "phase_movement_speed_range",
+        "phase_duration"
+      ]
+    },
+    {
+      "id": 51,
+      "key": "demon_edge",
+      "name": "Demon Edge",
+      "cost": 2200,
+      "stats": {
+        "attackDamage": 40.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 52,
+      "key": "eagle",
+      "name": "Eaglesong",
+      "cost": 2800,
+      "stats": {
+        "agility": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 53,
+      "key": "reaver",
+      "name": "Reaver",
+      "cost": 2800,
+      "stats": {
+        "strength": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 54,
+      "key": "relic",
+      "name": "Sacred Relic",
+      "cost": 3400,
+      "stats": {
+        "attackDamage": 55.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 55,
+      "key": "hyperstone",
+      "name": "Hyperstone",
+      "cost": 2000,
+      "stats": {
+        "attackSpeed": 60.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 56,
+      "key": "ring_of_health",
+      "name": "Ring of Health",
+      "cost": 700,
+      "stats": {
+        "healthRegen": 4.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 279,
+      "key": "ring_of_tarrasque",
+      "name": "Ring of Tarrasque",
+      "cost": 1700,
+      "stats": {
+        "healthRegen": 12.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 57,
+      "key": "void_stone",
+      "name": "Void Stone",
+      "cost": 700,
+      "stats": {
+        "manaRegen": 1.75
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 1802,
+      "key": "tiara_of_selemene",
+      "name": "Tiara of Selemene",
+      "cost": 1700,
+      "stats": {
+        "manaRegen": 5.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 58,
+      "key": "mystic_staff",
+      "name": "Mystic Staff",
+      "cost": 2800,
+      "stats": {
+        "intelligence": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 59,
+      "key": "energy_booster",
+      "name": "Energy Booster",
+      "cost": 800,
+      "stats": {
+        "mana": 250.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 60,
+      "key": "point_booster",
+      "name": "Point Booster",
+      "cost": 1200,
+      "stats": {
+        "health": 175.0,
+        "mana": 175.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 61,
+      "key": "vitality_booster",
+      "name": "Vitality Booster",
+      "cost": 1000,
+      "stats": {
+        "health": 250.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 593,
+      "key": "fluffy_hat",
+      "name": "Fluffy Hat",
+      "cost": 250,
+      "stats": {
+        "health": 125.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 1849,
+      "key": "wizard_hat",
+      "name": "Wizard Hat",
+      "cost": 250,
+      "stats": {
+        "mana": 125.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 63,
+      "key": "power_treads",
+      "name": "Power Treads",
+      "cost": 1400,
+      "stats": {
+        "attackSpeed": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Fixed attack speed only. The selected attribute and melee/ranged movement bonuses are scenario inputs."
+      ],
+      "unmodelledValues": [
+        "bonus_movement_speed_ranged",
+        "bonus_movement_speed_melee",
+        "bonus_stat"
+      ]
+    },
+    {
+      "id": 1107,
+      "key": "phylactery",
+      "name": "Phylactery",
+      "cost": 2600,
+      "stats": {
+        "healthRegen": 5.5,
+        "manaRegen": 2.25,
+        "strength": 6.0,
+        "agility": 6.0,
+        "intelligence": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "slow",
+        "bonus_spell_damage",
+        "slow_duration"
+      ]
+    },
+    {
+      "id": 1955,
+      "key": "caduceus",
+      "name": "Caduceus",
+      "cost": 5400,
+      "stats": {
+        "agility": 8.0,
+        "health": 175.0,
+        "healthRegen": 6.0,
+        "intelligence": 20.0,
+        "manaRegen": 3.0,
+        "strength": 8.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "bonus_spell_damage",
+        "slow",
+        "slow_duration",
+        "bonus_heal",
+        "haste",
+        "haste_duration",
+        "enemy_proc_cooldown",
+        "ally_proc_cooldown",
+        "push_length",
+        "push_time",
+        "enemy_cast_range"
+      ]
+    },
+    {
+      "id": 65,
+      "key": "hand_of_midas",
+      "name": "Hand of Midas",
+      "cost": 2200,
+      "stats": {
+        "attackSpeed": 40.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "bonus_gold"
+      ]
+    },
+    {
+      "id": 67,
+      "key": "oblivion_staff",
+      "name": "Oblivion Staff",
+      "cost": 1625,
+      "stats": {
+        "attackSpeed": 35.0,
+        "intelligence": 10.0,
+        "manaRegen": 1.25
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 534,
+      "key": "witch_blade",
+      "name": "Witch Blade",
+      "cost": 2775,
+      "stats": {
+        "armor": 5.0,
+        "attackSpeed": 40.0,
+        "intelligence": 12.0,
+        "manaRegen": 1.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "int_damage_multiplier",
+        "slow",
+        "slow_duration",
+        "projectile_speed"
+      ]
+    },
+    {
+      "id": 69,
+      "key": "pers",
+      "name": "Perseverance",
+      "cost": 1400,
+      "stats": {
+        "healthRegen": 5.5,
+        "manaRegen": 2.25
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 73,
+      "key": "bracer",
+      "name": "Bracer",
+      "cost": 505,
+      "stats": {
+        "agility": 2.0,
+        "health": 50.0,
+        "healthRegen": 0.75,
+        "intelligence": 2.0,
+        "strength": 5.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Uses listed held values. Any time-based item behavior needs its own model."
+      ],
+      "unmodelledValues": []
+    },
+    {
+      "id": 75,
+      "key": "wraith_band",
+      "name": "Wraith Band",
+      "cost": 505,
+      "stats": {
+        "agility": 5.0,
+        "armor": 1.75,
+        "attackSpeed": 10.0,
+        "intelligence": 2.0,
+        "strength": 2.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Uses listed held values. Any time-based item behavior needs its own model."
+      ],
+      "unmodelledValues": []
+    },
+    {
+      "id": 77,
+      "key": "null_talisman",
+      "name": "Null Talisman",
+      "cost": 505,
+      "stats": {
+        "agility": 2.0,
+        "intelligence": 5.0,
+        "mana": 60.0,
+        "manaRegen": 1.0,
+        "strength": 2.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Uses listed held values. Any time-based item behavior needs its own model."
+      ],
+      "unmodelledValues": []
+    },
+    {
+      "id": 79,
+      "key": "mekansm",
+      "name": "Mekansm",
+      "cost": 1775,
+      "stats": {
+        "armor": 5.0
+      },
+      "auras": [
+        {
+          "key": "mekansm",
+          "name": "Regeneration Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "healthRegen": 2.5
+          },
+          "stackGroups": {
+            "healthRegen": "headdress-health-regen"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "heal_amount",
+        "heal_radius",
+        "add_nostack_debuff"
+      ]
+    },
+    {
+      "id": 81,
+      "key": "vladmir",
+      "name": "Vladmir's Offering",
+      "cost": 2200,
+      "stats": {
+        "armor": 2.0,
+        "manaRegen": 0.75
+      },
+      "auras": [
+        {
+          "key": "vladmir",
+          "name": "Vladmir's Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "armor": 1.0,
+            "attackDamagePct": 18.0,
+            "manaRegen": 1.0
+          },
+          "stackGroups": {
+            "armor": "vladmir-armor",
+            "attackDamagePct": "vladmir-base-damage",
+            "manaRegen": "vladmir-mana-regen"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "lifesteal_aura"
+      ]
+    },
+    {
+      "id": 1944,
+      "key": "ristuls_devotion",
+      "name": "Ristul's Devotion",
+      "cost": 3800,
+      "stats": {
+        "armor": 8.0,
+        "manaRegen": 1.0
+      },
+      "auras": [
+        {
+          "key": "ristuls_devotion",
+          "name": "Ristul's Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "armor": 2.0,
+            "attackDamagePct": 18.0,
+            "manaRegen": 1.0
+          },
+          "stackGroups": {
+            "armor": "vladmir-armor",
+            "attackDamagePct": "vladmir-base-damage",
+            "manaRegen": "vladmir-mana-regen"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "lifesteal_aura",
+        "spell_lifesteal_aura"
+      ]
+    },
+    {
+      "id": 86,
+      "key": "buckler",
+      "name": "Buckler",
+      "cost": 425,
+      "stats": {
+        "armor": 2.0
+      },
+      "auras": [
+        {
+          "key": "buckler",
+          "name": "Buckler Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "armor": 1.0
+          },
+          "stackGroups": {
+            "armor": "buckler-armor"
+          },
+          "blockedBy": {
+            "armor": [
+              "vladmir-armor",
+              "assault-armor"
+            ]
+          }
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 88,
+      "key": "ring_of_basilius",
+      "name": "Ring of Basilius",
+      "cost": 425,
+      "stats": {
+        "manaRegen": 0.25
+      },
+      "auras": [
+        {
+          "key": "ring_of_basilius",
+          "name": "Basilius Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "manaRegen": 1.0
+          },
+          "stackGroups": {
+            "manaRegen": "basilius-mana-regen"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 269,
+      "key": "holy_locket",
+      "name": "Holy Locket",
+      "cost": 2250,
+      "stats": {
+        "strength": 7.0,
+        "agility": 7.0,
+        "intelligence": 7.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "heal_increase_passive",
+        "max_charges",
+        "charge_radius",
+        "health_restore_per_charge",
+        "mana_restore_per_charge",
+        "incoming_heal_increase_active",
+        "active_buff_duration",
+        "charge_gain_timer",
+        "use_cooldown"
+      ]
+    },
+    {
+      "id": 90,
+      "key": "pipe",
+      "name": "Pipe of Insight",
+      "cost": 3725,
+      "stats": {
+        "healthRegen": 14.0,
+        "magicResistance": 20.0
+      },
+      "auras": [
+        {
+          "key": "pipe",
+          "name": "Insight Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "magicResistance": 8.0
+          },
+          "stackGroups": {
+            "magicResistance": "pipe-magic-resistance"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "add_nostack_debuff",
+        "barrier_block",
+        "barrier_duration",
+        "barrier_radius",
+        "barrier_block_creep"
+      ]
+    },
+    {
+      "id": 92,
+      "key": "urn_of_shadows",
+      "name": "Urn of Shadows",
+      "cost": 875,
+      "stats": {
+        "armor": 2.0,
+        "manaRegen": 1.0,
+        "strength": 2.0,
+        "agility": 2.0,
+        "intelligence": 2.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "soul_radius",
+        "soul_initial_charge",
+        "soul_additional_charges",
+        "soul_heal_amount",
+        "soul_damage_amount",
+        "duration"
+      ]
+    },
+    {
+      "id": 94,
+      "key": "headdress",
+      "name": "Headdress",
+      "cost": 425,
+      "stats": {
+        "healthRegen": 0.5
+      },
+      "auras": [
+        {
+          "key": "headdress",
+          "name": "Regeneration Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "healthRegen": 2.0
+          },
+          "stackGroups": {
+            "healthRegen": "headdress-health-regen"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 96,
+      "key": "sheepstick",
+      "name": "Scythe of Vyse",
+      "cost": 5200,
+      "stats": {
+        "intelligence": 30.0,
+        "manaRegen": 8.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "sheep_duration",
+        "sheep_movement_speed",
+        "upgrade_radius"
+      ]
+    },
+    {
+      "id": 98,
+      "key": "orchid",
+      "name": "Orchid Malevolence",
+      "cost": 3275,
+      "stats": {
+        "attackSpeed": 35.0,
+        "attackDamage": 20.0,
+        "intelligence": 12.0,
+        "manaRegen": 2.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "silence_damage_percent",
+        "silence_duration"
+      ]
+    },
+    {
+      "id": 250,
+      "key": "bloodthorn",
+      "name": "Bloodthorn",
+      "cost": 6250,
+      "stats": {
+        "attackSpeed": 70.0,
+        "intelligence": 25.0,
+        "manaRegen": 4.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "The conditional hit damage from Soul Rend and the accumulated damage burst are outside this item model."
+      ],
+      "unmodelledValues": [
+        "silence_duration",
+        "silence_damage_percent",
+        "bonus_damage",
+        "duration",
+        "spell_amp_debuff",
+        "proc_damage_heroes",
+        "proc_damage_creeps"
+      ]
+    },
+    {
+      "id": 252,
+      "key": "echo_sabre",
+      "name": "Echo Sabre",
+      "cost": 2700,
+      "stats": {
+        "attackDamage": 20.0,
+        "manaRegen": 1.75,
+        "strength": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "movement_slow",
+        "slow_duration"
+      ]
+    },
+    {
+      "id": 100,
+      "key": "cyclone",
+      "name": "Eul's Scepter of Divinity",
+      "cost": 2600,
+      "stats": {
+        "intelligence": 10.0,
+        "manaRegen": 2.5,
+        "moveSpeed": 20.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "cyclone_duration"
+      ]
+    },
+    {
+      "id": 610,
+      "key": "wind_waker",
+      "name": "Wind Waker",
+      "cost": 6800,
+      "stats": {
+        "intelligence": 35.0,
+        "manaRegen": 3.0,
+        "moveSpeed": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "cyclone_duration",
+        "tornado_speed"
+      ]
+    },
+    {
+      "id": 232,
+      "key": "aether_lens",
+      "name": "Aether Lens",
+      "cost": 2100,
+      "stats": {
+        "mana": 300.0,
+        "manaRegen": 2.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "cast_range_bonus"
+      ]
+    },
+    {
+      "id": 102,
+      "key": "force_staff",
+      "name": "Force Staff",
+      "cost": 2200,
+      "stats": {
+        "health": 175.0,
+        "intelligence": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "push_length",
+        "enemy_cast_range",
+        "push_time"
+      ]
+    },
+    {
+      "id": 263,
+      "key": "hurricane_pike",
+      "name": "Hurricane Pike",
+      "cost": 4550,
+      "stats": {
+        "agility": 20.0,
+        "health": 200.0,
+        "intelligence": 15.0,
+        "strength": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "The active grants target-specific attack speed, which is separate from the held stats."
+      ],
+      "unmodelledValues": [
+        "base_attack_range",
+        "push_length",
+        "enemy_length",
+        "range_duration",
+        "cast_range_enemy",
+        "max_attacks",
+        "bonus_attack_speed",
+        "push_time"
+      ]
+    },
+    {
+      "id": 104,
+      "key": "dagon",
+      "name": "Dagon",
+      "cost": 3000,
+      "stats": {
+        "health": 200.0,
+        "mana": 350.0,
+        "strength": 6.0,
+        "agility": 6.0,
+        "intelligence": 6.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-active",
+          "key": "dagon",
+          "name": "Energy Burst",
+          "damage": 400.0,
+          "cooldown": 27.0,
+          "stackGroup": "dagon",
+          "notes": "Raw damage for one cast. Mana, blocking, cast range, and spell lifesteal are separate conditions."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "cast_range_bonus"
+      ]
+    },
+    {
+      "id": 201,
+      "key": "dagon_2",
+      "name": "Dagon 2",
+      "cost": 4100,
+      "stats": {
+        "health": 210.0,
+        "mana": 375.0,
+        "strength": 7.0,
+        "agility": 7.0,
+        "intelligence": 7.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-active",
+          "key": "dagon",
+          "name": "Energy Burst",
+          "damage": 500.0,
+          "cooldown": 24.0,
+          "stackGroup": "dagon",
+          "notes": "Raw damage for one cast. Mana, blocking, cast range, and spell lifesteal are separate conditions."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "damage_delay",
+        "cast_range_bonus"
+      ]
+    },
+    {
+      "id": 202,
+      "key": "dagon_3",
+      "name": "Dagon 3",
+      "cost": 5200,
+      "stats": {
+        "health": 220.0,
+        "mana": 400.0,
+        "strength": 8.0,
+        "agility": 8.0,
+        "intelligence": 8.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-active",
+          "key": "dagon",
+          "name": "Energy Burst",
+          "damage": 600.0,
+          "cooldown": 21.0,
+          "stackGroup": "dagon",
+          "notes": "Raw damage for one cast. Mana, blocking, cast range, and spell lifesteal are separate conditions."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "damage_delay",
+        "cast_range_bonus"
+      ]
+    },
+    {
+      "id": 203,
+      "key": "dagon_4",
+      "name": "Dagon 4",
+      "cost": 6300,
+      "stats": {
+        "health": 230.0,
+        "mana": 425.0,
+        "strength": 9.0,
+        "agility": 9.0,
+        "intelligence": 9.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-active",
+          "key": "dagon",
+          "name": "Energy Burst",
+          "damage": 700.0,
+          "cooldown": 18.0,
+          "stackGroup": "dagon",
+          "notes": "Raw damage for one cast. Mana, blocking, cast range, and spell lifesteal are separate conditions."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "damage_delay",
+        "cast_range_bonus"
+      ]
+    },
+    {
+      "id": 204,
+      "key": "dagon_5",
+      "name": "Dagon 5",
+      "cost": 7400,
+      "stats": {
+        "health": 240.0,
+        "mana": 450.0,
+        "strength": 10.0,
+        "agility": 10.0,
+        "intelligence": 10.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-active",
+          "key": "dagon",
+          "name": "Energy Burst",
+          "damage": 800.0,
+          "cooldown": 15.0,
+          "stackGroup": "dagon",
+          "notes": "Raw damage for one cast. Mana, blocking, cast range, and spell lifesteal are separate conditions."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "damage_delay",
+        "cast_range_bonus"
+      ]
+    },
+    {
+      "id": 108,
+      "key": "ultimate_scepter",
+      "name": "Aghanim's Scepter",
+      "cost": 4200,
+      "stats": {
+        "health": 175.0,
+        "mana": 175.0,
+        "strength": 10.0,
+        "agility": 10.0,
+        "intelligence": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Held stat bonuses are modelled. The hero-specific Aghanim upgrade needs an ability model."
+      ],
+      "unmodelledValues": []
+    },
+    {
+      "id": 271,
+      "key": "ultimate_scepter_2",
+      "name": "Aghanim's Blessing",
+      "cost": 5800,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [
+        "Consumed Aghanim upgrade needs a hero-specific ability model."
+      ],
+      "unmodelledValues": []
+    },
+    {
+      "id": 609,
+      "key": "aghanims_shard",
+      "name": "Aghanim's Shard",
+      "cost": 1400,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [
+        "Hero-specific Shard upgrade requires its own ability model."
+      ],
+      "unmodelledValues": []
+    },
+    {
+      "id": 110,
+      "key": "refresher",
+      "name": "Refresher Orb",
+      "cost": 5000,
+      "stats": {
+        "healthRegen": 14.0,
+        "manaRegen": 7.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "max_level",
+        "cooldown_duration"
+      ]
+    },
+    {
+      "id": 112,
+      "key": "assault",
+      "name": "Assault Cuirass",
+      "cost": 5125,
+      "stats": {
+        "armor": 10.0,
+        "attackSpeed": 30.0
+      },
+      "auras": [
+        {
+          "key": "assault-allies",
+          "name": "Assault Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "attackSpeed": 30.0,
+            "armor": 5.0
+          },
+          "stackGroups": {
+            "armor": "assault-armor",
+            "attackSpeed": "assault-attack-speed"
+          },
+          "blockedBy": {}
+        },
+        {
+          "key": "assault-enemies",
+          "name": "Assault Aura",
+          "recipient": "enemies",
+          "radius": 1200.0,
+          "stats": {
+            "armorReduction": 5.0
+          },
+          "stackGroups": {
+            "armorReduction": "assault-armor-reduction"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 114,
+      "key": "heart",
+      "name": "Heart of Tarrasque",
+      "cost": 5300,
+      "stats": {
+        "strength": 40.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Regeneration is sensitive to health state. Strength is modelled."
+      ],
+      "unmodelledValues": [
+        "hp_regen",
+        "missing_health_regen"
+      ]
+    },
+    {
+      "id": 116,
+      "key": "black_king_bar",
+      "name": "Black King Bar",
+      "cost": 4050,
+      "stats": {
+        "attackDamage": 24.0,
+        "strength": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "duration",
+        "max_level",
+        "model_scale",
+        "spell_reduce"
+      ]
+    },
+    {
+      "id": 119,
+      "key": "shivas_guard",
+      "name": "Shiva's Guard",
+      "cost": 4500,
+      "stats": {
+        "armor": 17.0
+      },
+      "auras": [
+        {
+          "key": "shivas-guard",
+          "name": "Freezing Aura",
+          "recipient": "enemies",
+          "radius": 1200.0,
+          "stats": {
+            "attackSpeed": -40.0
+          },
+          "stackGroups": {
+            "attackSpeed": "shivas-attack-speed"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [
+        {
+          "kind": "magic-active",
+          "key": "arctic-blast",
+          "name": "Arctic Blast",
+          "damage": 225.0,
+          "cooldown": 27.0,
+          "stackGroup": "shivas-guard",
+          "notes": "Assumes a successful hit on the target."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [
+        "Arctic Blast assumes the wave reaches the target. The slow and area scaling are separate."
+      ],
+      "unmodelledValues": [
+        "bonus_aoe",
+        "blast_movement_speed",
+        "blast_debuff_duration",
+        "blast_radius",
+        "blast_speed"
+      ]
+    },
+    {
+      "id": 121,
+      "key": "bloodstone",
+      "name": "Bloodstone",
+      "cost": 4700,
+      "stats": {
+        "health": 625.0,
+        "intelligence": 15.0,
+        "mana": 450.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "spell_lifesteal",
+        "buff_duration",
+        "spell_lifesteal_while_active",
+        "aura_spell_vulnerability",
+        "aura_radius"
+      ]
+    },
+    {
+      "id": 123,
+      "key": "sphere",
+      "name": "Linken's Sphere",
+      "cost": 4800,
+      "stats": {
+        "healthRegen": 6.5,
+        "manaRegen": 4.25,
+        "strength": 17.0,
+        "agility": 17.0,
+        "intelligence": 17.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "block_cooldown",
+        "upgrade_absorb_duration",
+        "damage_absorb"
+      ]
+    },
+    {
+      "id": 226,
+      "key": "lotus_orb",
+      "name": "Lotus Orb",
+      "cost": 3850,
+      "stats": {
+        "armor": 10.0,
+        "healthRegen": 6.5,
+        "mana": 250.0,
+        "manaRegen": 4.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "active_duration"
+      ]
+    },
+    {
+      "id": 223,
+      "key": "meteor_hammer",
+      "name": "Meteor Hammer",
+      "cost": 2750,
+      "stats": {
+        "agility": 6.0,
+        "intelligence": 22.0,
+        "strength": 6.0,
+        "spellAmp": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "mana_regen_multiplier",
+        "burn_dps_units",
+        "burn_slow",
+        "burn_duration",
+        "stun_duration",
+        "burn_interval",
+        "land_time",
+        "impact_radius",
+        "max_duration",
+        "building_damage_pct",
+        "impact_damage_units"
+      ]
+    },
+    {
+      "id": 1946,
+      "key": "starforge",
+      "name": "Starforge",
+      "cost": 6000,
+      "stats": {
+        "agility": 24.0,
+        "intelligence": 40.0,
+        "strength": 24.0,
+        "spellAmp": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "mana_regen_multiplier",
+        "burn_dps_units",
+        "burn_slow",
+        "burn_duration",
+        "stun_duration",
+        "burn_interval",
+        "land_time",
+        "impact_radius",
+        "max_duration",
+        "impact_damage_units",
+        "impact_damage_units_pct_health",
+        "building_damage_pct",
+        "passive_debuff_duration",
+        "slow_pct",
+        "burn_per_second",
+        "passive_burn_interval"
+      ]
+    },
+    {
+      "id": 225,
+      "key": "nullifier",
+      "name": "Nullifier",
+      "cost": 4350,
+      "stats": {
+        "armor": 10.0,
+        "attackDamage": 75.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "mute_duration",
+        "projectile_speed",
+        "slow_pct",
+        "knockback_reduction"
+      ]
+    },
+    {
+      "id": 256,
+      "key": "aeon_disk",
+      "name": "Aeon Disk",
+      "cost": 3000,
+      "stats": {
+        "health": 250.0,
+        "mana": 300.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "health_threshold_pct",
+        "status_resistance",
+        "buff_duration",
+        "max_level",
+        "cooldown_duration",
+        "initial_cooldown"
+      ]
+    },
+    {
+      "id": 259,
+      "key": "kaya",
+      "name": "Kaya",
+      "cost": 2000,
+      "stats": {
+        "intelligence": 16.0,
+        "spellAmp": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "mana_regen_multiplier"
+      ]
+    },
+    {
+      "id": 267,
+      "key": "spirit_vessel",
+      "name": "Spirit Vessel",
+      "cost": 2725,
+      "stats": {
+        "armor": 2.0,
+        "manaRegen": 1.75,
+        "strength": 10.0,
+        "agility": 10.0,
+        "intelligence": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "soul_radius",
+        "soul_initial_charge",
+        "soul_additional_charges",
+        "soul_heal_amount",
+        "soul_damage_amount",
+        "duration",
+        "restoration_reduction_enemy",
+        "enemy_hp_drain"
+      ]
+    },
+    {
+      "id": 1852,
+      "key": "essence_distiller",
+      "name": "Essence Distiller",
+      "cost": 1775,
+      "stats": {
+        "armor": 6.0,
+        "mana": 150.0,
+        "manaRegen": 1.5,
+        "strength": 3.0,
+        "agility": 3.0,
+        "intelligence": 3.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "soul_radius",
+        "soul_initial_charge",
+        "soul_additional_charges",
+        "soul_heal_amount",
+        "soul_damage_amount",
+        "duration",
+        "ground_duration",
+        "latch_range",
+        "latch_vision",
+        "linger_after_latch_duration"
+      ]
+    },
+    {
+      "id": 125,
+      "key": "vanguard",
+      "name": "Vanguard",
+      "cost": 1700,
+      "stats": {
+        "health": 250.0,
+        "healthRegen": 4.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "block_damage_melee",
+        "block_damage_ranged",
+        "block_chance"
+      ]
+    },
+    {
+      "id": 242,
+      "key": "crimson_guard",
+      "name": "Crimson Guard",
+      "cost": 3725,
+      "stats": {
+        "armor": 5.0,
+        "health": 250.0,
+        "healthRegen": 9.0
+      },
+      "auras": [
+        {
+          "key": "crimson-guard",
+          "name": "Buckler Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "armor": 2.0
+          },
+          "stackGroups": {
+            "armor": "buckler-armor"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "block_damage_melee",
+        "block_damage_ranged",
+        "block_chance",
+        "duration",
+        "bonus_aoe_radius",
+        "block_damage_active",
+        "block_chance_active",
+        "block_penalty_ranged",
+        "max_hp_pct",
+        "add_nostack_debuff"
+      ]
+    },
+    {
+      "id": 127,
+      "key": "blade_mail",
+      "name": "Blade Mail",
+      "cost": 2350,
+      "stats": {
+        "armor": 7.0,
+        "attackDamage": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "duration",
+        "passive_reflection_constant",
+        "passive_reflection_pct",
+        "active_reflection_pct"
+      ]
+    },
+    {
+      "id": 129,
+      "key": "soul_booster",
+      "name": "Soul Booster",
+      "cost": 3000,
+      "stats": {
+        "health": 425.0,
+        "mana": 425.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 1854,
+      "key": "consecrated_wraps",
+      "name": "Consecrated Wraps",
+      "cost": 2600,
+      "stats": {
+        "health": 250.0,
+        "magicResistance": 12.0,
+        "strength": 5.0,
+        "agility": 5.0,
+        "intelligence": 5.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "movement_speed_pct_on_stack_gain",
+        "duration",
+        "barrier_per_stack",
+        "damage_must_be_player_owned_or_roshan"
+      ]
+    },
+    {
+      "id": 1856,
+      "key": "crellas_crozier",
+      "name": "Crella's Crozier",
+      "cost": 4800,
+      "stats": {
+        "health": 450.0,
+        "mana": 450.0,
+        "strength": 6.0,
+        "agility": 6.0,
+        "intelligence": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "duration",
+        "extra_spell_damage_percent",
+        "radius",
+        "health_steal",
+        "interval",
+        "active_radius",
+        "movespeed_steal_pct",
+        "active_health_steal",
+        "stack_duration"
+      ]
+    },
+    {
+      "id": 133,
+      "key": "rapier",
+      "name": "Divine Rapier",
+      "cost": 5600,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [
+        "Attack damage and spell amplification depend on the selected toggle state."
+      ],
+      "unmodelledValues": [
+        "bonus_spell_amp",
+        "bonus_damage",
+        "bonus_damage_base"
+      ]
+    },
+    {
+      "id": 135,
+      "key": "monkey_king_bar",
+      "name": "Monkey King Bar",
+      "cost": 5000,
+      "stats": {
+        "attackSpeed": 50.0,
+        "attackDamage": 55.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-on-hit",
+          "key": "pierce",
+          "name": "Pierce",
+          "damage": 70.0,
+          "chance": 80.0,
+          "stackGroup": "pierce",
+          "notes": "Normal real-hero attacks at 100% Item Potency. Includes conditional true strike in game. Illusions use different damage."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "bonus_chance_damage_illu"
+      ]
+    },
+    {
+      "id": 137,
+      "key": "radiance",
+      "name": "Radiance",
+      "cost": 4700,
+      "stats": {
+        "attackDamage": 55.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "aura_damage",
+        "aura_damage_illusions",
+        "upgrade_day_vision",
+        "evasion",
+        "aura_radius",
+        "illusion_multiplier_pct"
+      ]
+    },
+    {
+      "id": 139,
+      "key": "butterfly",
+      "name": "Butterfly",
+      "cost": 5000,
+      "stats": {
+        "agility": 30.0,
+        "attackSpeed": 30.0,
+        "attackDamage": 30.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "bonus_evasion"
+      ]
+    },
+    {
+      "id": 141,
+      "key": "greater_crit",
+      "name": "Daedalus",
+      "cost": 5200,
+      "stats": {
+        "attackDamage": 88.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "critical",
+          "key": "critical-strike",
+          "name": "Critical Strike",
+          "chance": 30.0,
+          "multiplier": 225.0,
+          "stackGroup": "attack-critical",
+          "notes": "Competing crits need an explicit priority rule."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 143,
+      "key": "basher",
+      "name": "Skull Basher",
+      "cost": 2875,
+      "stats": {
+        "attackDamage": 30.0,
+        "strength": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Bash, proc restrictions, and cooldown are outside this item model."
+      ],
+      "unmodelledValues": [
+        "bash_chance_melee",
+        "bash_chance_ranged",
+        "bash_duration",
+        "bash_cooldown",
+        "bonus_chance_damage"
+      ]
+    },
+    {
+      "id": 145,
+      "key": "bfury",
+      "name": "Battle Fury",
+      "cost": 3900,
+      "stats": {
+        "attackDamage": 50.0,
+        "healthRegen": 7.5,
+        "manaRegen": 2.75
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "cleave_damage_percent",
+        "cleave_damage_percent_creep",
+        "quelling_bonus",
+        "quelling_bonus_ranged",
+        "cleave_starting_width",
+        "cleave_ending_width",
+        "cleave_distance",
+        "upgraded_cleave_bonus",
+        "upgraded_damage_bonus"
+      ]
+    },
+    {
+      "id": 147,
+      "key": "manta",
+      "name": "Manta Style",
+      "cost": 4550,
+      "stats": {
+        "agility": 26.0,
+        "attackSpeed": 15.0,
+        "intelligence": 10.0,
+        "strength": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Illusions and percent movement speed require separate models."
+      ],
+      "unmodelledValues": [
+        "bonus_movement_speed",
+        "images_count",
+        "illusion_effectiveness",
+        "illusion_duration",
+        "images_do_damage_percent_melee",
+        "images_take_damage_percent",
+        "images_do_damage_percent_ranged",
+        "invuln_duration",
+        "vision_radius"
+      ]
+    },
+    {
+      "id": 149,
+      "key": "lesser_crit",
+      "name": "Crystalys",
+      "cost": 2000,
+      "stats": {
+        "attackDamage": 32.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "critical",
+          "key": "critical-strike",
+          "name": "Critical Strike",
+          "chance": 30.0,
+          "multiplier": 160.0,
+          "stackGroup": "attack-critical",
+          "notes": "Competing crits need an explicit priority rule."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 236,
+      "key": "dragon_lance",
+      "name": "Dragon Lance",
+      "cost": 2000,
+      "stats": {
+        "agility": 15.0,
+        "strength": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "base_attack_range",
+        "base_attack_range_melee"
+      ]
+    },
+    {
+      "id": 151,
+      "key": "armlet",
+      "name": "Armlet of Mordiggian",
+      "cost": 2500,
+      "stats": {
+        "armor": 6.0,
+        "attackSpeed": 25.0,
+        "attackDamage": 15.0,
+        "healthRegen": 5.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Held bonuses only. Unholy Strength, toggling, and health drain require a separate state."
+      ],
+      "unmodelledValues": [
+        "unholy_bonus_damage",
+        "unholy_bonus_strength",
+        "unholy_bonus_armor",
+        "unholy_health_drain_per_second",
+        "toggle_cooldown"
+      ]
+    },
+    {
+      "id": 152,
+      "key": "invis_sword",
+      "name": "Shadow Blade",
+      "cost": 3250,
+      "stats": {
+        "attackSpeed": 35.0,
+        "attackDamage": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "windwalk_duration",
+        "windwalk_movement_speed",
+        "windwalk_fade_time",
+        "windwalk_bonus_damage"
+      ]
+    },
+    {
+      "id": 249,
+      "key": "silver_edge",
+      "name": "Silver Edge",
+      "cost": 5700,
+      "stats": {
+        "attackSpeed": 35.0,
+        "attackDamage": 70.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "windwalk_duration",
+        "windwalk_movement_speed",
+        "windwalk_fade_time",
+        "windwalk_bonus_damage",
+        "backstab_duration",
+        "max_movement_speed",
+        "visibility_radius"
+      ]
+    },
+    {
+      "id": 154,
+      "key": "sange_and_yasha",
+      "name": "Sange and Yasha",
+      "cost": 4000,
+      "stats": {
+        "agility": 16.0,
+        "attackSpeed": 20.0,
+        "strength": 16.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "status_resistance",
+        "movement_speed_percent_bonus_melee",
+        "movement_speed_percent_bonus",
+        "hp_regen_amp",
+        "slow_resistance"
+      ]
+    },
+    {
+      "id": 273,
+      "key": "kaya_and_sange",
+      "name": "Kaya and Sange",
+      "cost": 4000,
+      "stats": {
+        "intelligence": 16.0,
+        "strength": 16.0,
+        "spellAmp": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "slow_resistance",
+        "mana_regen_multiplier",
+        "hp_regen_amp",
+        "manacost_reduction"
+      ]
+    },
+    {
+      "id": 277,
+      "key": "yasha_and_kaya",
+      "name": "Yasha and Kaya",
+      "cost": 4000,
+      "stats": {
+        "agility": 16.0,
+        "attackSpeed": 20.0,
+        "intelligence": 16.0,
+        "spellAmp": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "mana_regen_multiplier",
+        "movement_speed_percent_bonus_melee",
+        "movement_speed_percent_bonus",
+        "cast_speed_pct"
+      ]
+    },
+    {
+      "id": 156,
+      "key": "satanic",
+      "name": "Satanic",
+      "cost": 5050,
+      "stats": {
+        "attackDamage": 25.0,
+        "strength": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "lifesteal_percent",
+        "unholy_lifesteal_percent",
+        "unholy_duration"
+      ]
+    },
+    {
+      "id": 158,
+      "key": "mjollnir",
+      "name": "Mjollnir",
+      "cost": 5500,
+      "stats": {
+        "attackSpeed": 90.0,
+        "attackDamage": 25.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-on-hit",
+          "key": "chain-lightning",
+          "name": "Chain Lightning",
+          "damage": 180.0,
+          "chance": 25.0,
+          "cooldown": 0.2,
+          "stackGroup": "chain-lightning",
+          "notes": "Single-target proc hit at 100% Item Potency. Additional bounces and the Mjollnir active are outside this item model."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "static_duration",
+        "static_chance",
+        "static_strikes",
+        "static_damage",
+        "static_primary_radius",
+        "static_seconary_radius",
+        "static_radius",
+        "static_cooldown",
+        "chain_strikes",
+        "chain_radius",
+        "chain_delay",
+        "chain_cooldown",
+        "illusion_multiplier_pct"
+      ]
+    },
+    {
+      "id": 160,
+      "key": "skadi",
+      "name": "Eye of Skadi",
+      "cost": 5900,
+      "stats": {
+        "strength": 35.0,
+        "agility": 35.0,
+        "intelligence": 35.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "cold_slow_melee",
+        "cold_attack_slow_melee",
+        "cold_slow_ranged",
+        "cold_attack_slow_ranged",
+        "cold_duration",
+        "restoration_reduction"
+      ]
+    },
+    {
+      "id": 162,
+      "key": "sange",
+      "name": "Sange",
+      "cost": 2000,
+      "stats": {
+        "strength": 16.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "slow_resistance",
+        "hp_regen_amp"
+      ]
+    },
+    {
+      "id": 164,
+      "key": "helm_of_the_dominator",
+      "name": "Helm of the Dominator",
+      "cost": 2550,
+      "stats": {
+        "armor": 6.0,
+        "healthRegen": 6.0,
+        "strength": 6.0,
+        "agility": 6.0,
+        "intelligence": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "health_min",
+        "speed_base",
+        "bounty_gold",
+        "creep_bonus_damage",
+        "creep_bonus_hp_regen",
+        "creep_bonus_mp_regen",
+        "creep_bonus_armor",
+        "count_limit",
+        "creep_damage_taken_cooldown",
+        "bounty_pct"
+      ]
+    },
+    {
+      "id": 166,
+      "key": "maelstrom",
+      "name": "Maelstrom",
+      "cost": 2950,
+      "stats": {
+        "attackSpeed": 25.0,
+        "attackDamage": 25.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "magic-on-hit",
+          "key": "chain-lightning",
+          "name": "Chain Lightning",
+          "damage": 110.0,
+          "chance": 25.0,
+          "cooldown": 0.2,
+          "stackGroup": "chain-lightning",
+          "notes": "Single-target proc hit at 100% Item Potency. Additional bounces and the Mjollnir active are outside this item model."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "chain_strikes",
+        "chain_radius",
+        "chain_delay",
+        "chain_cooldown",
+        "illusion_multiplier_pct"
+      ]
+    },
+    {
+      "id": 1466,
+      "key": "gungir",
+      "name": "Gleipnir",
+      "cost": 4650,
+      "stats": {
+        "health": 450.0,
+        "intelligence": 20.0,
+        "mana": 200.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "bonus_aoe",
+        "radius",
+        "duration"
+      ]
+    },
+    {
+      "id": 168,
+      "key": "desolator",
+      "name": "Desolator",
+      "cost": 3500,
+      "stats": {
+        "attackDamage": 55.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "armor-reduction",
+          "key": "corruption",
+          "name": "Corruption",
+          "armorReduction": 6.0,
+          "stackGroup": "corruption",
+          "notes": "Single target at 100% Item Potency with zero prior Desolator kill or assist stacks."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "corruption_duration",
+        "bonus_damage_per_kill",
+        "bonus_damage_per_assist",
+        "max_damage"
+      ]
+    },
+    {
+      "id": 170,
+      "key": "yasha",
+      "name": "Yasha",
+      "cost": 2000,
+      "stats": {
+        "agility": 16.0,
+        "attackSpeed": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "movement_speed_percent_bonus"
+      ]
+    },
+    {
+      "id": 172,
+      "key": "mask_of_madness",
+      "name": "Mask of Madness",
+      "cost": 1800,
+      "stats": {
+        "attackSpeed": 10.0,
+        "attackDamage": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "lifesteal_percent",
+        "berserk_bonus_attack_speed",
+        "berserk_bonus_movement_speed_melee",
+        "berserk_bonus_movement_speed",
+        "berserk_armor_reduction",
+        "berserk_slow_resist_melee",
+        "berserk_slow_resist",
+        "berserk_duration"
+      ]
+    },
+    {
+      "id": 174,
+      "key": "diffusal_blade",
+      "name": "Diffusal Blade",
+      "cost": 2500,
+      "stats": {
+        "agility": 15.0,
+        "intelligence": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "feedback_mana_burn",
+        "purge_rate",
+        "purge_root_duration",
+        "purge_slow_duration",
+        "damage_per_burn"
+      ]
+    },
+    {
+      "id": 1097,
+      "key": "disperser",
+      "name": "Disperser",
+      "cost": 6100,
+      "stats": {
+        "agility": 40.0,
+        "intelligence": 10.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "feedback_mana_burn",
+        "purge_rate",
+        "purge_root_duration",
+        "damage_per_burn",
+        "enemy_effect_duration",
+        "ally_effect_duration",
+        "movement_speed_buff_rate",
+        "phase_movement_speed",
+        "slow_resist"
+      ]
+    },
+    {
+      "id": 176,
+      "key": "ethereal_blade",
+      "name": "Ethereal Blade",
+      "cost": 5200,
+      "stats": {
+        "agility": 25.0,
+        "intelligence": 25.0,
+        "strength": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "The active depends on the primary attribute, target state, and spell amplification."
+      ],
+      "unmodelledValues": [
+        "blast_movement_slow",
+        "duration",
+        "blast_stat_multiplier",
+        "blast_damage_base",
+        "duration_ally",
+        "ethereal_damage_bonus",
+        "projectile_speed"
+      ]
+    },
+    {
+      "id": 178,
+      "key": "soul_ring",
+      "name": "Soul Ring",
+      "cost": 805,
+      "stats": {
+        "armor": 2.0,
+        "strength": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "mana_gain",
+        "duration"
+      ]
+    },
+    {
+      "id": 180,
+      "key": "arcane_boots",
+      "name": "Arcane Boots",
+      "cost": 1500,
+      "stats": {
+        "mana": 150.0,
+        "moveSpeed": 50.0,
+        "manaRegen": 0.25
+      },
+      "auras": [
+        {
+          "key": "arcane_boots",
+          "name": "Basilius Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "manaRegen": 1.0
+          },
+          "stackGroups": {
+            "manaRegen": "basilius-mana-regen"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Active mana restoration and movement speed stacking rules are outside this item model."
+      ],
+      "unmodelledValues": [
+        "replenish_amount",
+        "replenish_radius"
+      ]
+    },
+    {
+      "id": 235,
+      "key": "octarine_core",
+      "name": "Octarine Core",
+      "cost": 5100,
+      "stats": {
+        "health": 450.0,
+        "mana": 450.0,
+        "manaRegen": 6.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "bonus_cooldown"
+      ]
+    },
+    {
+      "id": 181,
+      "key": "orb_of_venom",
+      "name": "Orb of Venom",
+      "cost": 350,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "damage",
+        "tick_interval",
+        "poison_duration"
+      ]
+    },
+    {
+      "id": 240,
+      "key": "blight_stone",
+      "name": "Orb of Blight",
+      "cost": 300,
+      "stats": {},
+      "auras": [],
+      "effects": [
+        {
+          "kind": "armor-reduction",
+          "key": "corruption",
+          "name": "Lesser Corruption",
+          "armorReduction": 2.0,
+          "stackGroup": "corruption",
+          "notes": "Single target at 100% Item Potency."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "corruption_duration"
+      ]
+    },
+    {
+      "id": 569,
+      "key": "orb_of_corrosion",
+      "name": "Orb of Corrosion",
+      "cost": 880,
+      "stats": {
+        "agility": 7.0
+      },
+      "auras": [],
+      "effects": [
+        {
+          "kind": "armor-reduction",
+          "key": "corruption",
+          "name": "Corrosion",
+          "armorReduction": 2.0,
+          "stackGroup": "corruption",
+          "notes": "Single target at 100% Item Potency."
+        }
+      ],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "slow_melee",
+        "slow_ranged",
+        "heal_reduction",
+        "duration"
+      ]
+    },
+    {
+      "id": 1575,
+      "key": "orb_of_frost",
+      "name": "Orb of Frost",
+      "cost": 300,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "slow_melee",
+        "slow_ranged",
+        "duration",
+        "heal_reduction"
+      ]
+    },
+    {
+      "id": 596,
+      "key": "falcon_blade",
+      "name": "Falcon Blade",
+      "cost": 1125,
+      "stats": {
+        "attackDamage": 14.0,
+        "health": 200.0,
+        "manaRegen": 1.8
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "flat",
+      "notes": [],
+      "unmodelledValues": []
+    },
+    {
+      "id": 598,
+      "key": "mage_slayer",
+      "name": "Mage Slayer",
+      "cost": 3100,
+      "stats": {
+        "attackDamage": 12.0,
+        "healthRegen": 5.5,
+        "magicResistance": 18.0,
+        "manaRegen": 2.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "spell_amp_debuff",
+        "duration",
+        "dps"
+      ]
+    },
+    {
+      "id": 185,
+      "key": "ancient_janggo",
+      "name": "Drum of Endurance",
+      "cost": 1625,
+      "stats": {
+        "strength": 8.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "aura_movement_speed",
+        "aura_health_regen",
+        "bonus_attack_speed_pct",
+        "bonus_movement_speed_pct",
+        "duration",
+        "radius"
+      ]
+    },
+    {
+      "id": 931,
+      "key": "boots_of_bearing",
+      "name": "Boots of Bearing",
+      "cost": 4225,
+      "stats": {
+        "moveSpeed": 65.0,
+        "strength": 8.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "The Endurance active and its conditional movement and regeneration are outside this item model."
+      ],
+      "unmodelledValues": [
+        "aura_movement_speed",
+        "aura_health_regen",
+        "bonus_attack_speed_pct",
+        "bonus_movement_speed_pct",
+        "duration",
+        "radius",
+        "bonus_health_regen",
+        "bonus_ms_duration"
+      ]
+    },
+    {
+      "id": 229,
+      "key": "solar_crest",
+      "name": "Solar Crest",
+      "cost": 2575,
+      "stats": {
+        "armor": 7.0,
+        "health": 200.0,
+        "mana": 200.0,
+        "moveSpeed": 25.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "target_movement_speed",
+        "target_attack_speed",
+        "target_armor",
+        "self_efficacy",
+        "duration",
+        "absorb_amount"
+      ]
+    },
+    {
+      "id": 1128,
+      "key": "pavise",
+      "name": "Pavise",
+      "cost": 1250,
+      "stats": {
+        "armor": 3.0,
+        "health": 175.0,
+        "mana": 175.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "duration",
+        "absorb_amount"
+      ]
+    },
+    {
+      "id": 188,
+      "key": "smoke_of_deceit",
+      "name": "Smoke of Deceit",
+      "cost": 50,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "application_radius",
+        "visibility_radius",
+        "bonus_movement_speed",
+        "duration",
+        "second_cast_cooldown",
+        "secondary_application_radius"
+      ]
+    },
+    {
+      "id": 190,
+      "key": "veil_of_discord",
+      "name": "Veil of Discord",
+      "cost": 1700,
+      "stats": {
+        "health": 175.0,
+        "intelligence": 10.0,
+        "spellAmp": 8.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "spell_lifesteal",
+        "debuff_radius",
+        "resist_debuff_duration"
+      ]
+    },
+    {
+      "id": 1806,
+      "key": "devastator",
+      "name": "Parasma",
+      "cost": 5975,
+      "stats": {
+        "armor": 7.0,
+        "attackSpeed": 40.0,
+        "intelligence": 40.0,
+        "manaRegen": 1.5
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "projectile_speed",
+        "int_damage_multiplier",
+        "slow",
+        "slow_duration",
+        "active_mres_reduction",
+        "reduction_duration",
+        "passive_cooldown",
+        "building_effectiveness_pct"
+      ]
+    },
+    {
+      "id": 231,
+      "key": "guardian_greaves",
+      "name": "Guardian Greaves",
+      "cost": 4350,
+      "stats": {
+        "armor": 5.0,
+        "mana": 150.0,
+        "moveSpeed": 55.0,
+        "manaRegen": 1.0
+      },
+      "auras": [
+        {
+          "key": "guardian-greaves",
+          "name": "Guardian Aura",
+          "recipient": "allies",
+          "radius": 1200.0,
+          "stats": {
+            "healthRegen": 2.5,
+            "manaRegen": 1.5
+          },
+          "stackGroups": {
+            "healthRegen": "headdress-health-regen",
+            "manaRegen": "basilius-mana-regen"
+          },
+          "blockedBy": {}
+        }
+      ],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "replenish_health",
+        "replenish_mana",
+        "replenish_radius",
+        "add_nostack_debuff"
+      ]
+    },
+    {
+      "id": 206,
+      "key": "rod_of_atos",
+      "name": "Rod of Atos",
+      "cost": 2250,
+      "stats": {
+        "health": 275.0,
+        "intelligence": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "duration"
+      ]
+    },
+    {
+      "id": 208,
+      "key": "abyssal_blade",
+      "name": "Abyssal Blade",
+      "cost": 6150,
+      "stats": {
+        "agility": 15.0,
+        "attackDamage": 35.0,
+        "strength": 30.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "base_attack_range_melee",
+        "bash_chance_melee",
+        "bash_chance_ranged",
+        "bash_duration",
+        "bash_cooldown",
+        "bonus_chance_damage",
+        "stun_duration"
+      ]
+    },
+    {
+      "id": 210,
+      "key": "heavens_halberd",
+      "name": "Heaven's Halberd",
+      "cost": 2400,
+      "stats": {
+        "armor": 4.5,
+        "healthRegen": 4.5,
+        "strength": 12.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "disarm_range",
+        "disarm_melee"
+      ]
+    },
+    {
+      "id": 1948,
+      "key": "skypiercer",
+      "name": "Skypiercer",
+      "cost": 6000,
+      "stats": {
+        "armor": 5.0,
+        "healthRegen": 5.0,
+        "strength": 35.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "slow_resistance",
+        "hp_regen_amp",
+        "bonus_evasion",
+        "disarm_duration",
+        "close_radius",
+        "buff_cooldown_acceleration_pct"
+      ]
+    },
+    {
+      "id": 214,
+      "key": "tranquil_boots",
+      "name": "Tranquil Boots",
+      "cost": 900,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [
+        "Combat and out-of-combat states have different movement and regeneration."
+      ],
+      "unmodelledValues": [
+        "bonus_movement_speed",
+        "bonus_health_regen",
+        "heal_duration",
+        "heal_amount",
+        "heal_interval",
+        "break_time",
+        "break_count",
+        "break_threshold",
+        "broken_movement_speed",
+        "broken_health_regen"
+      ]
+    },
+    {
+      "id": 215,
+      "key": "shadow_amulet",
+      "name": "Shadow Amulet",
+      "cost": 900,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "fade_time",
+        "movement_speed_reduction",
+        "fade_duration"
+      ]
+    },
+    {
+      "id": 254,
+      "key": "glimmer_cape",
+      "name": "Glimmer Cape",
+      "cost": 2150,
+      "stats": {
+        "magicResistance": 20.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "initial_fade_delay",
+        "secondary_fade_delay",
+        "active_movement_speed",
+        "duration",
+        "barrier_block"
+      ]
+    },
+    {
+      "id": 939,
+      "key": "harpoon",
+      "name": "Harpoon",
+      "cost": 4700,
+      "stats": {
+        "agility": 15.0,
+        "attackDamage": 25.0,
+        "manaRegen": 2.5,
+        "strength": 30.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "base_attack_range_melee",
+        "passive_cooldown",
+        "movement_slow",
+        "slow_duration",
+        "pull_duration",
+        "pull_distance_pct",
+        "min_distance",
+        "max_distance",
+        "cast_range_enemy",
+        "push_length",
+        "projectile_speed"
+      ]
+    },
+    {
+      "id": 1076,
+      "key": "specialists_array",
+      "name": "Specialist's Array",
+      "cost": 2550,
+      "stats": {
+        "agility": 15.0,
+        "attackDamage": 20.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "count",
+        "secondary_target_range_bonus",
+        "secondary_target_angle",
+        "proc_chance",
+        "base_proc_dmg",
+        "proc_dmg_pct"
+      ]
+    },
+    {
+      "id": 1858,
+      "key": "hydras_breath",
+      "name": "Hydra's Breath",
+      "cost": 5900,
+      "stats": {
+        "agility": 30.0,
+        "attackDamage": 25.0,
+        "strength": 15.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [],
+      "unmodelledValues": [
+        "count",
+        "secondary_target_range_bonus",
+        "secondary_target_angle",
+        "proc_chance",
+        "proc_dmg_pct",
+        "base_proc_dmg",
+        "base_attack_range",
+        "poison_duration",
+        "poison_damage_per_second"
+      ]
+    },
+    {
+      "id": 1872,
+      "key": "chasm_stone",
+      "name": "Chasm Stone",
+      "cost": 900,
+      "stats": {},
+      "auras": [],
+      "effects": [],
+      "coverage": "unmodelled",
+      "notes": [],
+      "unmodelledValues": [
+        "aoe_bonus"
+      ]
+    },
+    {
+      "id": 1953,
+      "key": "berserkers_sabatons",
+      "name": "Sabatons of Mordiggian",
+      "cost": 5950,
+      "stats": {
+        "armor": 10.0,
+        "attackSpeed": 30.0,
+        "attackDamage": 40.0,
+        "healthRegen": 5.0
+      },
+      "auras": [],
+      "effects": [],
+      "coverage": "partial",
+      "notes": [
+        "Held offensive bonuses only. Unholy Strength, health drain, phase, and movement speed depend on state."
+      ],
+      "unmodelledValues": [
+        "bonus_movement_speed_ranged",
+        "bonus_movement_speed_melee",
+        "phase_movement_speed",
+        "phase_movement_speed_range",
+        "unholy_bonus_damage",
+        "unholy_bonus_strength",
+        "unholy_bonus_armor",
+        "unholy_bonus_slow_resistance",
+        "unholy_health_drain_per_second",
+        "toggle_cooldown"
+      ]
+    }
+  ]
+}

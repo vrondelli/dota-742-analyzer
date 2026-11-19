@@ -1,0 +1,1153 @@
+{
+  "patch": "7.42",
+  "client_build": 6978,
+  "definition_source": "https://raw.githubusercontent.com/SteamTracking/GameTracking-Dota2/2ad4e6b7bd40b0fbdbd4a85bd9f11f7a992c4300/game/dota/pak01_dir/scripts/npc/items.txt",
+  "name_source": "https://www.dota2.com/datafeed/itemlist?language=english",
+  "removed_item_ids": [
+    7,
+    635,
+    1808
+  ],
+  "items": [
+    {
+      "id": 1,
+      "key": "blink",
+      "name": "Blink Dagger",
+      "cost": 2250
+    },
+    {
+      "id": 600,
+      "key": "overwhelming_blink",
+      "name": "Overwhelming Blink",
+      "cost": 6800
+    },
+    {
+      "id": 603,
+      "key": "swift_blink",
+      "name": "Swift Blink",
+      "cost": 6800
+    },
+    {
+      "id": 604,
+      "key": "arcane_blink",
+      "name": "Arcane Blink",
+      "cost": 6800
+    },
+    {
+      "id": 2,
+      "key": "blades_of_attack",
+      "name": "Blades of Attack",
+      "cost": 450
+    },
+    {
+      "id": 3,
+      "key": "broadsword",
+      "name": "Broadsword",
+      "cost": 1000
+    },
+    {
+      "id": 4,
+      "key": "chainmail",
+      "name": "Chainmail",
+      "cost": 500
+    },
+    {
+      "id": 1847,
+      "key": "splintmail",
+      "name": "Splintmail",
+      "cost": 950
+    },
+    {
+      "id": 5,
+      "key": "claymore",
+      "name": "Claymore",
+      "cost": 1350
+    },
+    {
+      "id": 6,
+      "key": "helm_of_iron_will",
+      "name": "Helm of Iron Will",
+      "cost": 975
+    },
+    {
+      "id": 8,
+      "key": "mithril_hammer",
+      "name": "Mithril Hammer",
+      "cost": 1600
+    },
+    {
+      "id": 9,
+      "key": "platemail",
+      "name": "Platemail",
+      "cost": 1400
+    },
+    {
+      "id": 10,
+      "key": "quarterstaff",
+      "name": "Quarterstaff",
+      "cost": 900
+    },
+    {
+      "id": 11,
+      "key": "quelling_blade",
+      "name": "Quelling Blade",
+      "cost": 100
+    },
+    {
+      "id": 237,
+      "key": "faerie_fire",
+      "name": "Faerie Fire",
+      "cost": 65
+    },
+    {
+      "id": 265,
+      "key": "infused_raindrop",
+      "name": "Infused Raindrops",
+      "cost": 225
+    },
+    {
+      "id": 244,
+      "key": "wind_lace",
+      "name": "Wind Lace",
+      "cost": 225
+    },
+    {
+      "id": 12,
+      "key": "ring_of_protection",
+      "name": "Ring of Protection",
+      "cost": 175
+    },
+    {
+      "id": 247,
+      "key": "moon_shard",
+      "name": "Moon Shard",
+      "cost": 4000
+    },
+    {
+      "id": 13,
+      "key": "gauntlets",
+      "name": "Gauntlets of Strength",
+      "cost": 140
+    },
+    {
+      "id": 14,
+      "key": "slippers",
+      "name": "Slippers of Agility",
+      "cost": 140
+    },
+    {
+      "id": 15,
+      "key": "mantle",
+      "name": "Mantle of Intelligence",
+      "cost": 140
+    },
+    {
+      "id": 16,
+      "key": "branches",
+      "name": "Iron Branch",
+      "cost": 55
+    },
+    {
+      "id": 17,
+      "key": "belt_of_strength",
+      "name": "Belt of Strength",
+      "cost": 450
+    },
+    {
+      "id": 18,
+      "key": "boots_of_elves",
+      "name": "Band of Elvenskin",
+      "cost": 450
+    },
+    {
+      "id": 19,
+      "key": "robe",
+      "name": "Robe of the Magi",
+      "cost": 450
+    },
+    {
+      "id": 20,
+      "key": "circlet",
+      "name": "Circlet",
+      "cost": 155
+    },
+    {
+      "id": 261,
+      "key": "crown",
+      "name": "Crown",
+      "cost": 450
+    },
+    {
+      "id": 1122,
+      "key": "diadem",
+      "name": "Diadem",
+      "cost": 1000
+    },
+    {
+      "id": 21,
+      "key": "ogre_axe",
+      "name": "Ogre Axe",
+      "cost": 1000
+    },
+    {
+      "id": 22,
+      "key": "blade_of_alacrity",
+      "name": "Blade of Alacrity",
+      "cost": 1000
+    },
+    {
+      "id": 23,
+      "key": "staff_of_wizardry",
+      "name": "Staff of Wizardry",
+      "cost": 1000
+    },
+    {
+      "id": 24,
+      "key": "ultimate_orb",
+      "name": "Ultimate Orb",
+      "cost": 2800
+    },
+    {
+      "id": 25,
+      "key": "gloves",
+      "name": "Gloves of Haste",
+      "cost": 450
+    },
+    {
+      "id": 485,
+      "key": "blitz_knuckles",
+      "name": "Blitz Knuckles",
+      "cost": 1000
+    },
+    {
+      "id": 26,
+      "key": "lifesteal",
+      "name": "Morbid Mask",
+      "cost": 900
+    },
+    {
+      "id": 473,
+      "key": "voodoo_mask",
+      "name": "Voodoo Mask",
+      "cost": 650
+    },
+    {
+      "id": 27,
+      "key": "ring_of_regen",
+      "name": "Ring of Regen",
+      "cost": 175
+    },
+    {
+      "id": 28,
+      "key": "sobi_mask",
+      "name": "Sage's Mask",
+      "cost": 175
+    },
+    {
+      "id": 29,
+      "key": "boots",
+      "name": "Boots of Speed",
+      "cost": 500
+    },
+    {
+      "id": 30,
+      "key": "gem",
+      "name": "Gem of True Sight",
+      "cost": 900
+    },
+    {
+      "id": 1848,
+      "key": "shawl",
+      "name": "Shawl",
+      "cost": 450
+    },
+    {
+      "id": 31,
+      "key": "cloak",
+      "name": "Cloak",
+      "cost": 900
+    },
+    {
+      "id": 32,
+      "key": "talisman_of_evasion",
+      "name": "Talisman of Evasion",
+      "cost": 1300
+    },
+    {
+      "id": 34,
+      "key": "magic_stick",
+      "name": "Magic Stick",
+      "cost": 200
+    },
+    {
+      "id": 36,
+      "key": "magic_wand",
+      "name": "Magic Wand",
+      "cost": 460
+    },
+    {
+      "id": 37,
+      "key": "ghost",
+      "name": "Ghost Scepter",
+      "cost": 1500
+    },
+    {
+      "id": 38,
+      "key": "clarity",
+      "name": "Clarity",
+      "cost": 60
+    },
+    {
+      "id": 216,
+      "key": "enchanted_mango",
+      "name": "Enchanted Mango",
+      "cost": 65
+    },
+    {
+      "id": 1123,
+      "key": "blood_grenade",
+      "name": "Blood Grenade",
+      "cost": 50
+    },
+    {
+      "id": 1942,
+      "key": "bloodslinger",
+      "name": "Bloodslinger",
+      "cost": 925
+    },
+    {
+      "id": 39,
+      "key": "flask",
+      "name": "Healing Salve",
+      "cost": 100
+    },
+    {
+      "id": 40,
+      "key": "dust",
+      "name": "Dust of Appearance",
+      "cost": 80
+    },
+    {
+      "id": 41,
+      "key": "bottle",
+      "name": "Bottle",
+      "cost": 675
+    },
+    {
+      "id": 43,
+      "key": "ward_sentry",
+      "name": "Sentry Ward",
+      "cost": 50
+    },
+    {
+      "id": 44,
+      "key": "tango",
+      "name": "Tango",
+      "cost": 90
+    },
+    {
+      "id": 46,
+      "key": "tpscroll",
+      "name": "Town Portal Scroll",
+      "cost": 100
+    },
+    {
+      "id": 48,
+      "key": "travel_boots",
+      "name": "Boots of Travel",
+      "cost": 2500
+    },
+    {
+      "id": 220,
+      "key": "travel_boots_2",
+      "name": "Boots of Travel 2",
+      "cost": 4500
+    },
+    {
+      "id": 50,
+      "key": "phase_boots",
+      "name": "Phase Boots",
+      "cost": 1450
+    },
+    {
+      "id": 51,
+      "key": "demon_edge",
+      "name": "Demon Edge",
+      "cost": 2200
+    },
+    {
+      "id": 52,
+      "key": "eagle",
+      "name": "Eaglesong",
+      "cost": 2800
+    },
+    {
+      "id": 53,
+      "key": "reaver",
+      "name": "Reaver",
+      "cost": 2800
+    },
+    {
+      "id": 54,
+      "key": "relic",
+      "name": "Sacred Relic",
+      "cost": 3400
+    },
+    {
+      "id": 55,
+      "key": "hyperstone",
+      "name": "Hyperstone",
+      "cost": 2000
+    },
+    {
+      "id": 56,
+      "key": "ring_of_health",
+      "name": "Ring of Health",
+      "cost": 700
+    },
+    {
+      "id": 279,
+      "key": "ring_of_tarrasque",
+      "name": "Ring of Tarrasque",
+      "cost": 1700
+    },
+    {
+      "id": 57,
+      "key": "void_stone",
+      "name": "Void Stone",
+      "cost": 700
+    },
+    {
+      "id": 1802,
+      "key": "tiara_of_selemene",
+      "name": "Tiara of Selemene",
+      "cost": 1700
+    },
+    {
+      "id": 58,
+      "key": "mystic_staff",
+      "name": "Mystic Staff",
+      "cost": 2800
+    },
+    {
+      "id": 59,
+      "key": "energy_booster",
+      "name": "Energy Booster",
+      "cost": 800
+    },
+    {
+      "id": 60,
+      "key": "point_booster",
+      "name": "Point Booster",
+      "cost": 1200
+    },
+    {
+      "id": 61,
+      "key": "vitality_booster",
+      "name": "Vitality Booster",
+      "cost": 1000
+    },
+    {
+      "id": 593,
+      "key": "fluffy_hat",
+      "name": "Fluffy Hat",
+      "cost": 250
+    },
+    {
+      "id": 1849,
+      "key": "wizard_hat",
+      "name": "Wizard Hat",
+      "cost": 250
+    },
+    {
+      "id": 63,
+      "key": "power_treads",
+      "name": "Power Treads",
+      "cost": 1400
+    },
+    {
+      "id": 1107,
+      "key": "phylactery",
+      "name": "Phylactery",
+      "cost": 2600
+    },
+    {
+      "id": 1955,
+      "key": "caduceus",
+      "name": "Caduceus",
+      "cost": 5400
+    },
+    {
+      "id": 65,
+      "key": "hand_of_midas",
+      "name": "Hand of Midas",
+      "cost": 2200
+    },
+    {
+      "id": 67,
+      "key": "oblivion_staff",
+      "name": "Oblivion Staff",
+      "cost": 1625
+    },
+    {
+      "id": 534,
+      "key": "witch_blade",
+      "name": "Witch Blade",
+      "cost": 2775
+    },
+    {
+      "id": 69,
+      "key": "pers",
+      "name": "Perseverance",
+      "cost": 1400
+    },
+    {
+      "id": 73,
+      "key": "bracer",
+      "name": "Bracer",
+      "cost": 505
+    },
+    {
+      "id": 75,
+      "key": "wraith_band",
+      "name": "Wraith Band",
+      "cost": 505
+    },
+    {
+      "id": 77,
+      "key": "null_talisman",
+      "name": "Null Talisman",
+      "cost": 505
+    },
+    {
+      "id": 79,
+      "key": "mekansm",
+      "name": "Mekansm",
+      "cost": 1775
+    },
+    {
+      "id": 81,
+      "key": "vladmir",
+      "name": "Vladmir's Offering",
+      "cost": 2200
+    },
+    {
+      "id": 1944,
+      "key": "ristuls_devotion",
+      "name": "Ristul's Devotion",
+      "cost": 3800
+    },
+    {
+      "id": 86,
+      "key": "buckler",
+      "name": "Buckler",
+      "cost": 425
+    },
+    {
+      "id": 88,
+      "key": "ring_of_basilius",
+      "name": "Ring of Basilius",
+      "cost": 425
+    },
+    {
+      "id": 269,
+      "key": "holy_locket",
+      "name": "Holy Locket",
+      "cost": 2250
+    },
+    {
+      "id": 90,
+      "key": "pipe",
+      "name": "Pipe of Insight",
+      "cost": 3725
+    },
+    {
+      "id": 92,
+      "key": "urn_of_shadows",
+      "name": "Urn of Shadows",
+      "cost": 875
+    },
+    {
+      "id": 94,
+      "key": "headdress",
+      "name": "Headdress",
+      "cost": 425
+    },
+    {
+      "id": 96,
+      "key": "sheepstick",
+      "name": "Scythe of Vyse",
+      "cost": 5200
+    },
+    {
+      "id": 98,
+      "key": "orchid",
+      "name": "Orchid Malevolence",
+      "cost": 3275
+    },
+    {
+      "id": 250,
+      "key": "bloodthorn",
+      "name": "Bloodthorn",
+      "cost": 6250
+    },
+    {
+      "id": 252,
+      "key": "echo_sabre",
+      "name": "Echo Sabre",
+      "cost": 2700
+    },
+    {
+      "id": 100,
+      "key": "cyclone",
+      "name": "Eul's Scepter of Divinity",
+      "cost": 2600
+    },
+    {
+      "id": 610,
+      "key": "wind_waker",
+      "name": "Wind Waker",
+      "cost": 6800
+    },
+    {
+      "id": 232,
+      "key": "aether_lens",
+      "name": "Aether Lens",
+      "cost": 2100
+    },
+    {
+      "id": 102,
+      "key": "force_staff",
+      "name": "Force Staff",
+      "cost": 2200
+    },
+    {
+      "id": 263,
+      "key": "hurricane_pike",
+      "name": "Hurricane Pike",
+      "cost": 4550
+    },
+    {
+      "id": 104,
+      "key": "dagon",
+      "name": "Dagon",
+      "cost": 3000
+    },
+    {
+      "id": 201,
+      "key": "dagon_2",
+      "name": "Dagon",
+      "cost": 4100
+    },
+    {
+      "id": 202,
+      "key": "dagon_3",
+      "name": "Dagon",
+      "cost": 5200
+    },
+    {
+      "id": 203,
+      "key": "dagon_4",
+      "name": "Dagon",
+      "cost": 6300
+    },
+    {
+      "id": 204,
+      "key": "dagon_5",
+      "name": "Dagon",
+      "cost": 7400
+    },
+    {
+      "id": 108,
+      "key": "ultimate_scepter",
+      "name": "Aghanim's Scepter",
+      "cost": 4200
+    },
+    {
+      "id": 271,
+      "key": "ultimate_scepter_2",
+      "name": "Aghanim's Blessing",
+      "cost": 5800
+    },
+    {
+      "id": 609,
+      "key": "aghanims_shard",
+      "name": "Aghanim's Shard",
+      "cost": 1400
+    },
+    {
+      "id": 110,
+      "key": "refresher",
+      "name": "Refresher Orb",
+      "cost": 5000
+    },
+    {
+      "id": 112,
+      "key": "assault",
+      "name": "Assault Cuirass",
+      "cost": 5125
+    },
+    {
+      "id": 114,
+      "key": "heart",
+      "name": "Heart of Tarrasque",
+      "cost": 5300
+    },
+    {
+      "id": 116,
+      "key": "black_king_bar",
+      "name": "Black King Bar",
+      "cost": 4050
+    },
+    {
+      "id": 119,
+      "key": "shivas_guard",
+      "name": "Shiva's Guard",
+      "cost": 4500
+    },
+    {
+      "id": 121,
+      "key": "bloodstone",
+      "name": "Bloodstone",
+      "cost": 4700
+    },
+    {
+      "id": 123,
+      "key": "sphere",
+      "name": "Linken's Sphere",
+      "cost": 4800
+    },
+    {
+      "id": 226,
+      "key": "lotus_orb",
+      "name": "Lotus Orb",
+      "cost": 3850
+    },
+    {
+      "id": 223,
+      "key": "meteor_hammer",
+      "name": "Meteor Hammer",
+      "cost": 2750
+    },
+    {
+      "id": 1946,
+      "key": "starforge",
+      "name": "Starforge",
+      "cost": 6000
+    },
+    {
+      "id": 225,
+      "key": "nullifier",
+      "name": "Nullifier",
+      "cost": 4350
+    },
+    {
+      "id": 256,
+      "key": "aeon_disk",
+      "name": "Aeon Disk",
+      "cost": 3000
+    },
+    {
+      "id": 259,
+      "key": "kaya",
+      "name": "Kaya",
+      "cost": 2000
+    },
+    {
+      "id": 267,
+      "key": "spirit_vessel",
+      "name": "Spirit Vessel",
+      "cost": 2725
+    },
+    {
+      "id": 1852,
+      "key": "essence_distiller",
+      "name": "Essence Distiller",
+      "cost": 1775
+    },
+    {
+      "id": 125,
+      "key": "vanguard",
+      "name": "Vanguard",
+      "cost": 1700
+    },
+    {
+      "id": 242,
+      "key": "crimson_guard",
+      "name": "Crimson Guard",
+      "cost": 3725
+    },
+    {
+      "id": 127,
+      "key": "blade_mail",
+      "name": "Blade Mail",
+      "cost": 2350
+    },
+    {
+      "id": 129,
+      "key": "soul_booster",
+      "name": "Soul Booster",
+      "cost": 3000
+    },
+    {
+      "id": 1854,
+      "key": "consecrated_wraps",
+      "name": "Consecrated Wraps",
+      "cost": 2600
+    },
+    {
+      "id": 1856,
+      "key": "crellas_crozier",
+      "name": "Crella's Crozier",
+      "cost": 4800
+    },
+    {
+      "id": 133,
+      "key": "rapier",
+      "name": "Divine Rapier",
+      "cost": 5600
+    },
+    {
+      "id": 135,
+      "key": "monkey_king_bar",
+      "name": "Monkey King Bar",
+      "cost": 5000
+    },
+    {
+      "id": 137,
+      "key": "radiance",
+      "name": "Radiance",
+      "cost": 4700
+    },
+    {
+      "id": 139,
+      "key": "butterfly",
+      "name": "Butterfly",
+      "cost": 5000
+    },
+    {
+      "id": 141,
+      "key": "greater_crit",
+      "name": "Daedalus",
+      "cost": 5200
+    },
+    {
+      "id": 143,
+      "key": "basher",
+      "name": "Skull Basher",
+      "cost": 2875
+    },
+    {
+      "id": 145,
+      "key": "bfury",
+      "name": "Battle Fury",
+      "cost": 3900
+    },
+    {
+      "id": 147,
+      "key": "manta",
+      "name": "Manta Style",
+      "cost": 4550
+    },
+    {
+      "id": 149,
+      "key": "lesser_crit",
+      "name": "Crystalys",
+      "cost": 2000
+    },
+    {
+      "id": 236,
+      "key": "dragon_lance",
+      "name": "Dragon Lance",
+      "cost": 2000
+    },
+    {
+      "id": 151,
+      "key": "armlet",
+      "name": "Armlet of Mordiggian",
+      "cost": 2500
+    },
+    {
+      "id": 152,
+      "key": "invis_sword",
+      "name": "Shadow Blade",
+      "cost": 3250
+    },
+    {
+      "id": 249,
+      "key": "silver_edge",
+      "name": "Silver Edge",
+      "cost": 5700
+    },
+    {
+      "id": 154,
+      "key": "sange_and_yasha",
+      "name": "Sange and Yasha",
+      "cost": 4000
+    },
+    {
+      "id": 273,
+      "key": "kaya_and_sange",
+      "name": "Kaya and Sange",
+      "cost": 4000
+    },
+    {
+      "id": 277,
+      "key": "yasha_and_kaya",
+      "name": "Yasha and Kaya",
+      "cost": 4000
+    },
+    {
+      "id": 156,
+      "key": "satanic",
+      "name": "Satanic",
+      "cost": 5050
+    },
+    {
+      "id": 158,
+      "key": "mjollnir",
+      "name": "Mjollnir",
+      "cost": 5500
+    },
+    {
+      "id": 160,
+      "key": "skadi",
+      "name": "Eye of Skadi",
+      "cost": 5900
+    },
+    {
+      "id": 162,
+      "key": "sange",
+      "name": "Sange",
+      "cost": 2000
+    },
+    {
+      "id": 164,
+      "key": "helm_of_the_dominator",
+      "name": "Helm of the Dominator",
+      "cost": 2550
+    },
+    {
+      "id": 166,
+      "key": "maelstrom",
+      "name": "Maelstrom",
+      "cost": 2950
+    },
+    {
+      "id": 1466,
+      "key": "gungir",
+      "name": "Gleipnir",
+      "cost": 4650
+    },
+    {
+      "id": 168,
+      "key": "desolator",
+      "name": "Desolator",
+      "cost": 3500
+    },
+    {
+      "id": 170,
+      "key": "yasha",
+      "name": "Yasha",
+      "cost": 2000
+    },
+    {
+      "id": 172,
+      "key": "mask_of_madness",
+      "name": "Mask of Madness",
+      "cost": 1800
+    },
+    {
+      "id": 174,
+      "key": "diffusal_blade",
+      "name": "Diffusal Blade",
+      "cost": 2500
+    },
+    {
+      "id": 1097,
+      "key": "disperser",
+      "name": "Disperser",
+      "cost": 6100
+    },
+    {
+      "id": 176,
+      "key": "ethereal_blade",
+      "name": "Ethereal Blade",
+      "cost": 5200
+    },
+    {
+      "id": 178,
+      "key": "soul_ring",
+      "name": "Soul Ring",
+      "cost": 805
+    },
+    {
+      "id": 180,
+      "key": "arcane_boots",
+      "name": "Arcane Boots",
+      "cost": 1500
+    },
+    {
+      "id": 235,
+      "key": "octarine_core",
+      "name": "Octarine Core",
+      "cost": 5100
+    },
+    {
+      "id": 181,
+      "key": "orb_of_venom",
+      "name": "Orb of Venom",
+      "cost": 350
+    },
+    {
+      "id": 240,
+      "key": "blight_stone",
+      "name": "Orb of Blight",
+      "cost": 300
+    },
+    {
+      "id": 569,
+      "key": "orb_of_corrosion",
+      "name": "Orb of Corrosion",
+      "cost": 880
+    },
+    {
+      "id": 1575,
+      "key": "orb_of_frost",
+      "name": "Orb of Frost",
+      "cost": 300
+    },
+    {
+      "id": 596,
+      "key": "falcon_blade",
+      "name": "Falcon Blade",
+      "cost": 1125
+    },
+    {
+      "id": 598,
+      "key": "mage_slayer",
+      "name": "Mage Slayer",
+      "cost": 3100
+    },
+    {
+      "id": 185,
+      "key": "ancient_janggo",
+      "name": "Drum of Endurance",
+      "cost": 1625
+    },
+    {
+      "id": 931,
+      "key": "boots_of_bearing",
+      "name": "Boots of Bearing",
+      "cost": 4225
+    },
+    {
+      "id": 229,
+      "key": "solar_crest",
+      "name": "Solar Crest",
+      "cost": 2575
+    },
+    {
+      "id": 1128,
+      "key": "pavise",
+      "name": "Pavise",
+      "cost": 1250
+    },
+    {
+      "id": 188,
+      "key": "smoke_of_deceit",
+      "name": "Smoke of Deceit",
+      "cost": 50
+    },
+    {
+      "id": 190,
+      "key": "veil_of_discord",
+      "name": "Veil of Discord",
+      "cost": 1700
+    },
+    {
+      "id": 1806,
+      "key": "devastator",
+      "name": "Parasma",
+      "cost": 5975
+    },
+    {
+      "id": 231,
+      "key": "guardian_greaves",
+      "name": "Guardian Greaves",
+      "cost": 4350
+    },
+    {
+      "id": 206,
+      "key": "rod_of_atos",
+      "name": "Rod of Atos",
+      "cost": 2250
+    },
+    {
+      "id": 208,
+      "key": "abyssal_blade",
+      "name": "Abyssal Blade",
+      "cost": 6150
+    },
+    {
+      "id": 210,
+      "key": "heavens_halberd",
+      "name": "Heaven's Halberd",
+      "cost": 2400
+    },
+    {
+      "id": 1948,
+      "key": "skypiercer",
+      "name": "Skypiercer",
+      "cost": 6000
+    },
+    {
+      "id": 214,
+      "key": "tranquil_boots",
+      "name": "Tranquil Boots",
+      "cost": 900
+    },
+    {
+      "id": 215,
+      "key": "shadow_amulet",
+      "name": "Shadow Amulet",
+      "cost": 900
+    },
+    {
+      "id": 254,
+      "key": "glimmer_cape",
+      "name": "Glimmer Cape",
+      "cost": 2150
+    },
+    {
+      "id": 939,
+      "key": "harpoon",
+      "name": "Harpoon",
+      "cost": 4700
+    },
+    {
+      "id": 1076,
+      "key": "specialists_array",
+      "name": "Specialist's Array",
+      "cost": 2550
+    },
+    {
+      "id": 1858,
+      "key": "hydras_breath",
+      "name": "Hydra's Breath",
+      "cost": 5900
+    },
+    {
+      "id": 1872,
+      "key": "chasm_stone",
+      "name": "Chasm Stone",
+      "cost": 900
+    },
+    {
+      "id": 1953,
+      "key": "berserkers_sabatons",
+      "name": "Sabatons of Mordiggian",
+      "cost": 5950
+    }
+  ]
+}
