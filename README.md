@@ -21,6 +21,12 @@ Hero ranks use the lower bound of a 95% Wilson interval with a default minimum o
 
 Item rows compare first purchases within a selected time window against games where the hero reached the end of that window without buying the item. Games with missing logs and prior owners are excluded. A rank requires at least five games in each group. Any displayed win-rate difference is an unadjusted association within the selected cohort. Pre-purchase gold and team lead are outside the first version's comparison.
 
+## Deploy to Vercel
+
+Import the GitHub repository with the repository root as the Vercel project directory. The checked-in Vercel configuration serves the analyzer pages and the Node API with the bundled 7.42 datasets. The default data snapshot runs without environment variables.
+
+Use the project's production domain for sharing. Open `/role-rankings` for the role boards or add a role query such as `/role-rankings?role=offlane` to link directly to a position.
+
 ## Build efficiency
 
 Open [Build efficiency](http://127.0.0.1:4173/efficiency) to compare single items and two-item builds under the same gold budget. The model starts from the selected hero and level. Choose a damage, durability, aura or sustain metric and enter the relevant target and fight assumptions. The same page also opens from a selected hero in the Legend analyzer.

@@ -1,4 +1,5 @@
 node_modules/
+.vercel/
 .playwright-cli/
 output/playwright/
 output/legend-742-top-20-by-role.json

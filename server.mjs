@@ -546,13 +546,13 @@ function heroRows(stats) {
   return [...rankedRows, ...unplayedRows];
 }
 
-const server = createServer(async (request, response) => {
+export async function handleRequest(request, response, routedUrl) {
   try {
     if (request.method !== 'GET' && request.method !== 'HEAD') {
       response.setHeader('Allow', 'GET, HEAD');
       return sendJson(response, 405, { error: 'Method not supported.' });
     }
-    const url = new URL(request.url, 'http://localhost');
+    const url = routedUrl ?? new URL(request.url, 'http://localhost');
     const route = url.pathname;
     if (staticFiles.has(route)) {
       const [file, type] = staticFiles.get(route);
@@ -629,9 +629,12 @@ const server = createServer(async (request, response) => {
     console.error(error);
     sendJson(response, 500, { error: 'Could not load analyzer data. Check the local server log.' });
   }
-});
+}
 
-const port = Number(process.env.PORT ?? 4173);
-server.listen(port, '127.0.0.1', () => {
-  console.log(`Dota ${patch} analyzer available at http://127.0.0.1:${server.address().port}`);
-});
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const server = createServer(handleRequest);
+  const port = Number(process.env.PORT ?? 4173);
+  server.listen(port, '127.0.0.1', () => {
+    console.log(`Dota ${patch} analyzer available at http://127.0.0.1:${server.address().port}`);
+  });
+}
