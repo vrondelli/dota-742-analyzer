@@ -13,6 +13,8 @@ import { DRAFT_CONDITIONS, priceDraftPlan } from './lib/draft-plans.mjs';
 import { ROLE_IMPACT_KEYS, prepareImpactRubric, scoreRoleImpact } from './lib/role-impact.mjs';
 import { getHeroMatchups } from './lib/hero-matchups.mjs';
 import { buildHeroFarm } from './lib/hero-farm.mjs';
+import { simulateBuildTimings, TIMING_FARM_ITEMS } from './lib/build-timings.mjs';
+import { buildTimingPaths, timingItemOptions } from './lib/build-timing-paths.mjs';
 
 const patch = '7.42';
 const dataDirectory = new URL(`./data/${patch}/`, import.meta.url);
@@ -52,6 +54,9 @@ const roles = [
 ];
 const rankedRoles = roles.filter(({ key }) => key !== 'all' && key !== 'unknown');
 const farmCheckMinutes = [5, 10, 15, 20, 25, 30];
+const timingLevelMarks = [4, 7, 10, 12, 15, 18, 21, 24];
+const timingFarms = [{ key: 'bad', label: 'Bad farm' }, { key: 'good', label: 'Good farm' }, { key: 'easy', label: 'Easy farm' }];
+const timingDefaults = { hero: 'antimage', role: 'carry', farm: 'good', targetArmor: 10, targetMagicResistance: 25, bonusGpm: 0 };
 const hasRankedRole = ({ key }) => {
   const rankings = roleRankings.roles?.[key]?.rankings;
   return Array.isArray(rankings) && rankings.length === 20;
@@ -85,6 +90,9 @@ const staticFiles = new Map([
   ['/gpm-builds', ['gpm-builds.html', 'text/html; charset=utf-8']],
   ['/gpm-builds.css', ['gpm-builds.css', 'text/css; charset=utf-8']],
   ['/gpm-builds.js', ['gpm-builds.js', 'text/javascript; charset=utf-8']],
+  ['/build-timings', ['build-timings.html', 'text/html; charset=utf-8']],
+  ['/build-timings.css', ['build-timings.css', 'text/css; charset=utf-8']],
+  ['/build-timings.js', ['build-timings.js', 'text/javascript; charset=utf-8']],
   ['/draft-guide', ['draft-guide.html', 'text/html; charset=utf-8']],
   ['/draft-guide.css', ['draft-guide.css', 'text/css; charset=utf-8']],
   ['/draft-guide.js', ['draft-guide.js', 'text/javascript; charset=utf-8']],
@@ -473,8 +481,16 @@ function profileEvidence(snapshot) {
     if (hasRole) roleReplayMatches += 1;
   }
   const economy = projectGpmEconomy(snapshot);
-  heroProfileEvidence = { snapshot, picks, economy, roleReplayMatches, rankedFarms: new Map() };
+  const economies = new Map([[economy.options.targetMinute, economy]]);
+  heroProfileEvidence = { snapshot, picks, economy, economies, roleReplayMatches, rankedFarms: new Map() };
   return heroProfileEvidence;
+}
+
+function economyAtMinute(evidence, minute) {
+  if (!evidence.economies.has(minute)) {
+    evidence.economies.set(minute, projectGpmEconomy(evidence.snapshot, { targetMinute: minute }));
+  }
+  return evidence.economies.get(minute);
 }
 
 const exampleRoles = {
@@ -581,8 +597,7 @@ async function handleFarmCheck(response) {
   if (!evidence.farmCheck) {
     const byRole = new Map(rankedRoles.map(({ key, label }) => [key, { key, label, checkpoints: [] }]));
     for (const minute of farmCheckMinutes) {
-      const economy = minute === evidence.economy.options.targetMinute
-        ? evidence.economy : projectGpmEconomy(snapshot, { targetMinute: minute });
+      const economy = economyAtMinute(evidence, minute);
       for (const { key, basis, scenarios } of economy.roles) {
         const checkpoint = { minute, basis, sampleSize: scenarios[0]?.sampleSize ?? 0, bad: null, good: null, easy: null };
         for (const { key: farm, earnedGold, gpm } of scenarios) checkpoint[farm] = { gold: earnedGold, gpm };
@@ -592,6 +607,72 @@ async function handleFarmCheck(response) {
     evidence.farmCheck = [...byRole.values()];
   }
   return sendJson(response, 200, { patch, source: snapshot.source, fetchedAt: snapshot.fetchedAt, roles: evidence.farmCheck });
+}
+
+function timingCheckpoints(evidence, role, farm, reserveGold) {
+  const checkpoints = [{ minute: 0, level: 1, earnedGold: 0, budget: 0, basis: 'start', sampleSize: 0 }];
+  for (const [index, level] of timingLevelMarks.entries()) {
+    const minute = (index + 1) * 5;
+    const economy = economyAtMinute(evidence, minute).roles.find(({ key }) => key === role);
+    const mark = economy.scenarios.find(({ key }) => key === farm);
+    if (!mark) break;
+    const previous = checkpoints.at(-1);
+    const endGold = Math.max(previous.earnedGold, mark.earnedGold);
+    for (let time = previous.minute + 1; time <= minute; time += 1) {
+      const share = (time - previous.minute) / (minute - previous.minute);
+      const earnedGold = Math.floor(previous.earnedGold + share * (endGold - previous.earnedGold));
+      checkpoints.push({ minute: time, level: Math.floor(previous.level + share * (level - previous.level)), earnedGold,
+        budget: Math.max(0, earnedGold - reserveGold), basis: time === minute ? mark.basis : 'interpolated',
+        sampleSize: time === minute ? mark.sampleSize : null });
+    }
+  }
+  return checkpoints;
+}
+
+async function handleBuildTimings(url, response) {
+  const data = await loadBuildData();
+  if (url.pathname === '/api/build-timings/meta') {
+    return sendJson(response, 200, { patch, heroes, roles: rankedRoles, farms: timingFarms,
+      items: timingItemOptions(data.items), defaults: timingDefaults });
+  }
+  const query = url.searchParams;
+  const hero = heroesBySlug.get(query.get('hero') || timingDefaults.hero);
+  const role = rankedRoles.find(({ key }) => key === (query.get('role') || timingDefaults.role));
+  const farm = timingFarms.find(({ key }) => key === (query.get('farm') || timingDefaults.farm));
+  const model = data.heroes.get(hero?.id);
+  if (!model || !role || !farm) return sendJson(response, 400, { error: 'Choose a hero, Legend role, and farm pace.' });
+  try {
+    const options = { reserveGold: GPM_PROJECTION_DEFAULTS.reserveGold };
+    for (const [field, min, max] of [['targetArmor', -300, 300], ['targetMagicResistance', -100, 99.9], ['bonusGpm', 0, 500]]) {
+      const value = query.get(field)?.trim();
+      const number = value ? Number(value) : timingDefaults[field];
+      if (!Number.isFinite(number) || number < min || number > max) {
+        throw new RangeError(`${field} must be between ${min} and ${max}.`);
+      }
+      options[field] = number;
+    }
+    const [snapshot, guide] = await Promise.all([loadSnapshot(), loadDraftPlans()]);
+    const checkpoints = timingCheckpoints(profileEvidence(snapshot), role.key, farm.key, options.reserveGold);
+    if (checkpoints.length < 6) return sendJson(response, 422, { error: 'No usable farm checkpoints for this role.' });
+    const rolePlans = guide.plans.filter((entry) => entry.heroId === hero.id && entry.role === role.key);
+    const paths = buildTimingPaths(hero, rolePlans, catalog, query.getAll('item'), role.key);
+    const result = simulateBuildTimings({ hero: model, items: data.items, checkpoints, paths, options });
+    const farmingItems = new Intl.ListFormat('en', { type: 'disjunction' })
+      .format(TIMING_FARM_ITEMS.map((key) => catalog.get(key).name));
+    return sendJson(response, 200, { ...result, patch, hero, role: role.key, roleLabel: role.label, farm: farm.key, farmLabel: farm.label,
+      fetchedAt: snapshot.fetchedAt, source: snapshot.source, options,
+      assumptions: [
+        'Purchase minutes use Legend position gold percentiles with one-minute estimates between five-minute replay checkpoints. Each path sets aside 1,500 gold for other purchases.',
+        'The comparison holds hero level and target defenses constant across paths at each minute. Level 12 at minute 20 is a shared assumption.',
+        'Damage counts sustained physical attacks and supported passive magical item procs against one target. Skills, survival, farming speed, and attack uptime can change the best purchase in a match.',
+        `Added gold per minute is a sensitivity test after completing ${farmingItems}. Use zero to compare the paths at identical income.`,
+        'Only completed purchases contribute stats. Supported direct recipe upgrades credit consumed components. Times are estimates given that income curve.',
+      ],
+    });
+  } catch (error) {
+    if (error instanceof RangeError) return sendJson(response, 400, { error: error.message });
+    throw error;
+  }
 }
 
 async function handleDraftGuide(url, response) {
@@ -742,6 +823,7 @@ export async function handleRequest(request, response, routedUrl) {
     if (route === '/api/role-rankings') return sendJson(response, 200, { ...roleRankings, heroSlugs });
     if (route === '/api/role-rankings/builds') return await handleRankedFarms(url, response);
     if (route === '/api/hero-farm-check') return await handleFarmCheck(response);
+    if (route === '/api/build-timings' || route === '/api/build-timings/meta') return await handleBuildTimings(url, response);
     if (route === '/api/hero-profiles/meta') {
       return sendJson(response, 200, { patch, heroes: heroes.map(({ id, name, slug }) => ({ id, name, slug })),
         conditions: DRAFT_CONDITIONS.map(({ key, label }) => ({ key, label })) });

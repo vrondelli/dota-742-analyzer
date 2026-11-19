@@ -1,0 +1,91 @@
+.timing-main .intro { padding-block: 32px 20px; }
+.timing-main .intro h1 { font-size: clamp(38px, 5vw, 62px); }
+.timing-controls, .timing-results, .timing-purchases, .timing-method { margin-bottom: 16px; min-width: 0; }
+.timing-controls-core, .timing-advanced-fields { display: grid; grid-template-columns: minmax(150px, 1.5fr) repeat(2, minmax(110px, 1fr)) auto; gap: 8px; align-items: end; }
+.timing-controls-core { padding: 0 16px 16px; }
+.timing-field { display: grid; min-width: 0; gap: 4px; color: var(--muted); font-size: 12px; }
+.timing-field > :is(select, input) { width: 100%; min-width: 0; min-height: 38px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: var(--input); font: inherit; font-size: 13px; }
+.timing-primary, .timing-secondary { min-height: 38px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--input); color: var(--ink); font-size: 13px; font-weight: 650; }
+.timing-primary { padding-inline: 16px; color: #241712; background: var(--accent); border-color: var(--accent); }
+.timing-primary:hover:not(:disabled) { background: #ffac99; }
+.timing-secondary:hover:not(:disabled) { border-color: #735348; color: #ffbca8; }
+.timing-main button:disabled { opacity: .55; }
+.timing-settings-section { border-top: 1px solid var(--line-soft); }
+.timing-settings-section > summary { padding: 12px 16px; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 630; }
+.timing-settings-section > summary:hover { color: var(--ink); }
+.timing-settings-section > summary::marker { color: var(--accent); }
+.timing-settings-section > summary .subtle { margin-inline-start: 6px; font-weight: 520; }
+.timing-settings-body { padding: 0 16px 12px; }
+.timing-custom-entry { display: grid; grid-template-columns: minmax(0, 340px) max-content; gap: 8px; align-items: end; }
+.timing-advanced-fields { grid-template-columns: repeat(auto-fit, minmax(125px, 176px)); margin-bottom: 6px; }
+.timing-status { padding: 0 16px 12px; }
+.timing-status:empty { display: none; }
+.timing-status.timing-error { color: #ffbca8; }
+.timing-retry { margin: 0 16px 12px; }
+.timing-steps { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 4px; max-width: 520px; }
+.timing-steps li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; border: 1px solid var(--line); border-radius: 7px; padding: 4px 8px; background: var(--input); }
+.timing-step-detail { display: flex; min-width: 0; align-items: center; gap: 8px; }
+.timing-step-detail strong { overflow-wrap: anywhere; font-size: 13px; }
+.timing-step-actions { display: flex; gap: 2px; }
+.timing-step-actions button { width: 28px; height: 30px; line-height: 1; }
+.timing-step-number { color: var(--muted); font-size: 12px; min-width: 12px; }
+.timing-results-heading { align-items: start; }
+.timing-hero-block { display: flex; align-items: center; gap: 10px; }
+.timing-hero-block .portrait { width: 54px; height: 31px; }
+.timing-share { flex: 0 1 auto; text-align: right; }
+.timing-share p:empty { display: none; }
+.timing-chart-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; padding: 0 16px 10px; }
+.timing-chart-controls label:first-child { flex: 0 1 220px; }
+.timing-chart-controls label:nth-child(2) { flex: 0 1 110px; }
+.timing-chart-key { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin: 0 0 8px auto; padding: 0; list-style: none; }
+.timing-chart-key li { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+.timing-chart-key li::before { content: ""; width: 10px; height: 2px; border-radius: 1px; background: var(--series); }
+.timing-chart { min-width: 0; min-height: 200px; height: clamp(220px, 27vw, 325px); margin-inline: 12px; }
+.timing-chart canvas { display: block; width: 100%; height: 100%; }
+.timing-mark-leaders { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 10px; }
+.timing-mark-leaders .timing-secondary { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 3px 6px; min-height: 32px; font-size: 12px; }
+.timing-mark-leaders .timing-secondary[aria-pressed="true"] { border-color: #674139; background: var(--accent-soft); }
+.timing-mark-leaders strong { color: #ffbca8; font-variant-numeric: tabular-nums; }
+.timing-leads { display: grid; grid-template-columns: repeat(auto-fit, minmax(116px, 1fr)); gap: 6px; padding: 0 16px 16px; }
+.timing-series { display: grid; align-content: start; gap: 2px; min-width: 0; padding: 8px; border: 1px solid var(--line); border-radius: 7px; background: var(--input); }
+.timing-series.timing-leading { border-color: var(--series); }
+.timing-series h3, .timing-path h3 { display: flex; align-items: baseline; gap: 6px; font-size: 13px; line-height: 1.3; }
+.timing-series h3::before, .timing-path h3::before { content: ""; display: inline-block; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--series); }
+.timing-series strong { font-size: 17px; font-variant-numeric: tabular-nums; }
+.timing-series p { overflow-wrap: anywhere; }
+.timing-table-wrap { margin: 0 16px 16px; border: 1px solid var(--line-soft); border-radius: 6px; }
+.timing-table-wrap table { min-width: 575px; }
+.timing-table-wrap :is(th, td) { padding: 8px; border-top: 1px solid var(--line-soft); text-align: end; }
+.timing-table-wrap thead th { border-top: 0; font-size: 12px; }
+.timing-table-wrap :is(th, td):first-child { position: sticky; inset-inline-start: 0; text-align: start; background: var(--layer); }
+.timing-table-wrap tr.timing-selected { background: var(--layer); }
+.timing-table-wrap tr.timing-selected th { box-shadow: inset 2px 0 var(--accent); }
+.timing-purchases > h2 { padding: 4px 0 10px; font-size: 21px; letter-spacing: -.035em; }
+.timing-paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 242px), 1fr)); align-items: start; gap: 8px; }
+.timing-path { min-width: 0; }
+.timing-path > header { padding: 12px; border-bottom: 1px solid var(--line-soft); }
+.timing-path h3 { font-size: 15px; }
+.timing-path header p { margin-top: 4px; }
+.timing-purchase-list { padding: 4px 12px 8px; margin: 0; list-style: none; }
+.timing-purchase-list li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: center; min-height: 42px; padding-block: 6px; }
+.timing-purchase-list li + li { border-top: 1px solid var(--line-soft); }
+.timing-purchase-list li strong { font-size: 13px; overflow-wrap: anywhere; }
+.timing-purchase-list li > p { color: #eac18e; text-align: right; font-size: 13px; font-variant-numeric: tabular-nums; }
+.timing-purchase-list li.timing-later > p { color: var(--muted); }
+.timing-method p + p { margin-top: 5px; }
+
+@media (max-width: 690px) {
+  .timing-main .intro { padding-block: 24px 16px; }
+  .timing-controls-core { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .timing-results-heading { flex-wrap: wrap; }
+  .timing-share { text-align: start; }
+  .timing-chart-key { flex-basis: 100%; margin: 0; }
+}
+@media (max-width: 420px) {
+  .timing-controls-core, .timing-status, .timing-results .section-heading, .timing-chart-controls, .timing-leads, .timing-mark-leaders,
+  .timing-settings-section > summary, .timing-settings-body { padding-inline: 10px; }
+  .timing-chart-controls label:first-child { flex: 1 1 160px; }
+  .timing-chart-controls label:nth-child(2) { flex: 0 1 78px; }
+  .timing-table-wrap { margin-inline: 10px; }
+  .timing-chart { margin-inline: 4px; }
+}

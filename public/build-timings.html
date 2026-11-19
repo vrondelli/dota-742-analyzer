@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <meta name="description" content="Compare Dota 2 item purchase orders, arrival times, and damage spikes on the same Legend farm curve.">
+  <title>Build timings | Dota 2 Analyzer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/build-timings.css">
+  <script src="/build-timings.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to build timings</a>
+  <header class="topbar">
+    <div class="shell topbar-content analyzer-header">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <nav class="analyzer-nav" aria-label="Analyzer views">
+        <a href="/">Matches</a>
+        <a href="/heroes">Heroes</a>
+        <a href="/role-rankings">Role rankings</a>
+        <a href="/draft-guide">Draft guide</a>
+        <a href="/gpm-builds">Farm budgets</a>
+        <a href="/build-timings" aria-current="page">Build timings</a>
+        <a href="/legend-builds">Damage rankings</a>
+        <a href="/efficiency">Item lab</a>
+      </nav>
+      <span class="analyzer-patch" id="timing-patch">Patch 7.42</span>
+    </div>
+  </header>
+
+  <main class="shell timing-main" id="main">
+    <header class="intro">
+      <div>
+        <h1>Build timings</h1>
+        <p class="intro-subtitle">Compare when items come online and how each purchase order changes your damage.</p>
+      </div>
+    </header>
+
+    <form class="surface timing-controls" id="timing-settings" aria-labelledby="timing-scenario-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="timing-scenario-title">Comparison settings</h2>
+          <p class="subtle">Pick a hero and an income curve from Legend Ranked All Pick.</p>
+        </div>
+      </div>
+      <div class="timing-controls-core">
+        <label class="timing-field" for="timing-hero">Hero
+          <select class="select" id="timing-hero" name="hero" required disabled></select>
+        </label>
+        <label class="timing-field" for="timing-role">Legend role
+          <select class="select" id="timing-role" name="role" required disabled></select>
+        </label>
+        <label class="timing-field" for="timing-farm">Farm pace
+          <select class="select" id="timing-farm" name="farm" required>
+            <option value="bad">Bad farm</option>
+            <option value="good" selected>Good farm</option>
+            <option value="easy">Easy farm</option>
+          </select>
+        </label>
+        <button class="timing-primary" id="timing-run" type="submit" disabled>Compare builds</button>
+      </div>
+      <details class="timing-settings-section" id="timing-custom">
+        <summary>Custom purchase order <span id="timing-step-count" class="subtle"></span></summary>
+        <div class="timing-settings-body">
+          <div class="timing-custom-entry">
+            <label class="timing-field" for="timing-item">Find an item
+              <select class="select" id="timing-item" disabled></select>
+            </label>
+            <button class="timing-secondary" id="timing-add-item" type="button" disabled>Add item</button>
+          </div>
+          <ol class="timing-steps" id="timing-custom-steps"></ol>
+        </div>
+      </details>
+      <details class="timing-settings-section" id="timing-advanced">
+        <summary>Combat and income settings</summary>
+        <div class="timing-settings-body">
+          <div class="timing-advanced-fields">
+            <label class="timing-field" for="timing-armor">Target armor
+              <input id="timing-armor" name="targetArmor" type="number" min="-300" max="300" step="any" value="10" required>
+            </label>
+            <label class="timing-field" for="timing-resistance">Target magic resist (%)
+              <input id="timing-resistance" name="targetMagicResistance" type="number" min="-100" max="99.9" step="any" value="25" required>
+            </label>
+            <label class="timing-field" for="timing-bonus-gpm">Extra farm gold/min
+              <input id="timing-bonus-gpm" name="bonusGpm" type="number" min="0" max="500" step="1" value="0" required aria-describedby="timing-bonus-help">
+            </label>
+          </div>
+          <p class="subtle" id="timing-bonus-help">Test a farm boost after completing a farming item. At zero, every path uses the same income.</p>
+        </div>
+      </details>
+      <p id="timing-status" class="timing-status subtle" role="status">Loading comparison settings…</p>
+      <button type="button" class="timing-secondary timing-retry" id="timing-retry" hidden>Retry</button>
+    </form>
+
+    <section id="timing-results" class="surface timing-results" aria-labelledby="timing-results-title" hidden>
+      <div class="section-heading timing-results-heading">
+        <div class="timing-hero-block">
+          <div class="portrait" id="timing-portrait" aria-hidden="true"></div>
+          <div>
+            <h2 id="timing-results-title">Damage over time</h2>
+            <p class="subtle" id="timing-context"></p>
+          </div>
+        </div>
+        <div class="timing-share">
+          <button type="button" class="timing-secondary" id="timing-copy">Copy comparison link</button>
+          <p class="subtle" id="timing-share-status" role="status"></p>
+        </div>
+      </div>
+      <div class="timing-chart-controls">
+        <label class="timing-field" for="timing-metric">Damage metric
+          <select class="select" id="timing-metric">
+            <option value="dps">Total modeled attack DPS</option>
+            <option value="physicalDps">Physical attack DPS</option>
+            <option value="procDps">Magic proc DPS</option>
+          </select>
+        </label>
+        <label class="timing-field" for="timing-minute">Inspect minute
+          <select class="select" id="timing-minute"></select>
+        </label>
+        <ul class="timing-chart-key" id="timing-chart-key" aria-label="Build paths"></ul>
+      </div>
+      <div id="timing-mark-leaders" class="timing-mark-leaders" role="group" aria-label="Leaders at key minutes"></div>
+      <div class="timing-chart" id="timing-chart">
+        <canvas id="timing-canvas" aria-hidden="true"></canvas>
+      </div>
+      <div id="timing-leads" class="timing-leads"></div>
+      <details class="timing-settings-section timing-table-details">
+        <summary>Damage table</summary>
+        <div class="scroll-table timing-table-wrap" id="timing-table" tabindex="0" role="region" aria-label="Damage by minute table"></div>
+      </details>
+    </section>
+
+    <section class="timing-purchases" id="timing-purchases" aria-labelledby="timing-purchases-title" hidden>
+      <h2 id="timing-purchases-title">When each item arrives</h2>
+      <div id="timing-paths" class="timing-paths"></div>
+    </section>
+
+    <details class="surface reading-note timing-method" id="timing-method" hidden>
+      <summary>Model assumptions <span aria-hidden="true">+</span></summary>
+      <div id="timing-assumptions"></div>
+    </details>
+
+    <footer>
+      <span>OpenDota economy samples · Valve mechanics</span>
+      <a class="text-link" id="timing-hero-link" href="/heroes">Hero guides</a>
+    </footer>
+  </main>
+</body>
+</html>

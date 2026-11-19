@@ -127,13 +127,17 @@ function projectionCell(row, { key, label }) {
 
 function renderRows() {
   if (!state.result) return
-  const { rows } = state.result
+  const { rows, options } = state.result
+  const view = $('gpm-display').value
+  const timing = new URLSearchParams({ targetArmor: options.targetArmor })
+  if (options.role !== 'all') timing.set('role', options.role)
+  if (view !== 'all') timing.set('farm', view)
+  $('gpm-timing-link').href = `/build-timings?${timing}`
   const target = $('gpm-result-body')
   if (!rows.length) {
     target.innerHTML = '<div class="gpm-empty"><strong>No projections for these settings</strong><span>Try an earlier minute or select a different role with economy samples.</span></div>'
     return
   }
-  const view = $('gpm-display').value
   const scenarios = scenarioTypes.filter(({ key }) => view === 'all' || view === key)
   target.innerHTML = `<div class="scroll-table" tabindex="0" role="region" aria-label="Ranked GPM build projections">
     <table class="gpm-table${view === 'all' ? ' gpm-all-scenarios' : ''}">

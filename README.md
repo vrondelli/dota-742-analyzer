@@ -17,6 +17,7 @@ Open [the analyzer](http://127.0.0.1:4173). It starts on Legend, using the lobby
 | Role rankings | Which heroes fit my position under the mechanics rubric? |
 | Draft guide | How do revealed picks, game conditions, and farm speed change my options? |
 | Farm budgets | Which builds fit the gold I could earn by a given minute? |
+| Build timings | When do alternative purchase paths come online, and how does their damage change over time? |
 | Damage rankings | Which hero and item combinations add the most damage per gold across fixed spend bands? |
 | Item lab | What does a specific build add to one hero under the same combat assumptions? |
 
@@ -84,6 +85,14 @@ The default scenario evaluates minute 20, hero level 12, a 1,500g reserve for ot
 Heroes in a role share its farm distribution. Replay start times assign the current sample to the patch window, and inferred replay roles determine hero eligibility. The build model uses gross earnings and ranks held items by single-target attack DPS. The CSV export includes the selected settings, per-scenario sample counts, budgets, items and DPS.
 
 Open **Item Potency and patch builds** to compare supported on-hit effects across normal attacks, illusions, and special attacks. The panel also prices report-derived build examples against the current role budgets. Its Dota2ProTracker paths are historical 7.41f context. Per-hit effects and build hypotheses sit alongside the sustained right-click ranking. [Valve 7.42 mechanics](https://www.dota2.com/patches/7.42)
+
+## Build timings
+
+Open [Build timings](http://127.0.0.1:4173/build-timings) to compare Daedalus rush, Maelstrom first, an early Mjollnir upgrade, and other paths for a hero. Choose a Legend position and farm pace, set the target's defenses, or enter up to six purchases in your own order. A shared link restores the whole setup.
+
+The model estimates purchases at one-minute intervals from five-minute Legend gold checkpoints, with 1,500 gold set aside for other spending. Paths share the same hero levels at each minute. When a supported recipe consumes an item already bought, the path pays the remaining cost and replaces that item's stats with the upgrade's stats.
+
+Each curve combines sustained physical attacks with supported passive item magic damage. Hero abilities, survival, target access, and farming gains can change what works in a match. Add hypothetical gold per minute after a farm item comes online to see how early farming could change later timings. At zero, the comparison uses the same income for every path.
 
 ## Legend draft guide
 

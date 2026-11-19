@@ -343,6 +343,7 @@ function renderFarm(profile) {
   const caveat = projection ? sampleBases[projection.basis] : null;
   const sample = caveat ? `${caveat}, based on ${count(projection.sampleSize)} role ${noun(projection.sampleSize, 'sample')}.` : '';
   const role = encodeURIComponent(profile.role);
+  const timings = new URLSearchParams({ hero: hero.slug, role: profile.role });
   const details = `/gpm-builds?role=${role}&targetMinute=${encodeURIComponent(farm.targetMinute)}&reserveGold=${encodeURIComponent(farm.reserveGold)}`;
   const isImpact = ['offlane', 'soft-support', 'hard-support'].includes(profile.role);
   const draft = new URLSearchParams({ role: profile.role, hero: hero.id });
@@ -359,7 +360,7 @@ function renderFarm(profile) {
     ${adjustment ? `<p class="subtle profile-farm-source">${adjustment}</p>` : ''}
     <div class="profile-farm-grid">${(farm.scenarios ?? []).map((scenario) => scenarioMarkup(scenario, farm.type)).join('')}</div>
     ${observedPurchases(farm.observedPurchases)}
-    <div class="profile-farm-links">${action}<a href="${details}">Change the farm budget</a></div>`;
+    <div class="profile-farm-links"><a href="/build-timings?${escape(timings)}">Compare purchase timings</a>${action}<a href="${details}">Change the farm budget</a></div>`;
   const model = farm.type === 'right-click-model'
     ? `<p>Damage per second uses sustained right-clicks at hero level ${count(farm.level)} against ${count(farm.targetArmor)} armor.</p>`
     : '';
