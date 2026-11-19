@@ -102,6 +102,25 @@
             </div>
           </div>
           <p class="subtle profile-role-status" id="profile-role-status" role="status"></p>
+          <div class="profile-build-setup" id="profile-build-setup" hidden>
+            <div class="profile-build-fields">
+              <div class="profile-search profile-enemy-search" id="profile-enemy-panel">
+                <label for="profile-enemy-search">Add enemy hero</label>
+                <input id="profile-enemy-search" type="search" autocomplete="off" spellcheck="false" maxlength="80" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="profile-enemy-results" aria-describedby="profile-enemy-help" disabled>
+                <ul class="profile-search-results" id="profile-enemy-results" role="listbox" aria-label="Enemy hero suggestions" hidden></ul>
+              </div>
+              <div class="profile-condition-field">
+                <label for="profile-condition">Game condition</label>
+                <select class="select" id="profile-condition" disabled></select>
+              </div>
+            </div>
+            <p class="subtle profile-enemy-help" id="profile-enemy-help">Choose up to five enemy heroes.</p>
+            <div class="profile-enemy-selection" id="profile-enemy-selection" hidden>
+              <ul class="profile-enemy-picks" id="profile-enemy-picks" aria-label="Selected enemy heroes"></ul>
+              <button class="profile-build-clear" id="profile-enemy-clear" type="button">Clear enemies</button>
+            </div>
+            <div class="profile-condition-hints" id="profile-condition-hints"></div>
+          </div>
           <div class="profile-farm-content" id="profile-farm-content"></div>
           <details class="reading-note profile-method" id="profile-farm-method" hidden>
             <summary>How farm budgets are estimated <span aria-hidden="true">+</span></summary>

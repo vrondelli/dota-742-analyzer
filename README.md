@@ -111,6 +111,8 @@ Open [Heroes](http://127.0.0.1:4173/heroes) to search the 7.42 roster. A hero gu
 
 Select a position to compare bad, good, and easy farm. Item budgets use that position's 25th, 50th, and 85th percentile farm by minute 20, less 1,500 gold reserved for other spending. Each guide labels the basis of the purchases, whether the view uses a curated build, a right-click damage model, or a general role template. Share a selected role with a link such as `/hero/juggernaut?role=carry`.
 
+Add up to five enemies under **What to buy**. The automatic condition uses the threat flagged by the most enemies, with hero-specific item changes first when counts tie. You can choose a condition yourself or return to the default build. The three farm budgets show what you can afford and which counter items need more gold. Shared hero links restore the role, enemies, and selected condition.
+
 ## Patch sources
 
 Valve released 7.42 on November 18, 2026. The Steam event starts at 17:00 São Paulo time (20:00 UTC) and was published 46 seconds later. The patch-notes feed carries a separate timestamp at 08:00 UTC. Use the actual server build where available when assigning matches to a patch. [Full official notes](https://www.dota2.com/patches/7.42) · [Official JSON feed](https://www.dota2.com/datafeed/patchnotes?version=7.42&language=english) · [Valve announcement](https://store.steampowered.com/news/app/570/view/689773669992367212)

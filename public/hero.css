@@ -60,6 +60,29 @@
 .profile-method div { display: grid; }
 .profile-role-status { padding: 0 16px 8px; color: #ffc5b5; }
 .profile-role-status:empty { display: none; }
+.profile-build-setup { margin: 0 16px 14px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--input); }
+.profile-build-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+.profile-build-fields label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 12px; }
+.profile-build-fields :is(input, select) { width: 100%; min-height: 40px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.profile-build-fields .profile-search { width: auto; margin: 0; }
+.profile-enemy-search [role="option"] { display: flex; align-items: center; gap: 8px; padding: 4px 8px; min-height: 36px; border-radius: 4px; font-size: 13px; }
+.profile-enemy-search [data-enemy-id] { cursor: pointer; }
+.profile-enemy-search [data-enemy-id]:hover, .profile-enemy-search [aria-selected="true"] { color: #ffb39f; background: var(--accent-soft); }
+.profile-enemy-search .portrait, .profile-enemy-pick .portrait { width: 28px; height: 18px; }
+.profile-enemy-help { margin-top: 6px; }
+.profile-enemy-selection, .profile-enemy-picks, .profile-condition-links { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.profile-enemy-selection { margin-top: 8px; }
+.profile-enemy-picks { padding: 0; margin: 0; list-style: none; }
+.profile-enemy-pick, .profile-condition-links button, .profile-build-clear { min-height: 32px; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--surface); font-size: 12px; }
+.profile-enemy-pick { display: inline-flex; align-items: center; gap: 5px; padding: 4px 6px; }
+.profile-enemy-pick:hover, .profile-condition-links button:hover, .profile-condition-links button[aria-pressed="true"] { border-color: #8b574a; color: #ffb39f; background: var(--accent-soft); }
+.profile-build-clear { padding: 4px 8px; color: var(--muted); background: transparent; border-color: transparent; }
+.profile-build-clear:hover { color: var(--ink); text-decoration: underline; }
+.profile-condition-hints:not(:empty) { margin-top: 8px; display: grid; gap: 6px; }
+.profile-condition-links button { display: grid; gap: 2px; padding: 4px 8px; text-align: left; }
+.profile-condition-links button span:last-child { color: var(--muted); font-size: 11px; }
+.profile-condition-change { color: #ffc5b5; }
+.profile-scenario-items .profile-counter-item strong { color: #ffc5b5; }
 .profile-farm-content { padding: 0 16px 16px; }
 .profile-farm-content .profile-empty { padding: 0; }
 .profile-farm-source { margin-bottom: 12px; }
@@ -92,6 +115,7 @@
   .profile-role-list { gap: 6px; padding-inline: 12px; }
   .profile-role { padding-inline: 8px; }
   .profile-role-detail, .profile-farm-content { padding-inline: 12px; }
+  .profile-build-setup { margin-inline: 12px; }
   .profile-matchup-table th:first-child, .profile-matchup-table td:first-child { padding-left: 12px; }
   .profile-matchup-table th:last-child, .profile-matchup-table td:last-child { padding-right: 12px; }
   .profile-farm-grid { grid-template-columns: minmax(0, 1fr); }
@@ -107,5 +131,6 @@
   .profile-summary:has(.profile-portrait:not([hidden])) { grid-template-columns: auto minmax(0, 1fr); }
   .profile-summary .profile-share { grid-column: 1 / -1; justify-self: start; }
   .profile-role-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .profile-build-fields { grid-template-columns: 1fr; }
   .profile-directory-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 }

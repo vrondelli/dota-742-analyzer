@@ -432,6 +432,13 @@ function draftIds(query, field) {
   return ids.map(Number);
 }
 
+function enemyConditionHints(enemyIds) {
+  return DRAFT_CONDITIONS.flatMap(({ key, label, heroIds }) => {
+    const matching = enemyIds.filter((id) => heroIds.includes(id));
+    return matching.length ? [{ key, label, enemyIds: matching, enemies: matching.map((id) => heroesById.get(id).name) }] : [];
+  });
+}
+
 async function loadImpactRoles() {
   const datasets = await Promise.all(['offlane-impact.json', 'support-impact.json']
     .map((filename) => readJson(new URL(filename, dataDirectory))));
@@ -483,11 +490,25 @@ function chooseProfileRole(requestedRole, roleCards, heroPlans, slug) {
   return { role: exampleRoles[slug] ?? 'carry', roleBasis: 'example' };
 }
 
-async function handleHeroProfile(response, slug, requestedRole) {
+async function handleHeroProfile(response, slug, query) {
   const hero = heroesBySlug.get(slug);
   if (!hero) return sendJson(response, 404, { error: 'Hero not found in the 7.42 roster.' });
+  const requestedRole = query.get('role');
   if (requestedRole !== null && !rankedRoles.some(({ key }) => key === requestedRole)) {
     return sendJson(response, 400, { error: 'Select one Legend role.' });
+  }
+  const condition = query.get('condition') || 'auto';
+  if (!['auto', 'none'].includes(condition) && !DRAFT_CONDITIONS.some(({ key }) => key === condition)) {
+    return sendJson(response, 400, { error: 'Select a supported game condition.' });
+  }
+  let enemyIds;
+  try {
+    enemyIds = [...new Set(draftIds(query, 'enemy'))];
+    if (enemyIds.includes(hero.id)) throw new RangeError('Choose enemies other than the hero you are playing.');
+    if (enemyIds.length > 5) throw new RangeError('Select up to five enemy heroes.');
+  } catch (error) {
+    if (error instanceof RangeError) return sendJson(response, 400, { error: error.message });
+    throw error;
   }
   const [snapshot, data, guide] = await Promise.all([loadSnapshot(), loadBuildData(), loadDraftPlans()]);
   const { picks, economy, roleReplayMatches } = profileEvidence(snapshot);
@@ -498,9 +519,14 @@ async function handleHeroProfile(response, slug, requestedRole) {
   });
   const plans = guide.plans.filter(({ heroId }) => heroId === hero.id);
   const { role, roleBasis } = chooseProfileRole(requestedRole, roleCards, plans, slug);
+  const rolePlan = plans.find((plan) => plan.role === role);
+  const curatedConditions = new Set(rolePlan?.swaps?.map(({ trigger }) => trigger));
+  const conditionHints = enemyConditionHints(enemyIds).sort((a, b) => b.enemyIds.length - a.enemyIds.length
+    || Number(curatedConditions.has(b.key)) - Number(curatedConditions.has(a.key)));
+  const activeCondition = condition === 'auto' ? conditionHints[0]?.key ?? '' : condition === 'none' ? '' : condition;
   const farm = buildHeroFarm(data.heroes.get(hero.id) ?? hero, data.items, catalog, plans, {
     options: { ...economy.options, role }, roles: economy.roles.filter(({ key }) => key === role),
-  }, { role, replayPicks: picks.get(role).get(hero.id) ?? 0, snapshot });
+  }, { role, replayPicks: picks.get(role).get(hero.id) ?? 0, snapshot, condition: activeCondition });
   const matchups = getHeroMatchups(heroes, snapshot, hero.id);
   const addSlugs = (rows) => rows.map((row) => ({ ...row, enemySlug: heroSlugs[row.enemyId] ?? null }));
   return sendJson(response, 200, {
@@ -508,7 +534,7 @@ async function handleHeroProfile(response, slug, requestedRole) {
     rankCoverage: { legendMatches: roleRankings.sample.publicMatches,
       inferredRoleReplays: roleRankings.sample.positionInferredReplayMatches },
     matchups: { ...matchups, favorable: addSlugs(matchups.favorable), difficult: addSlugs(matchups.difficult) },
-    farm,
+    enemyIds, condition, activeCondition, conditionHints, farm,
   });
 }
 
@@ -555,10 +581,7 @@ async function handleDraftGuide(url, response) {
       role, enemyIds, allyIds, blockedIds, minRolePicks: 0, limit: 20, candidateIds,
     });
     const { options: farm, roles: [economy] } = projectGpmEconomy(snapshot, { ...readGpmOptions(query), role });
-    const conditionHints = DRAFT_CONDITIONS.flatMap(({ key, label, heroIds }) => {
-      const matches = enemyIds.filter((id) => heroIds.includes(id));
-      return matches.length ? [{ key, label, enemies: matches.map((id) => heroesById.get(id).name) }] : [];
-    });
+    const conditionHints = enemyConditionHints(enemyIds);
     const rows = draft.rows.map((row) => {
       const plan = priceDraftPlan(plansByHero.get(row.hero.id), catalog, economy, condition);
       return { ...row, plan, ...(impact ? { impact: scoreRoleImpact(impact, profiles.get(row.hero.id), plan) } : {}) };
@@ -662,10 +685,11 @@ export async function handleRequest(request, response, routedUrl) {
     if (route === '/api/draft-guide' || route === '/api/draft-guide/meta') return await handleDraftGuide(url, response);
     if (route === '/api/role-rankings') return sendJson(response, 200, { ...roleRankings, heroSlugs });
     if (route === '/api/hero-profiles/meta') {
-      return sendJson(response, 200, { patch, heroes: heroes.map(({ id, name, slug }) => ({ id, name, slug })) });
+      return sendJson(response, 200, { patch, heroes: heroes.map(({ id, name, slug }) => ({ id, name, slug })),
+        conditions: DRAFT_CONDITIONS.map(({ key, label }) => ({ key, label })) });
     }
     const heroProfile = /^\/api\/hero-profiles\/([a-z0-9_-]+)$/.exec(route);
-    if (heroProfile) return await handleHeroProfile(response, heroProfile[1], url.searchParams.get('role'));
+    if (heroProfile) return await handleHeroProfile(response, heroProfile[1], url.searchParams);
     if (route === '/api/gpm-builds' || route === '/api/gpm-builds/meta' || route === '/api/gpm-builds.csv') {
       return await handleGpmBuilds(url, response);
     }

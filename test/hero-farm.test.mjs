@@ -57,3 +57,37 @@ test('observed purchases count repeated completions in matching role replays bef
   const small = buildHeroFarm(antiMage, items, catalog, [], economy, { role: 'carry', snapshot: { matches: matching.slice(0, 2) } });
   assert.equal(small.observedPurchases, undefined);
 });
+
+test('a hero-specific condition retains the original guide and its cheaper bridge', () => {
+  const juggernaut = heroes.find(({ id }) => id === 8);
+  const farmEconomy = projectGpmEconomy({ matches: [{ duration: 1800, rankTier: 5, players: [
+    { heroId: 8, role: 'carry', gpm: 300 },
+    { heroId: 8, role: 'carry', gpm: 425 },
+    { heroId: 8, role: 'carry', gpm: 500 },
+  ] }] });
+  const farm = buildHeroFarm(juggernaut, items, catalog, plans, farmEconomy, { role: 'carry', condition: 'illusions' });
+  assert.equal(farm.type, 'curated');
+  assert.equal(farm.conditionSource, 'hero-specific');
+  assert.deepEqual(farm.scenarios.map(({ change }) => change.item.key), ['maelstrom', 'maelstrom', 'mjollnir']);
+  assert.equal(farm.scenarios[0].change.deferredItem.key, 'mjollnir');
+  assert.ok(farm.scenarios.every(({ items }) => items.filter(({ conditionItem }) => conditionItem).length === 1));
+});
+
+test('generic condition swaps replace upgrade components and reprice each farm tier', () => {
+  const antiMage = heroes.find(({ id }) => id === 1);
+  const farm = buildHeroFarm(antiMage, items, catalog, plans, economy, { role: 'carry', condition: 'illusions' });
+  assert.equal(farm.type, 'role-template');
+  assert.equal(farm.conditionSource, 'role-based');
+  assert.ok(farm.scenarios.every(({ dps, items, spent, budget, change }) => dps === undefined
+    && spent <= budget && change.item.key === 'mjollnir'
+    && items.every(({ key, affordable, cumulativeCost }) => key !== 'maelstrom' && affordable === (cumulativeCost <= budget))));
+  assert.ok(farm.scenarios.some(({ change }) => change.replaces?.key === 'maelstrom'));
+});
+
+test('a curated base uses a labeled role adjustment for an unmapped condition', () => {
+  const juggernaut = heroes.find(({ id }) => id === 8);
+  const farm = buildHeroFarm(juggernaut, items, catalog, plans, economy, { role: 'carry', condition: 'saves' });
+  assert.equal(farm.type, 'curated');
+  assert.equal(farm.conditionSource, 'role-based');
+  assert.ok(farm.scenarios.every(({ change }) => change.item.key === 'nullifier'));
+});
