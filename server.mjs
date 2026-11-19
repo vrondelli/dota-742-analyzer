@@ -15,6 +15,8 @@ import { getHeroMatchups } from './lib/hero-matchups.mjs';
 import { buildHeroFarm } from './lib/hero-farm.mjs';
 import { simulateBuildTimings, TIMING_FARM_ITEMS } from './lib/build-timings.mjs';
 import { buildTimingPaths, timingItemOptions } from './lib/build-timing-paths.mjs';
+import { STARTING_LANES } from './lib/starting-build-scoring.mjs';
+import { STARTING_GOLD } from './lib/starting-builds.mjs';
 
 const patch = '7.42';
 const dataDirectory = new URL(`./data/${patch}/`, import.meta.url);
@@ -59,6 +61,7 @@ const timingFarms = [{ key: 'bad', label: 'Bad farm' }, { key: 'good', label: 'G
 const timingDefaults = { hero: 'antimage', role: 'carry', farm: 'good', targetArmor: 10, targetMagicResistance: 25, bonusGpm: 0 };
 const bestBuildDefaults = { hero: timingDefaults.hero, role: timingDefaults.role,
   targetArmor: timingDefaults.targetArmor, targetMagicResistance: timingDefaults.targetMagicResistance };
+const startingDefaults = { hero: 'juggernaut', role: 'carry', budget: STARTING_GOLD, lane: 'balanced' };
 const hasRankedRole = ({ key }) => {
   const rankings = roleRankings.roles?.[key]?.rankings;
   return Array.isArray(rankings) && rankings.length === 20;
@@ -98,6 +101,9 @@ const staticFiles = new Map([
   ['/best-builds', ['best-builds.html', 'text/html; charset=utf-8']],
   ['/best-builds.css', ['best-builds.css', 'text/css; charset=utf-8']],
   ['/best-builds.js', ['best-builds.js', 'text/javascript; charset=utf-8']],
+  ['/starting-builds', ['starting-builds.html', 'text/html; charset=utf-8']],
+  ['/starting-builds.css', ['starting-builds.css', 'text/css; charset=utf-8']],
+  ['/starting-builds.js', ['starting-builds.js', 'text/javascript; charset=utf-8']],
   ['/draft-guide', ['draft-guide.html', 'text/html; charset=utf-8']],
   ['/draft-guide.css', ['draft-guide.css', 'text/css; charset=utf-8']],
   ['/draft-guide.js', ['draft-guide.js', 'text/javascript; charset=utf-8']],
@@ -116,6 +122,7 @@ let buildData;
 let heroProfileEvidence;
 let currentProjectionSnapshot;
 const projectionCache = new Map();
+const startingBuildCache = new Map();
 let projectionQueue = Promise.resolve();
 const leaderboardMetrics = [
   ...BUILD_METRICS.filter(({ key }) => ['physicalDps', 'magicalDamage'].includes(key)),
@@ -688,9 +695,9 @@ async function handleBuildTimings(url, response) {
   }
 }
 
-function evaluateBestBuilds(workerData) {
+function evaluateBuildWorker(entry, workerData) {
   return new Promise((accept, reject) => {
-    const worker = new Worker(new URL('./workers/best-builds.mjs', import.meta.url), { workerData });
+    const worker = new Worker(entry, { workerData });
     worker.on('message', ({ result, error }) => {
       if (error) reject(new Error(error));
       else if (result) accept(result);
@@ -733,7 +740,8 @@ async function handleBestBuilds(url, response) {
     const seedPaths = buildTimingPaths(hero, guide.plans, catalog, [], role.key);
     const eligibleKeys = new Set(timingItemOptions(data.items).map(({ key: itemKey }) => itemKey));
     const items = data.items.filter(({ key: itemKey }) => eligibleKeys.has(itemKey));
-    job = evaluateBestBuilds({ model, role: role.key, items, farms, options, seedPaths, patch });
+    job = evaluateBuildWorker(new URL('./workers/best-builds.mjs', import.meta.url),
+      { model, role: role.key, items, farms, options, seedPaths, patch });
     job.catch(() => { if (bestBuilds.get(key) === job) bestBuilds.delete(key); });
   }
   bestBuilds.set(key, job);
@@ -745,6 +753,55 @@ async function handleBestBuilds(url, response) {
       'Role incomes come from the 25th, 50th, and 85th percentiles of Legend gold earned. Plans set aside 1,500 gold for other spending.',
       'The search tests shop items and legal upgrades within a bounded set of paths. Timing estimates use the same purchase and upgrade accounting as Build timings.',
       'Scores reflect the listed mechanics and role priorities. Matchups, teammate needs, and actual fight uptime can change the right purchase.',
+    ],
+  });
+}
+
+function observedStartingItems(snapshot, heroId, role) {
+  const counts = new Map();
+  let sampleSize = 0;
+  for (const match of snapshot.matches) {
+    if (match.rankTier !== 5) continue;
+    const player = match.players.find((entry) => entry.heroId === heroId && entry.role === role);
+    const keys = new Set(player?.purchases?.filter(({ key, time }) => Number.isFinite(time) && time < 0 && catalog.has(key))
+      .map(({ key }) => key));
+    if (!keys.size) continue;
+    sampleSize += 1;
+    for (const key of keys) counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return { sampleSize, items: [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 6).map(([key, games]) => ({ key, name: catalog.get(key).name, games })) };
+}
+
+async function handleStartingBuilds(url, response) {
+  if (url.pathname === '/api/starting-builds/meta') {
+    return sendJson(response, 200, { patch, heroes, roles: rankedRoles, lanes: STARTING_LANES, defaults: startingDefaults });
+  }
+  const hero = heroesBySlug.get(url.searchParams.get('hero') || startingDefaults.hero);
+  const role = rankedRoles.find(({ key }) => key === (url.searchParams.get('role') || startingDefaults.role));
+  if (!hero || !role) return sendJson(response, 400, { error: 'Choose a hero and Legend role.' });
+  const [snapshot, data] = await Promise.all([loadSnapshot(), loadBuildData()]);
+  const model = data.heroes.get(hero.id);
+  if (!model) return sendJson(response, 422, { error: 'This hero has no level-one model.' });
+  const cacheKey = `${hero.id}/${role.key}`;
+  const budget = startingDefaults.budget;
+  let job = startingBuildCache.get(cacheKey);
+  if (job) {
+    startingBuildCache.delete(cacheKey);
+  } else {
+    job = evaluateBuildWorker(new URL('./workers/starting-builds.mjs', import.meta.url),
+      { hero: model, items: data.items, catalog, role: role.key, budget });
+    job.catch(() => { if (startingBuildCache.get(cacheKey) === job) startingBuildCache.delete(cacheKey); });
+  }
+  startingBuildCache.set(cacheKey, job);
+  if (startingBuildCache.size > 32) startingBuildCache.delete(startingBuildCache.keys().next().value);
+  return sendJson(response, 200, { ...(await job), patch, hero, role: role.key, roleLabel: role.label, budget,
+    observed: observedStartingItems(snapshot, hero.id, role.key), fetchedAt: snapshot.fetchedAt, source: snapshot.source,
+    assumptions: [
+      'The starting shop budget is 600 gold in standard Ranked All Pick. Rune income and later deliveries are outside this starting budget.',
+      'Each loadout uses level-one hero stats and the 7.42 shop catalog. Consumable values describe their potential resources. Lane conditions determine how much you can use.',
+      'The search uses up to six inventory slots and spends at least 150 gold on lasting equipment.',
+      'The score reflects the selected lane goal and position. Recorded purchases are shown separately as context.',
     ],
   });
 }
@@ -899,6 +956,7 @@ export async function handleRequest(request, response, routedUrl) {
     if (route === '/api/hero-farm-check') return await handleFarmCheck(response);
     if (route === '/api/build-timings' || route === '/api/build-timings/meta') return await handleBuildTimings(url, response);
     if (route === '/api/best-builds' || route === '/api/best-builds/meta') return await handleBestBuilds(url, response);
+    if (route === '/api/starting-builds' || route === '/api/starting-builds/meta') return await handleStartingBuilds(url, response);
     if (route === '/api/hero-profiles/meta') {
       return sendJson(response, 200, { patch, heroes: heroes.map(({ id, name, slug }) => ({ id, name, slug })),
         conditions: DRAFT_CONDITIONS.map(({ key, label }) => ({ key, label })) });

@@ -19,6 +19,7 @@ Open [the analyzer](http://127.0.0.1:4173). It starts on Legend, using the lobby
 | Farm budgets | Which builds fit the gold I could earn by a given minute? |
 | Build timings | When do alternative purchase paths come online, and how does their damage change over time? |
 | Best build orders | Which purchase sequences lead at minutes 15, 20, and 30 for this hero, role, and farm pace? |
+| Starting items | What can this hero buy before the horn to fit their role and lane goal? |
 | Damage rankings | Which hero and item combinations add the most damage per gold across fixed spend bands? |
 | Item lab | What does a specific build add to one hero under the same combat assumptions? |
 
@@ -96,6 +97,10 @@ The model estimates purchases at one-minute intervals from five-minute Legend go
 Each curve combines sustained physical attacks with supported passive item magic damage. Hero abilities, survival, target access, and farming gains can change what works in a match. Add hypothetical gold per minute after a farm item comes online to see how early farming could change later timings. At zero, the comparison uses the same income for every path.
 
 Open [Best build orders](http://127.0.0.1:4173/best-builds) to search up to six purchases for any hero and Legend position. The search keeps competitive paths at several spending levels and reports three distinct inventories for each target minute and farm pace when available. It scores the purchases from damage, durability, or role utility as shown on the page. Buy timings break ties in favor of earlier impact. Open any result in Build timings to inspect its purchase curve alongside other paths.
+
+## Starting items
+
+Open [Starting items](http://127.0.0.1:4173/starting-builds) or follow the link from a hero's role guide. The search uses a 600-gold pre-horn budget and the hero's level-one stats. Compare balanced loadouts with ones focused on staying in lane, trading, or securing last hits. Each result shows quantities, spent and unspent gold, and the mechanics behind its score. The search fits items into six slots and spends at least 150 gold on lasting equipment. Pre-horn purchases in the available Legend replays provide context for the selected hero and role. [Valve starting-gold update](https://store.steampowered.com/oldnews/37271)
 
 ## Legend draft guide
 

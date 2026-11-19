@@ -153,6 +153,8 @@
     get('search-portrait').innerHTML = portrait;
     get('search-portrait').hidden = !portrait;
     get('search-results-heading').textContent = `${view.hero.name} · ${view.roleLabel}`;
+    const startingQuery = new URLSearchParams({ hero: view.hero.slug, role: view.role });
+    get('search-starting-link').href = `/starting-builds?${startingQuery}`;
     get('search-objective').textContent = view.objective.label;
     const criteria = (view.objective.criteria ?? []).map(({ label, weight }) =>
       `<li>${escape(label)}${Number.isFinite(weight) ? ` ${decimals.format(weight)}%` : ''}</li>`

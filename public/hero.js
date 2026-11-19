@@ -238,7 +238,7 @@ function renderRole(profile) {
   const example = profile.roleBasis === 'example' ? ' This is an example role.' : '';
   get('profile-role-detail').innerHTML = `<p class="subtle"><strong>${escape(active.label)}</strong>. ${positionScore}${replays}${example}</p>
     ${active.summary ? `<p class="subtle">${escape(active.summary)}</p>` : ''}
-    <div class="profile-role-actions"><a href="#profile-farm">View items for this role</a>
+    <div class="profile-role-actions"><a href="/starting-builds?hero=${encodeURIComponent(profile.hero.slug)}&amp;role=${encodeURIComponent(active.key)}">Starting items</a><a href="#profile-farm">View items for this role</a>
     <a href="/role-rankings?role=${encodeURIComponent(active.key)}">See all ${escape(active.label.toLowerCase())} rankings</a></div>`;
 }
 

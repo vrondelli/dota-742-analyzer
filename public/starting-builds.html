@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <meta name="description" content="Compare starting items for every Dota 2 hero and Legend role in patch 7.42.">
+  <title>Starting items | Dota 2 Analyzer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/starting-builds.css">
+  <script src="/starting-builds.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to starting items</a>
+  <header class="topbar">
+    <div class="shell topbar-content analyzer-header">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <nav class="analyzer-nav" aria-label="Analyzer views">
+        <a href="/">Matches</a>
+        <a href="/heroes">Heroes</a>
+        <a href="/role-rankings">Role rankings</a>
+        <a href="/draft-guide">Draft guide</a>
+        <a href="/gpm-builds">Farm budgets</a>
+        <a href="/build-timings" aria-current="location">Build timings</a>
+        <a href="/legend-builds">Damage rankings</a>
+        <a href="/efficiency">Item lab</a>
+      </nav>
+      <span class="analyzer-patch" id="starter-patch">Patch 7.42</span>
+    </div>
+  </header>
+
+  <main class="shell starter-main" id="main">
+    <header class="intro">
+      <div>
+        <h1>Starting items</h1>
+        <p class="intro-subtitle">Plan what to buy before the horn for your hero, Legend role, and lane priority.</p>
+      </div>
+    </header>
+
+    <form class="surface starter-controls" id="starter-settings">
+      <div class="starter-fields">
+        <label for="starter-hero">Hero</label>
+        <select id="starter-hero" name="hero" required disabled></select>
+        <label for="starter-role">Legend role</label>
+        <select id="starter-role" name="role" required disabled></select>
+        <button type="submit" class="starter-primary" id="starter-run" disabled>Find starting items</button>
+      </div>
+      <p class="starter-status subtle" id="starter-status" role="status">Loading heroes and roles…</p>
+      <button class="starter-action starter-retry" id="starter-retry" type="button" hidden>Retry</button>
+    </form>
+
+    <div id="starter-results" hidden>
+      <section class="surface starter-overview" aria-labelledby="starter-result-heading">
+        <div class="starter-result-title">
+          <span class="portrait" id="starter-portrait" aria-hidden="true"></span>
+          <div>
+            <h2 id="starter-result-heading"></h2>
+            <p class="subtle" id="starter-context"></p>
+          </div>
+        </div>
+        <div class="starter-share">
+          <button class="starter-action" id="starter-copy" type="button" disabled>Copy starting build link</button>
+          <p class="subtle" id="starter-copy-status" role="status"></p>
+        </div>
+        <div class="starter-lanes" id="starter-lanes" role="group" aria-label="Lane priority"></div>
+      </section>
+      <div id="starter-loadouts"></div>
+      <details class="surface starter-method">
+        <summary>Scoring and assumptions</summary>
+        <div id="starter-method"></div>
+      </details>
+      <nav class="starter-related" aria-label="More build tools">
+        <a class="text-link" id="starter-hero-link" href="/heroes">Hero guide</a>
+        <a class="text-link" id="starter-search-link" href="/best-builds">Search later builds</a>
+        <a class="text-link" id="starter-timing-link" href="/build-timings">Compare purchase timings</a>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>
