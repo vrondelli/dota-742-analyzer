@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <meta name="description" content="Find modeled Dota 2 purchase orders by Legend role, farm pace, and game minute.">
+  <title>Build search | Dota 2 Analyzer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/best-builds.css">
+  <script src="/best-builds.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to build search</a>
+  <header class="topbar">
+    <div class="shell topbar-content analyzer-header">
+      <a href="/" class="brand" aria-label="Dota 2 Analyzer home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Dota 2 Analyzer</span>
+      </a>
+      <nav class="analyzer-nav" aria-label="Analyzer views">
+        <a href="/">Matches</a>
+        <a href="/heroes">Heroes</a>
+        <a href="/role-rankings">Role rankings</a>
+        <a href="/draft-guide">Draft guide</a>
+        <a href="/gpm-builds">Farm budgets</a>
+        <a href="/build-timings" aria-current="location">Build timings</a>
+        <a href="/legend-builds">Damage rankings</a>
+        <a href="/efficiency">Item lab</a>
+      </nav>
+      <span class="analyzer-patch" id="search-patch">Patch 7.42</span>
+    </div>
+  </header>
+
+  <main class="shell build-search" id="main">
+    <header class="intro">
+      <div>
+        <h1>Build search</h1>
+        <p class="intro-subtitle">Find purchase orders for minutes 15, 20, and 30 across three Legend farm speeds.</p>
+      </div>
+    </header>
+
+    <form class="surface build-search-controls" id="search-settings">
+      <div class="build-search-fields">
+        <label class="build-search-field">
+          <span>Hero</span>
+          <select id="search-hero" name="hero" required disabled></select>
+        </label>
+        <label class="build-search-field">
+          <span>Legend role</span>
+          <select id="search-role" name="role" required disabled></select>
+        </label>
+        <button class="build-search-primary" id="search-run" type="submit" disabled>Find builds</button>
+      </div>
+      <details class="build-search-settings" id="search-advanced">
+        <summary>Target defenses</summary>
+        <div class="build-search-advanced">
+          <label class="build-search-field">
+            <span>Target armor</span>
+            <input id="search-armor" name="targetArmor" type="number" min="-300" max="300" step="any" value="10" required>
+          </label>
+          <label class="build-search-field">
+            <span>Target magic resist (%)</span>
+            <input id="search-resistance" name="targetMagicResistance" type="number" min="-100" max="99.9" step="any" value="25" required>
+          </label>
+        </div>
+      </details>
+      <p class="build-search-status subtle" id="search-status" role="status">Loading heroes and roles…</p>
+      <button class="build-search-action build-search-retry" id="search-retry" type="button" hidden>Retry</button>
+    </form>
+
+    <div id="search-results" hidden>
+      <section class="surface build-search-objective" aria-labelledby="search-results-heading">
+        <div class="build-search-result-heading">
+          <span class="portrait" id="search-portrait" aria-hidden="true"></span>
+          <div>
+            <h2 id="search-results-heading"></h2>
+            <p id="search-objective" class="subtle"></p>
+          </div>
+        </div>
+        <div class="build-search-share">
+          <button class="build-search-action" id="search-copy" type="button" disabled>Copy build search link</button>
+          <p class="subtle" id="search-copy-status" role="status"></p>
+        </div>
+        <details class="build-search-settings build-search-method">
+          <summary>Scoring and search method</summary>
+          <div id="search-method"></div>
+        </details>
+      </section>
+
+      <nav class="build-search-jumps" id="search-jumps" aria-label="Jump to farm speed"></nav>
+      <div id="search-matrix"></div>
+    </div>
+  </main>
+</body>
+</html>

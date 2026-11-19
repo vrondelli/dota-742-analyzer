@@ -57,6 +57,8 @@ const farmCheckMinutes = [5, 10, 15, 20, 25, 30];
 const timingLevelMarks = [4, 7, 10, 12, 15, 18, 21, 24];
 const timingFarms = [{ key: 'bad', label: 'Bad farm' }, { key: 'good', label: 'Good farm' }, { key: 'easy', label: 'Easy farm' }];
 const timingDefaults = { hero: 'antimage', role: 'carry', farm: 'good', targetArmor: 10, targetMagicResistance: 25, bonusGpm: 0 };
+const bestBuildDefaults = { hero: timingDefaults.hero, role: timingDefaults.role,
+  targetArmor: timingDefaults.targetArmor, targetMagicResistance: timingDefaults.targetMagicResistance };
 const hasRankedRole = ({ key }) => {
   const rankings = roleRankings.roles?.[key]?.rankings;
   return Array.isArray(rankings) && rankings.length === 20;
@@ -93,6 +95,9 @@ const staticFiles = new Map([
   ['/build-timings', ['build-timings.html', 'text/html; charset=utf-8']],
   ['/build-timings.css', ['build-timings.css', 'text/css; charset=utf-8']],
   ['/build-timings.js', ['build-timings.js', 'text/javascript; charset=utf-8']],
+  ['/best-builds', ['best-builds.html', 'text/html; charset=utf-8']],
+  ['/best-builds.css', ['best-builds.css', 'text/css; charset=utf-8']],
+  ['/best-builds.js', ['best-builds.js', 'text/javascript; charset=utf-8']],
   ['/draft-guide', ['draft-guide.html', 'text/html; charset=utf-8']],
   ['/draft-guide.css', ['draft-guide.css', 'text/css; charset=utf-8']],
   ['/draft-guide.js', ['draft-guide.js', 'text/javascript; charset=utf-8']],
@@ -482,7 +487,7 @@ function profileEvidence(snapshot) {
   }
   const economy = projectGpmEconomy(snapshot);
   const economies = new Map([[economy.options.targetMinute, economy]]);
-  heroProfileEvidence = { snapshot, picks, economy, economies, roleReplayMatches, rankedFarms: new Map() };
+  heroProfileEvidence = { snapshot, picks, economy, economies, roleReplayMatches, rankedFarms: new Map(), bestBuilds: new Map() };
   return heroProfileEvidence;
 }
 
@@ -609,10 +614,11 @@ async function handleFarmCheck(response) {
   return sendJson(response, 200, { patch, source: snapshot.source, fetchedAt: snapshot.fetchedAt, roles: evidence.farmCheck });
 }
 
-function timingCheckpoints(evidence, role, farm, reserveGold) {
+function timingCheckpoints(evidence, role, farm, reserveGold, lastMinute = timingLevelMarks.length * 5) {
   const checkpoints = [{ minute: 0, level: 1, earnedGold: 0, budget: 0, basis: 'start', sampleSize: 0 }];
   for (const [index, level] of timingLevelMarks.entries()) {
     const minute = (index + 1) * 5;
+    if (minute > lastMinute) break;
     const economy = economyAtMinute(evidence, minute).roles.find(({ key }) => key === role);
     const mark = economy.scenarios.find(({ key }) => key === farm);
     if (!mark) break;
@@ -629,6 +635,21 @@ function timingCheckpoints(evidence, role, farm, reserveGold) {
   return checkpoints;
 }
 
+function readTimingOptions(query, includeBonus = false) {
+  const options = { reserveGold: GPM_PROJECTION_DEFAULTS.reserveGold };
+  const ranges = [['targetArmor', -300, 300], ['targetMagicResistance', -100, 99.9]];
+  if (includeBonus) ranges.push(['bonusGpm', 0, 500]);
+  for (const [field, min, max] of ranges) {
+    const value = query.get(field)?.trim();
+    const number = value ? Number(value) : timingDefaults[field];
+    if (!Number.isFinite(number) || number < min || number > max) {
+      throw new RangeError(`${field} must be between ${min} and ${max}.`);
+    }
+    options[field] = number;
+  }
+  return options;
+}
+
 async function handleBuildTimings(url, response) {
   const data = await loadBuildData();
   if (url.pathname === '/api/build-timings/meta') {
@@ -642,15 +663,7 @@ async function handleBuildTimings(url, response) {
   const model = data.heroes.get(hero?.id);
   if (!model || !role || !farm) return sendJson(response, 400, { error: 'Choose a hero, Legend role, and farm pace.' });
   try {
-    const options = { reserveGold: GPM_PROJECTION_DEFAULTS.reserveGold };
-    for (const [field, min, max] of [['targetArmor', -300, 300], ['targetMagicResistance', -100, 99.9], ['bonusGpm', 0, 500]]) {
-      const value = query.get(field)?.trim();
-      const number = value ? Number(value) : timingDefaults[field];
-      if (!Number.isFinite(number) || number < min || number > max) {
-        throw new RangeError(`${field} must be between ${min} and ${max}.`);
-      }
-      options[field] = number;
-    }
+    const options = readTimingOptions(query, true);
     const [snapshot, guide] = await Promise.all([loadSnapshot(), loadDraftPlans()]);
     const checkpoints = timingCheckpoints(profileEvidence(snapshot), role.key, farm.key, options.reserveGold);
     if (checkpoints.length < 6) return sendJson(response, 422, { error: 'No usable farm checkpoints for this role.' });
@@ -673,6 +686,67 @@ async function handleBuildTimings(url, response) {
     if (error instanceof RangeError) return sendJson(response, 400, { error: error.message });
     throw error;
   }
+}
+
+function evaluateBestBuilds(workerData) {
+  return new Promise((accept, reject) => {
+    const worker = new Worker(new URL('./workers/best-builds.mjs', import.meta.url), { workerData });
+    worker.on('message', ({ result, error }) => {
+      if (error) reject(new Error(error));
+      else if (result) accept(result);
+    });
+    worker.once('error', reject);
+    worker.once('exit', (code) => reject(new Error(`Build search worker exited before returning a result (${code}).`)));
+  });
+}
+
+async function handleBestBuilds(url, response) {
+  if (url.pathname === '/api/best-builds/meta') {
+    return sendJson(response, 200, { patch, heroes, roles: rankedRoles, farms: timingFarms, defaults: bestBuildDefaults });
+  }
+  const query = url.searchParams;
+  const hero = heroesBySlug.get(query.get('hero') || bestBuildDefaults.hero);
+  const role = rankedRoles.find(({ key }) => key === (query.get('role') || bestBuildDefaults.role));
+  if (!hero || !role) return sendJson(response, 400, { error: 'Choose a hero and Legend role.' });
+  let options;
+  try {
+    options = readTimingOptions(query);
+  } catch (error) {
+    if (error instanceof RangeError) return sendJson(response, 400, { error: error.message });
+    throw error;
+  }
+
+  const [snapshot, data, guide] = await Promise.all([loadSnapshot(), loadBuildData(), loadDraftPlans()]);
+  const model = data.heroes.get(hero.id);
+  if (!model) return sendJson(response, 422, { error: 'This hero has no mechanics model.' });
+  const evidence = profileEvidence(snapshot);
+  const { bestBuilds } = evidence;
+  const key = `${hero.id}/${role.key}/${options.targetArmor}/${options.targetMagicResistance}`;
+  let job = bestBuilds.get(key);
+  if (job) {
+    bestBuilds.delete(key);
+  } else {
+    const farms = timingFarms.map((farm) => ({ ...farm, checkpoints: timingCheckpoints(evidence, role.key, farm.key, options.reserveGold, 30) }));
+    if (!farms.some(({ checkpoints }) => checkpoints.at(-1).minute >= 15)) {
+      return sendJson(response, 422, { error: 'No usable farm checkpoints at minute 15 for this role.' });
+    }
+    const seedPaths = buildTimingPaths(hero, guide.plans, catalog, [], role.key);
+    const eligibleKeys = new Set(timingItemOptions(data.items).map(({ key: itemKey }) => itemKey));
+    const items = data.items.filter(({ key: itemKey }) => eligibleKeys.has(itemKey));
+    job = evaluateBestBuilds({ model, role: role.key, items, farms, options, seedPaths, patch });
+    job.catch(() => { if (bestBuilds.get(key) === job) bestBuilds.delete(key); });
+  }
+  bestBuilds.set(key, job);
+  if (bestBuilds.size > 32) bestBuilds.delete(bestBuilds.keys().next().value);
+  return sendJson(response, 200, { ...(await job), patch, hero, role: role.key, roleLabel: role.label, options,
+    fetchedAt: snapshot.fetchedAt, source: snapshot.source,
+    assumptions: [
+      'Each card is an independent plan from an empty modeled inventory to the selected minute. Paths use the same hero level and baseline income within that card.',
+      'Role incomes come from the 25th, 50th, and 85th percentiles of Legend gold earned. Plans set aside 1,500 gold for other spending.',
+      'The search tests shop items and legal upgrades within a bounded set of paths. Timing estimates use the same purchase and upgrade accounting as Build timings.',
+      'Scores reflect the listed mechanics and role priorities. Matchups, teammate needs, and actual fight uptime can change the right purchase.',
+    ],
+  });
 }
 
 async function handleDraftGuide(url, response) {
@@ -824,6 +898,7 @@ export async function handleRequest(request, response, routedUrl) {
     if (route === '/api/role-rankings/builds') return await handleRankedFarms(url, response);
     if (route === '/api/hero-farm-check') return await handleFarmCheck(response);
     if (route === '/api/build-timings' || route === '/api/build-timings/meta') return await handleBuildTimings(url, response);
+    if (route === '/api/best-builds' || route === '/api/best-builds/meta') return await handleBestBuilds(url, response);
     if (route === '/api/hero-profiles/meta') {
       return sendJson(response, 200, { patch, heroes: heroes.map(({ id, name, slug }) => ({ id, name, slug })),
         conditions: DRAFT_CONDITIONS.map(({ key, label }) => ({ key, label })) });

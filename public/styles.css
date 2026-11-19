@@ -94,7 +94,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .analyzer-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-width: 0; }
 .analyzer-nav a { display: flex; align-items: center; justify-content: center; min-height: 36px; padding: 4px 8px; border: 1px solid transparent; border-radius: 6px; color: var(--muted); font-size: 13px; font-weight: 650; text-align: center; text-decoration: none; line-height: 1.2; }
 .analyzer-nav a:hover { color: var(--ink); background-color: var(--layer); }
-.analyzer-nav a[aria-current="page"] { border-color: #674139; background: var(--accent-soft); color: #ffc5b5; }
+.analyzer-nav a:is([aria-current="page"], [aria-current="location"]) { border-color: #674139; background: var(--accent-soft); color: #ffc5b5; }
 .analyzer-patch { color: var(--muted); font-size: 12px; font-weight: 600; white-space: nowrap; }
 .text-link { color: var(--muted); text-decoration: none; white-space: nowrap; }
 .text-link:hover { color: var(--ink); }

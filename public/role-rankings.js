@@ -204,6 +204,7 @@ function renderRow(role, hero, scoring) {
         <section class="ranking-farm-breakdown" data-farm-builds="${hero.heroId}">${farmBreakdownMarkup(farm, state.failedBuilds.has(role))}</section>
         <div class="ranking-breakdown-actions">
           ${slug ? `<a class="text-link" href="/hero/${encodeURIComponent(slug)}?role=${role}">${escape(hero.name)} hero guide</a>` : ''}
+          ${slug ? `<a class="text-link" href="/best-builds?hero=${encodeURIComponent(slug)}&amp;role=${role}">Find best build orders</a>` : ''}
           ${slug ? `<a class="text-link" data-timing-hero="${escape(slug)}" href="/build-timings?hero=${encodeURIComponent(slug)}&amp;role=${role}&amp;farm=${activeFarm()}">Compare purchase timings</a>` : ''}
           <a class="text-link" href="/efficiency?heroId=${hero.heroId}">Test a build</a>
           ${source}

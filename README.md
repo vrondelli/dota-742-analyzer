@@ -18,6 +18,7 @@ Open [the analyzer](http://127.0.0.1:4173). It starts on Legend, using the lobby
 | Draft guide | How do revealed picks, game conditions, and farm speed change my options? |
 | Farm budgets | Which builds fit the gold I could earn by a given minute? |
 | Build timings | When do alternative purchase paths come online, and how does their damage change over time? |
+| Best build orders | Which purchase sequences lead at minutes 15, 20, and 30 for this hero, role, and farm pace? |
 | Damage rankings | Which hero and item combinations add the most damage per gold across fixed spend bands? |
 | Item lab | What does a specific build add to one hero under the same combat assumptions? |
 
@@ -93,6 +94,8 @@ Open [Build timings](http://127.0.0.1:4173/build-timings) to compare Daedalus ru
 The model estimates purchases at one-minute intervals from five-minute Legend gold checkpoints, with 1,500 gold set aside for other spending. Paths share the same hero levels at each minute. When a supported recipe consumes an item already bought, the path pays the remaining cost and replaces that item's stats with the upgrade's stats.
 
 Each curve combines sustained physical attacks with supported passive item magic damage. Hero abilities, survival, target access, and farming gains can change what works in a match. Add hypothetical gold per minute after a farm item comes online to see how early farming could change later timings. At zero, the comparison uses the same income for every path.
+
+Open [Best build orders](http://127.0.0.1:4173/best-builds) to search up to six purchases for any hero and Legend position. The search keeps competitive paths at several spending levels and reports three distinct inventories for each target minute and farm pace when available. It scores the purchases from damage, durability, or role utility as shown on the page. Buy timings break ties in favor of earlier impact. Open any result in Build timings to inspect its purchase curve alongside other paths.
 
 ## Legend draft guide
 

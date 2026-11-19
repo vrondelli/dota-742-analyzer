@@ -43,6 +43,33 @@ test('an upgrade credits every held ingredient and retains only the completed it
   assert.deepEqual(result.points.at(-1).items.map(({ key }) => key), ['mjollnir']);
 });
 
+test('basic upgrades remove their components and a repeated recipe component is credited once', () => {
+  const recipes = {
+    ring_of_basilius: ['sobi_mask'],
+    bracer: ['circlet', 'gauntlets'],
+    null_talisman: ['circlet', 'mantle'],
+    wraith_band: ['circlet', 'slippers'],
+    vanguard: ['ring_of_health', 'vitality_booster'],
+    moon_shard: ['hyperstone'],
+  };
+  const price = (target) => items.find(({ key }) => key === target).cost;
+  for (const [upgrade, components] of Object.entries(recipes)) {
+    const [result] = run([point(15, price(upgrade))], [path(upgrade, ...components, upgrade)]);
+    assert.equal(result.purchases.at(-1).incrementalCost, price(upgrade) - components.reduce((sum, key) => sum + price(key), 0));
+    assert.deepEqual(result.purchases.at(-1).replacedItems.map(({ key }) => key).sort(), [...components].sort());
+    assert.deepEqual(result.points.at(-1).items.map(({ key }) => key), [upgrade]);
+    assert.equal(result.points.at(-1).spent, price(upgrade));
+  }
+});
+
+test('Treads can use a preferred recipe attribute while retaining other held components', () => {
+  const [result] = run([point(10, 2000)], [path('treads', 'boots', 'gloves', 'belt_of_strength', 'robe',
+    { key: 'power_treads', replaces: 'robe' })]);
+  assert.deepEqual(result.purchases.at(-1).replacedItems.map(({ key }) => key), ['boots', 'gloves', 'robe']);
+  assert.deepEqual(result.points.at(-1).items.map(({ key }) => key), ['belt_of_strength', 'power_treads']);
+  assert.equal(result.points.at(-1).spent, 1850);
+});
+
 test('farm income starts after the farm item completes and can advance later purchases', () => {
   const checkpoints = [point(5, 3000), point(10, 4700), point(15, 6750), point(20, 8150)];
   const paths = [path('farm', 'maelstrom', 'greater_crit'), path('rush', 'greater_crit', 'maelstrom')];

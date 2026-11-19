@@ -256,6 +256,9 @@
     get('timing-portrait').innerHTML = portrait ? `<img src="${portrait}" alt="">` : '';
     get('timing-hero-link').href = `/hero/${encodeURIComponent(slug(hero))}?role=${encodeURIComponent(result.role)}`;
     get('timing-hero-link').textContent = `${hero.name} hero guide`;
+    const searchQuery = new URLSearchParams({ hero: slug(hero), role: result.role,
+      targetArmor: result.options.targetArmor, targetMagicResistance: result.options.targetMagicResistance });
+    get('timing-best-link').href = `/best-builds?${searchQuery}`;
     get('timing-assumptions').innerHTML = (result.assumptions ?? []).map((item) => `<p>${escape(item)}</p>`).join('');
 
     const previousMinute = Number(minuteSelect.value);

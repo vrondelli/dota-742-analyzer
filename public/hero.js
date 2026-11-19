@@ -360,7 +360,7 @@ function renderFarm(profile) {
     ${adjustment ? `<p class="subtle profile-farm-source">${adjustment}</p>` : ''}
     <div class="profile-farm-grid">${(farm.scenarios ?? []).map((scenario) => scenarioMarkup(scenario, farm.type)).join('')}</div>
     ${observedPurchases(farm.observedPurchases)}
-    <div class="profile-farm-links"><a href="/build-timings?${escape(timings)}">Compare purchase timings</a>${action}<a href="${details}">Change the farm budget</a></div>`;
+    <div class="profile-farm-links"><a href="/best-builds?${escape(timings)}">Find best build orders</a><a href="/build-timings?${escape(timings)}">Compare purchase timings</a>${action}<a href="${details}">Change the farm budget</a></div>`;
   const model = farm.type === 'right-click-model'
     ? `<p>Damage per second uses sustained right-clicks at hero level ${count(farm.level)} against ${count(farm.targetArmor)} armor.</p>`
     : '';

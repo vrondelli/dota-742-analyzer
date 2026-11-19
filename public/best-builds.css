@@ -1,0 +1,81 @@
+.analyzer-nav a[aria-current="location"] { border-color: #674139; background: var(--accent-soft); color: #ffc5b5; }
+.build-search .intro { padding-block: 32px 20px; }
+.build-search .intro h1 { font-size: clamp(38px, 5vw, 62px); }
+.build-search-controls, .build-search-objective, .build-search-farm { margin-bottom: 16px; }
+.build-search-fields { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr) max-content; gap: 8px; align-items: end; padding: 16px; }
+.build-search-field { display: grid; gap: 4px; min-width: 0; color: var(--muted); font-size: 12px; }
+.build-search-field :is(input, select) { min-width: 0; width: 100%; min-height: 38px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: var(--input); font-size: 13px; }
+.build-search-action, .build-search-primary { min-height: 38px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: var(--input); font-size: 13px; font-weight: 650; }
+.build-search-primary { padding-inline: 16px; color: #241712; background: var(--accent); border-color: var(--accent); }
+.build-search-primary:hover:not(:disabled) { background: #ffac99; }
+.build-search-action:hover:not(:disabled) { border-color: #735348; color: #ffbca8; }
+.build-search button:disabled { opacity: .55; }
+.build-search-settings { border-top: 1px solid var(--line-soft); }
+.build-search-settings > summary { padding: 10px 16px; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 640; }
+.build-search-settings > summary::marker, .build-search-alternatives > summary::marker { color: var(--accent); }
+.build-search-settings > summary:hover, .build-search-alternatives > summary:hover { color: var(--ink); }
+.build-search-advanced { display: grid; grid-template-columns: repeat(auto-fit, minmax(114px, 180px)); gap: 8px; padding: 0 16px 12px; }
+.build-search-status { padding: 0 16px 12px; }
+.build-search-status:empty, #search-copy-status:empty { display: none; }
+.build-search-error { color: #ffbca8; }
+.build-search-retry { margin: 0 16px 12px; }
+.build-search-objective { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 8px; }
+.build-search-result-heading { display: flex; align-items: center; min-width: 0; gap: 10px; padding: 12px 16px; }
+.build-search-result-heading .portrait { width: 56px; height: 32px; flex-shrink: 0; }
+.build-search-result-heading h2 { font-size: 21px; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.build-search-share { align-self: start; padding: 12px 16px 8px 0; text-align: end; }
+.build-search-method { grid-column: 1 / -1; }
+#search-method { padding: 0 16px 12px; color: var(--muted); font-size: 13px; }
+#search-method p + p { margin-top: 6px; }
+.build-search-criteria { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 0; margin: 8px 0; list-style: none; }
+.build-search-criteria li { color: var(--ink); font-size: 12px; }
+.build-search-jumps { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.build-search-jumps a { display: inline-flex; min-height: 32px; align-items: center; border: 1px solid var(--line); border-radius: 7px; padding: 3px 10px; color: var(--muted); background: var(--surface); text-decoration: none; font-size: 13px; }
+.build-search-jumps a:hover { color: var(--ink); border-color: #735348; }
+.build-search-farm { scroll-margin-top: 14px; }
+.build-search-farm > h2 { margin: 0 0 8px; font-size: 23px; letter-spacing: -.03em; }
+.build-search-marks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: 8px; }
+.build-search-mark { min-width: 0; }
+.build-search-mark > header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 3px 8px; padding: 10px 12px; border-bottom: 1px solid var(--line-soft); }
+.build-search-mark > header h3 { font-size: 18px; font-variant-numeric: tabular-nums; }
+.build-search-mark > header p { font-size: 12px; }
+.build-search-route { padding: 10px 12px; }
+.build-search-route + .build-search-route { border-top: 1px solid var(--line-soft); }
+.build-search-route-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 8px; }
+.build-search-route-head strong { color: #ffbca8; font-size: 17px; font-variant-numeric: tabular-nums; }
+.build-search-route-head > :last-child { font-size: 12px; }
+.build-search-steps { margin: 6px 0 8px; padding: 0; list-style: none; }
+.build-search-steps li { display: grid; grid-template-columns: 14px 29px minmax(0, 1fr) auto; align-items: start; padding-block: 5px; gap: 5px; font-size: 12px; }
+.build-search-steps li + li { border-top: 1px solid var(--line-soft); }
+.build-search-steps .item-icon { width: 29px; height: 21px; }
+.build-search-step-number { color: var(--faint); font-variant-numeric: tabular-nums; }
+.build-search-item-name { overflow-wrap: anywhere; }
+.build-search-step-meta { text-align: end; white-space: nowrap; }
+.build-search-step-meta span { display: block; }
+.build-search-step-time { color: #e7bc88; font-variant-numeric: tabular-nums; }
+.build-search-step-cost, .build-search-recipe { color: var(--muted); font-size: 11px; }
+.build-search-recipe { display: block; }
+.build-search-route-metrics { margin: 5px 0; }
+.build-search-route-metrics summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+.build-search-route-metrics dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px; margin-top: 5px; font-size: 12px; }
+.build-search-route-metrics dt { color: var(--muted); overflow-wrap: anywhere; }
+.build-search-route-metrics dd { text-align: end; font-variant-numeric: tabular-nums; }
+.build-search-compare { display: inline-block; padding-block: 4px; color: #ffbca8; font-size: 12px; font-weight: 640; text-underline-offset: 3px; }
+.build-search-compare:hover { color: var(--ink); }
+.build-search-alternatives { border-top: 1px solid var(--line-soft); }
+.build-search-alternatives > summary { padding: 8px 12px; cursor: pointer; color: var(--muted); font-size: 12px; }
+.build-search-alternatives[open] > summary { border-bottom: 1px solid var(--line-soft); }
+.build-search-empty { padding: 10px 12px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 700px) {
+  .build-search-marks { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .build-search-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 10px; }
+  .build-search-primary { grid-column: 1 / -1; }
+  .build-search-objective { grid-template-columns: 1fr; }
+  .build-search-share { padding: 0 10px 8px; text-align: start; }
+  .build-search-result-heading, .build-search-settings > summary, .build-search-status, #search-method { padding-inline: 10px; }
+  .build-search-advanced { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-inline: 10px; }
+  .build-search .intro { padding-block: 24px 14px; }
+}
