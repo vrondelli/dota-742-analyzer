@@ -13,7 +13,9 @@ const enemyLimit = 5;
 const state = { heroes: null, conditions: [], profile: null, selection: null, request: null, activeEnemy: -1 };
 const enemyInput = get('profile-enemy-search');
 const enemyResults = get('profile-enemy-results');
-const conditionSelect = get('profile-condition');
+const conditionModes = get('profile-condition-modes');
+const conditionOptions = get('profile-condition-options');
+const conditionEditor = get('profile-condition-editor');
 
 function escape(value) {
   return String(value ?? '').replace(/[&<>"']/g, (char) =>
@@ -95,60 +97,84 @@ async function loadDirectory() {
     get('hero-directory').hidden = false;
     get('profile-status').textContent = '';
   } else {
-    conditionSelect.replaceChildren(new Option('Automatic from enemy picks', 'auto'), new Option('Default builds', 'none'),
-      ...state.conditions.map(({ key, label }) => new Option(label, key)));
-    if (state.profile) renderDraftSelection(state.profile);
+    conditionOptions.innerHTML = state.conditions.map(({ key, label }) => `<label>
+      <input type="checkbox" value="${escape(key)}"> <span>${escape(label)}</span></label>`).join('');
+    if (state.profile) {
+      renderDraftSelection(state.profile);
+      renderFarm(state.profile);
+    }
   }
 }
 
 function profileQuery() {
   const params = new URLSearchParams(location.search);
-  return { role: params.get('role'), enemyIds: params.getAll('enemy').map(Number), condition: params.get('condition') || 'auto' };
+  const conditions = params.getAll('condition');
+  return { role: params.get('role'), enemyIds: params.getAll('enemy').map(Number), conditions: conditions.length ? conditions : ['auto'] };
 }
 
-function profileParams({ role, enemyIds, condition }) {
+function profileParams({ role, enemyIds, conditions }) {
   const params = new URLSearchParams();
   if (role) params.set('role', role);
   for (const id of enemyIds) params.append('enemy', id);
-  if (condition !== 'auto') params.set('condition', condition);
+  if (conditions.length !== 1 || conditions[0] !== 'auto') {
+    for (const condition of conditions) params.append('condition', condition);
+  }
   return params;
 }
 
 function profileSelection(profile) {
-  return { role: profile.role, enemyIds: profile.enemyIds ?? [], condition: profile.condition || 'auto' };
+  const conditions = profile.selectedConditions?.length ? profile.selectedConditions : [profile.condition || 'auto'];
+  return { role: profile.role, enemyIds: profile.enemyIds ?? [], conditions };
 }
 
-function renderConditionHints(profile) {
-  const target = get('profile-condition-hints');
-  if (!profile) {
-    target.replaceChildren();
-    return;
+function activeConditions(selection, profile) {
+  const [first] = selection.conditions;
+  if (first === 'none') return [];
+  if (first === 'auto') {
+    if (profile?.condition !== 'auto') return [];
+    return profile.activeConditions ?? (profile.activeCondition ? [profile.activeCondition] : []);
   }
-  const { activeCondition, condition, conditionHints = [], enemyIds = [] } = profile;
-  const activeLabel = (state.conditions.find(({ key }) => key === activeCondition)
-    ?? conditionHints.find(({ key }) => key === activeCondition))?.label;
-  const priority = condition === 'auto' && activeLabel
-    ? `<p class="subtle">Automatic priority <strong>${escape(activeLabel)}</strong></p>`
-    : condition === 'auto' && enemyIds.length
-      ? '<p class="subtle">No condition suggested for these picks. You can choose one above.</p>' : '';
+  return selection.conditions;
+}
+
+function conditionLabel(key) {
+  return state.conditions.find((condition) => condition.key === key)?.label
+    ?? state.profile?.conditionHints?.find((condition) => condition.key === key)?.label
+    ?? key;
+}
+
+function renderConditions(profile) {
+  const [mode] = state.selection.conditions;
+  const active = activeConditions(state.selection, profile);
+  for (const button of conditionModes.querySelectorAll('button')) {
+    button.setAttribute('aria-pressed', String(button.dataset.conditionMode === mode));
+  }
+  for (const choice of conditionOptions.querySelectorAll('input')) choice.checked = active.includes(choice.value);
+  const order = get('profile-condition-order');
+  order.hidden = !active.length;
+  const orderMarkup = order.hidden ? '' : `<p class="subtle">${mode === 'auto' ? 'Priority from enemy picks' : 'Condition priority'}</p>
+    <ol>${active.map((key, index) => `<li><span>${escape(conditionLabel(key))}</span>${mode !== 'auto' && index > 0
+      ? ` <button type="button" data-promote-condition="${escape(key)}" aria-label="Move ${escape(conditionLabel(key))} earlier">Move up</button>` : ''}</li>`).join('')}</ol>`;
+  if (order.innerHTML !== orderMarkup) order.innerHTML = orderMarkup;
+  const { conditionHints = [], enemyIds = [] } = profile ?? {};
+  const noHints = mode === 'auto' && enemyIds.length && !active.length
+    ? '<p class="subtle">No conditions detected for these picks.</p>' : '';
   const suggestions = conditionHints.map(({ key, label, enemies }) => `<button type="button" data-condition-hint="${escape(key)}"
-    aria-pressed="${key === activeCondition}"><span>${escape(label)}</span><span>${escape(enemies.join(', '))}</span></button>`).join('');
-  target.innerHTML = `${priority}${suggestions ? `<div class="profile-condition-links" role="group" aria-label="Suggested conditions">${suggestions}</div>` : ''}`;
+    aria-pressed="${active.includes(key)}"><span>${escape(label)}</span><span>${escape(enemies.join(', '))}</span></button>`).join('');
+  get('profile-condition-hints').innerHTML = `${noHints}${suggestions ? `<div class="profile-condition-links" role="group" aria-label="Suggested conditions">${suggestions}</div>` : ''}`;
 }
 
 function renderDraftSelection(profile) {
   if (!state.heroes || !state.selection) return;
-  const { condition, enemyIds } = state.selection;
-  const picks = state.heroes.filter(({ id }) => enemyIds.includes(id));
+  const { enemyIds } = state.selection;
+  const picks = enemyIds.map((id) => state.heroes.find((hero) => hero.id === id)).filter(Boolean);
   get('profile-build-setup').hidden = false;
   get('profile-enemy-selection').hidden = !picks.length;
   get('profile-enemy-picks').innerHTML = picks.map(({ id, name, slug }) => `<li><button class="profile-enemy-pick" type="button" data-remove-enemy="${id}" aria-label="Remove ${escape(name)}">
     ${thumbnail('heroes', slug, 'portrait')}<span>${escape(name)}</span><span aria-hidden="true">×</span></button></li>`).join('');
   get('profile-enemy-help').textContent = picks.length ? `${picks.length} of ${enemyLimit} enemies selected.` : 'Choose up to five enemy heroes.';
-  conditionSelect.disabled = false;
-  conditionSelect.value = condition;
   enemyInput.disabled = enemyIds.length >= enemyLimit;
-  renderConditionHints(profile);
+  renderConditions(profile);
 }
 
 function closeEnemySearch() {
@@ -177,6 +203,12 @@ function updateSelection(changes) {
   void loadProfile({ ...state.selection, ...changes }, 'pushState');
 }
 
+function toggleCondition(key) {
+  const active = activeConditions(state.selection, state.profile);
+  const next = active.includes(key) ? active.filter((condition) => condition !== key) : [...active, key];
+  updateSelection({ conditions: next.length ? next : ['none'] });
+}
+
 function addEnemy(option) {
   if (!option || enemyInput.disabled) return;
   const id = Number(option.dataset.enemyId);
@@ -184,7 +216,7 @@ function addEnemy(option) {
   enemyInput.value = '';
   closeEnemySearch();
   updateSelection({ enemyIds: [...state.selection.enemyIds, id] });
-  if (enemyInput.disabled) conditionSelect.focus({ preventScroll: true });
+  if (enemyInput.disabled) conditionModes.querySelector('button').focus({ preventScroll: true });
   else enemyInput.focus({ preventScroll: true });
 }
 
@@ -237,21 +269,30 @@ function renderMatchups({ favorable, difficult, coverage, minGames, minCompariso
     <p>Minimum of ${count(minGames)} games against each opponent and ${count(minComparisonGames)} comparison games. The Legend match snapshot contains ${count(coverage?.teamMatches)} matches with usable team data.</p>`;
 }
 
-function planItems(items, { later = false, ordered = true } = {}) {
+function planItems(items, { start = 1, later = false, ordered = true } = {}) {
   const element = ordered ? 'ol' : 'ul';
-  return `<${element} class="profile-scenario-items">${items.map((item) => `<li${item.conditionItem ? ' class="profile-counter-item"' : ''}>${thumbnail('items', item.key, 'item-icon')}<div><strong>${escape(item.name)}</strong>
-    <p class="subtle">${gold(item.cost)}${later && Number.isFinite(item.cumulativeCost) ? ` (${gold(item.cumulativeCost)} total)` : ''}</p></div></li>`).join('')}</${element}>`;
+  return `<${element} role="list" class="profile-scenario-items"${ordered ? ` start="${start}"` : ''}>
+    ${items.map((item, index) => `<li${item.conditionItem ? ' class="profile-counter-item"' : ''}>
+      ${ordered ? `<span class="profile-purchase-step" aria-hidden="true">${start + index}</span>` : ''}${thumbnail('items', item.key, 'item-icon')}
+      <div>${ordered && start + index === 1 ? '<span class="profile-first-purchase">Buy first</span>' : ''}<strong>${escape(item.name)}</strong>
+      <p class="subtle">${gold(item.cost)}${later && Number.isFinite(item.cumulativeCost) ? ` (${gold(item.cumulativeCost)} total)` : ''}</p></div></li>`).join('')}
+    </${element}>`;
 }
 
-function conditionChange(change) {
+function conditionChange(change, showCondition) {
   if (!change?.item) return '';
   const item = escape(change.item.name);
-  const action = change.replaces ? `Swap ${escape(change.replaces.name)} for ${item}.`
-    : change.action === 'advanced' ? `Buy ${item} earlier.`
-      : change.action === 'kept' ? `Keep ${item} in the plan.` : `Add ${item}.`;
+  const actions = {
+    advanced: `Buy ${item} earlier.`,
+    kept: `Keep ${item} in the plan.`,
+    shared: `${item} also helps against this condition.`,
+    conflict: `Prioritize ${item} over ${escape(change.requestedItem?.name ?? 'the alternate item')}.`,
+  };
+  const action = change.replaces ? `Swap ${escape(change.replaces.name)} for ${item}.` : actions[change.action] ?? `Add ${item}.`;
   const upgrade = change.deferredItem && !change.note?.includes(change.deferredItem.name)
     ? ` Save for ${escape(change.deferredItem.name)} when you have more gold.` : '';
-  return `<p class="subtle profile-scenario-value profile-condition-change"><b>${action}</b>${change.note ? ` ${escape(change.note)}` : ''}${upgrade}</p>`;
+  const label = showCondition && change.condition ? `<span class="profile-change-label">${escape(conditionLabel(change.condition))}</span>` : '';
+  return `<p class="subtle profile-scenario-value profile-condition-change">${label}<b>${action}</b>${change.note ? ` ${escape(change.note)}` : ''}${upgrade}</p>`;
 }
 
 function scenarioMarkup(scenario, type) {
@@ -262,15 +303,16 @@ function scenarioMarkup(scenario, type) {
   const later = items.filter(({ affordable }) => affordable === false);
   const empty = hasBudget ? 'No suggested purchases fit this budget.' : 'No modeled item budget for this role.';
   const nextPurchases = later.length ? `<details class="profile-next-purchases">
-    <summary>Next purchases (${later.length})</summary>${planItems(later, { later: true })}</details>` : '';
+    <summary>Later purchases (${later.length})</summary>${planItems(later, { start: now.length + 1, later: true, ordered: !isModel })}</details>` : '';
   const dps = isModel && Number.isFinite(scenario.dps)
     ? `<p class="subtle profile-scenario-value"><strong>${count(scenario.dps)} DPS</strong> with this build</p>` : '';
-  return `<article class="profile-scenario">
+  const changes = scenario.changes ?? (scenario.change ? [scenario.change] : []);
+  return `<article class="profile-scenario" id="profile-build-${escape(scenario.key)}">
     <h3>${escape(farmLabels[scenario.key] ?? scenario.label)}</h3><p class="profile-scenario-budget">${gold(scenario.budget)}</p>
     ${Number.isFinite(scenario.gpm) ? `<p class="subtle">${count(scenario.gpm)} gold per minute</p>` : ''}
     ${now.length ? planItems(now, { ordered: !isModel }) : `<p class="subtle">${empty}</p>`}${nextPurchases}
-    ${conditionChange(scenario.change)}
-    ${!scenario.change && scenario.note ? `<p class="subtle profile-scenario-value">${escape(scenario.note)}</p>` : ''}${dps}
+    ${changes.map((change) => conditionChange(change, changes.length > 1)).join('')}
+    ${!changes.length && scenario.note ? `<p class="subtle profile-scenario-value">${escape(scenario.note)}</p>` : ''}${dps}
   </article>`;
 }
 
@@ -308,10 +350,11 @@ function renderFarm(profile) {
   if (profile.activeCondition) draft.set('condition', profile.activeCondition);
   for (const enemy of profile.enemyIds ?? []) draft.append('enemy', enemy);
   const action = farm.type === 'curated'
-    ? `<a href="/draft-guide?${escape(draft)}">Open in Draft guide</a>`
+    ? `<a href="/draft-guide?${escape(draft)}">${(profile.activeConditions?.length ?? 0) > 1 ? 'Open primary condition in Draft guide' : 'Open in Draft guide'}</a>`
     : `<a href="/efficiency?heroId=${encodeURIComponent(hero.id)}">Test your own item build</a>`;
   const adjustment = farm.conditionSource === 'hero-specific' ? 'Hero-specific adjustment'
-    : farm.conditionSource === 'role-based' ? 'General role adjustment' : '';
+    : farm.conditionSource === 'role-based' ? 'General role adjustment'
+      : farm.conditionSource === 'mixed' ? 'Hero-specific and role-based adjustments' : '';
   content.innerHTML = `<p class="subtle profile-farm-source"><strong>${escape(typeLabel)}</strong>${farm.note ? ` <span>${escape(farm.note)}</span>` : ''}</p>
     ${adjustment ? `<p class="subtle profile-farm-source">${adjustment}</p>` : ''}
     <div class="profile-farm-grid">${(farm.scenarios ?? []).map((scenario) => scenarioMarkup(scenario, farm.type)).join('')}</div>
@@ -342,6 +385,7 @@ function renderProfile(profile) {
   }
   renderRole(profile);
   renderFarm(profile);
+  document.dispatchEvent(new CustomEvent('hero-farm-check-role', { detail: { role: profile.role } }));
 }
 
 async function loadProfile(selection = profileQuery(), historyAction = 'replaceState') {
@@ -364,6 +408,7 @@ async function loadProfile(selection = profileQuery(), historyAction = 'replaceS
     renderProfile(profile);
     state.profile = profile;
     state.selection = profileSelection(profile);
+    if (!previous && !['auto', 'none'].includes(state.selection.conditions[0])) conditionEditor.open = true;
     renderDraftSelection(profile);
     status.textContent = '';
     if (historyAction) history[historyAction](null, '', `${heroPath(profile.hero.slug)}?${profileParams(state.selection)}${location.hash}`);
@@ -466,12 +511,34 @@ get('profile-enemy-clear').addEventListener('click', () => {
   updateSelection({ enemyIds: [] });
   enemyInput.focus({ preventScroll: true });
 });
-conditionSelect.addEventListener('change', () => updateSelection({ condition: conditionSelect.value }));
+conditionModes.addEventListener('click', (event) => {
+  const mode = event.target.closest('[data-condition-mode]');
+  if (mode && mode.dataset.conditionMode !== state.selection.conditions[0]) {
+    updateSelection({ conditions: [mode.dataset.conditionMode] });
+  }
+});
+conditionOptions.addEventListener('change', (event) => {
+  if (event.target.matches('input[type="checkbox"]')) toggleCondition(event.target.value);
+});
+get('profile-condition-order').addEventListener('click', (event) => {
+  const promote = event.target.closest('[data-promote-condition]');
+  if (!promote) return;
+  const conditions = [...state.selection.conditions];
+  const index = conditions.indexOf(promote.dataset.promoteCondition);
+  if (index < 1) return;
+  [conditions[index - 1], conditions[index]] = [conditions[index], conditions[index - 1]];
+  updateSelection({ conditions });
+  const nextControl = [...event.currentTarget.querySelectorAll('[data-promote-condition]')]
+    .find((button) => button.dataset.promoteCondition === promote.dataset.promoteCondition);
+  (nextControl ?? conditionEditor.querySelector('summary')).focus({ preventScroll: true });
+});
 get('profile-condition-hints').addEventListener('click', (event) => {
   const hint = event.target.closest('[data-condition-hint]');
-  if (!hint || hint.dataset.conditionHint === state.selection.condition) return;
-  conditionSelect.focus({ preventScroll: true });
-  updateSelection({ condition: hint.dataset.conditionHint });
+  if (!hint) return;
+  conditionEditor.open = true;
+  const option = [...conditionOptions.querySelectorAll('input')].find((input) => input.value === hint.dataset.conditionHint);
+  option?.focus({ preventScroll: true });
+  toggleCondition(hint.dataset.conditionHint);
 });
 
 get('profile-share').addEventListener('click', async () => {

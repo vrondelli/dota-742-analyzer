@@ -91,3 +91,74 @@ test('a curated base uses a labeled role adjustment for an unmapped condition', 
   assert.equal(farm.conditionSource, 'role-based');
   assert.ok(farm.scenarios.every(({ change }) => change.item.key === 'nullifier'));
 });
+
+const combinedEconomy = projectGpmEconomy({ matches: [{ duration: 1800, rankTier: 5, players: [
+  { heroId: 8, role: 'carry', gpm: 360 },
+  { heroId: 8, role: 'carry', gpm: 440 },
+  { heroId: 8, role: 'carry', gpm: 535 },
+] }] });
+
+test('illusions and heavy magic damage share the same sequential purchase budget', () => {
+  const juggernaut = heroes.find(({ id }) => id === 8);
+  const conditions = ['illusions', 'magic-burst'];
+  const farm = buildHeroFarm(juggernaut, items, catalog, plans, combinedEconomy, { role: 'carry', conditions });
+  assert.deepEqual(farm.conditions, conditions);
+  assert.equal(farm.conditionSource, 'mixed');
+  assert.deepEqual(farm.scenarios.map(({ changes }) => changes.map(({ item }) => item.key)),
+    [['maelstrom', 'cloak'], ['maelstrom', 'cloak'], ['mjollnir', 'cloak']]);
+  assert.ok(farm.scenarios.every(({ items: steps, budget, spent, changes }) => {
+    const counters = steps.filter(({ conditionItem }) => conditionItem);
+    return spent <= budget && counters.length === 2 && counters.every(({ affordable }) => affordable)
+      && changes[1].deferredItem.key === 'black_king_bar' && changes[1].affordable;
+  }));
+});
+
+test('one counter item can cover multiple conditions and is charged only once', () => {
+  const antiMage = heroes.find(({ id }) => id === 1);
+  const conditions = ['magic-burst', 'control'];
+  const farm = buildHeroFarm(antiMage, items, catalog, plans, economy, { role: 'carry', conditions });
+  for (const { items: steps, changes } of farm.scenarios) {
+    const counters = steps.filter(({ conditionItem }) => conditionItem);
+    assert.deepEqual(counters.map(({ key }) => key), ['black_king_bar']);
+    assert.deepEqual(counters[0].conditions, conditions);
+    assert.equal(changes[1].action, 'shared');
+    assert.equal(changes[1].item.key, 'black_king_bar');
+  }
+});
+
+test('the bridge to a shared counter applies only to the condition it addresses', () => {
+  const antiMage = heroes.find(({ id }) => id === 1);
+  const limitedEconomy = projectGpmEconomy({ matches: [{ duration: 1800, rankTier: 5, players: [
+    { heroId: 1, role: 'carry', gpm: 240 },
+    { heroId: 1, role: 'carry', gpm: 280 },
+    { heroId: 1, role: 'carry', gpm: 320 },
+  ] }] });
+  const farm = buildHeroFarm(antiMage, items, catalog, plans, limitedEconomy,
+    { role: 'carry', conditions: ['magic-burst', 'control'] });
+  for (const { items: steps, changes } of farm.scenarios) {
+    assert.deepEqual(steps.find(({ key }) => key === 'cloak').conditions, ['magic-burst']);
+    assert.equal(changes[1].item.key, 'black_king_bar');
+    assert.equal(changes[1].affordable, false);
+  }
+});
+
+test('the first condition keeps its upgrade when another condition requests a conflicting branch', () => {
+  const juggernaut = heroes.find(({ id }) => id === 8);
+  const original = plans.find(({ heroId }) => heroId === 8);
+  const plan = { ...original, swaps: [...original.swaps, { trigger: 'summons', itemKey: 'gungir', note: 'Root a group of units.' }] };
+  const farm = buildHeroFarm(juggernaut, items, catalog, [plan], economy, { role: 'carry', conditions: ['illusions', 'summons'] });
+  for (const { items: steps, changes } of farm.scenarios) {
+    assert.deepEqual(steps.filter(({ conditionItem }) => conditionItem).map(({ key }) => key), ['mjollnir']);
+    assert.ok(steps.every(({ key }) => key !== 'gungir' && key !== 'maelstrom'));
+    assert.equal(changes[1].requestedItem.key, 'gungir');
+    assert.equal(changes[1].action, 'conflict');
+  }
+});
+
+test('an affordable counter is bought before an unaffordable higher-priority response', () => {
+  const juggernaut = heroes.find(({ id }) => id === 8);
+  const farm = buildHeroFarm(juggernaut, items, catalog, plans, combinedEconomy, { role: 'carry', conditions: ['evasion', 'healing'] });
+  const { items: steps, changes } = farm.scenarios[0];
+  assert.deepEqual(steps.slice(2, 4).map(({ key, affordable }) => [key, affordable]), [['orb_of_corrosion', true], ['monkey_king_bar', false]]);
+  assert.deepEqual(changes.map(({ condition, affordable }) => [condition, affordable]), [['evasion', false], ['healing', true]]);
+});

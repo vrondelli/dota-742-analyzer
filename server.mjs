@@ -51,6 +51,7 @@ const roles = [
   { key: 'unknown', label: 'Unknown' },
 ];
 const rankedRoles = roles.filter(({ key }) => key !== 'all' && key !== 'unknown');
+const farmCheckMinutes = [5, 10, 15, 20, 25, 30];
 const hasRankedRole = ({ key }) => {
   const rankings = roleRankings.roles?.[key]?.rankings;
   return Array.isArray(rankings) && rankings.length === 20;
@@ -93,6 +94,8 @@ const staticFiles = new Map([
   ['/hero', ['hero.html', 'text/html; charset=utf-8']],
   ['/hero.css', ['hero.css', 'text/css; charset=utf-8']],
   ['/hero.js', ['hero.js', 'text/javascript; charset=utf-8']],
+  ['/hero-farm-check.css', ['hero-farm-check.css', 'text/css; charset=utf-8']],
+  ['/hero-farm-check.js', ['hero-farm-check.js', 'text/javascript; charset=utf-8']],
 ]);
 const emptySnapshot = { patch, fetchedAt: null, source: 'OpenDota', matches: [] };
 let snapshotCache;
@@ -470,7 +473,7 @@ function profileEvidence(snapshot) {
     if (hasRole) roleReplayMatches += 1;
   }
   const economy = projectGpmEconomy(snapshot);
-  heroProfileEvidence = { snapshot, picks, economy, roleReplayMatches };
+  heroProfileEvidence = { snapshot, picks, economy, roleReplayMatches, rankedFarms: new Map() };
   return heroProfileEvidence;
 }
 
@@ -490,6 +493,23 @@ function chooseProfileRole(requestedRole, roleCards, heroPlans, slug) {
   return { role: exampleRoles[slug] ?? 'carry', roleBasis: 'example' };
 }
 
+function buildProfileFarm(hero, role, data, plans, { picks, economy }, settings = {}) {
+  return buildHeroFarm(data.heroes.get(hero.id) ?? hero, data.items, catalog, plans, {
+    options: { ...economy.options, role }, roles: economy.roles.filter(({ key }) => key === role),
+  }, { role, replayPicks: picks.get(role).get(hero.id) ?? 0, ...settings });
+}
+
+function profileConditions(query) {
+  const keys = [...new Set(query.getAll('condition').filter(Boolean))];
+  if (!keys.length || (keys.length === 1 && ['auto', 'none'].includes(keys[0]))) {
+    return { condition: keys[0] ?? 'auto', selectedConditions: [] };
+  }
+  if (keys.some((key) => !DRAFT_CONDITIONS.some((entry) => entry.key === key))) {
+    throw new RangeError('Choose game conditions individually, or use automatic conditions or default builds.');
+  }
+  return { condition: keys[0], selectedConditions: keys };
+}
+
 async function handleHeroProfile(response, slug, query) {
   const hero = heroesBySlug.get(slug);
   if (!hero) return sendJson(response, 404, { error: 'Hero not found in the 7.42 roster.' });
@@ -497,12 +517,9 @@ async function handleHeroProfile(response, slug, query) {
   if (requestedRole !== null && !rankedRoles.some(({ key }) => key === requestedRole)) {
     return sendJson(response, 400, { error: 'Select one Legend role.' });
   }
-  const condition = query.get('condition') || 'auto';
-  if (!['auto', 'none'].includes(condition) && !DRAFT_CONDITIONS.some(({ key }) => key === condition)) {
-    return sendJson(response, 400, { error: 'Select a supported game condition.' });
-  }
-  let enemyIds;
+  let enemyIds, condition, selectedConditions;
   try {
+    ({ condition, selectedConditions } = profileConditions(query));
     enemyIds = [...new Set(draftIds(query, 'enemy'))];
     if (enemyIds.includes(hero.id)) throw new RangeError('Choose enemies other than the hero you are playing.');
     if (enemyIds.length > 5) throw new RangeError('Select up to five enemy heroes.');
@@ -511,7 +528,8 @@ async function handleHeroProfile(response, slug, query) {
     throw error;
   }
   const [snapshot, data, guide] = await Promise.all([loadSnapshot(), loadBuildData(), loadDraftPlans()]);
-  const { picks, economy, roleReplayMatches } = profileEvidence(snapshot);
+  const evidence = profileEvidence(snapshot);
+  const { picks, roleReplayMatches } = evidence;
   const roleCards = rankedRoles.map(({ key, label }) => {
     const ranking = roleRankings.roles[key].rankings.find((row) => row.heroId === hero.id);
     return { key, label, rank: ranking?.rank ?? null, score: ranking?.score ?? null,
@@ -523,10 +541,9 @@ async function handleHeroProfile(response, slug, query) {
   const curatedConditions = new Set(rolePlan?.swaps?.map(({ trigger }) => trigger));
   const conditionHints = enemyConditionHints(enemyIds).sort((a, b) => b.enemyIds.length - a.enemyIds.length
     || Number(curatedConditions.has(b.key)) - Number(curatedConditions.has(a.key)));
-  const activeCondition = condition === 'auto' ? conditionHints[0]?.key ?? '' : condition === 'none' ? '' : condition;
-  const farm = buildHeroFarm(data.heroes.get(hero.id) ?? hero, data.items, catalog, plans, {
-    options: { ...economy.options, role }, roles: economy.roles.filter(({ key }) => key === role),
-  }, { role, replayPicks: picks.get(role).get(hero.id) ?? 0, snapshot, condition: activeCondition });
+  const activeConditions = condition === 'auto' ? conditionHints.map(({ key }) => key) : selectedConditions;
+  const activeCondition = activeConditions[0] ?? '';
+  const farm = buildProfileFarm(hero, role, data, plans, evidence, { snapshot, conditions: activeConditions });
   const matchups = getHeroMatchups(heroes, snapshot, hero.id);
   const addSlugs = (rows) => rows.map((row) => ({ ...row, enemySlug: heroSlugs[row.enemyId] ?? null }));
   return sendJson(response, 200, {
@@ -534,8 +551,47 @@ async function handleHeroProfile(response, slug, query) {
     rankCoverage: { legendMatches: roleRankings.sample.publicMatches,
       inferredRoleReplays: roleRankings.sample.positionInferredReplayMatches },
     matchups: { ...matchups, favorable: addSlugs(matchups.favorable), difficult: addSlugs(matchups.difficult) },
-    enemyIds, condition, activeCondition, conditionHints, farm,
+    enemyIds, condition, selectedConditions, activeCondition, activeConditions, conditionHints, farm,
   });
+}
+
+async function handleRankedFarms(url, response) {
+  const role = url.searchParams.get('role') ?? rankedRoles[0].key;
+  if (!rankedRoles.some(({ key }) => key === role)) {
+    return sendJson(response, 400, { error: 'Select one Legend role.' });
+  }
+  const snapshot = await loadSnapshot();
+  const evidence = profileEvidence(snapshot);
+  const { rankedFarms, economy: { options } } = evidence;
+  if (!rankedFarms.has(role)) {
+    const [data, guide] = await Promise.all([loadBuildData(), loadDraftPlans()]);
+    const rows = roleRankings.roles[role].rankings.map(({ heroId }) => ({
+      heroId, farm: buildProfileFarm(heroesById.get(heroId), role, data, guide.plans, evidence),
+    }));
+    rankedFarms.set(role, rows);
+  }
+  return sendJson(response, 200, {
+    role, defaults: { targetMinute: options.targetMinute, reserveGold: options.reserveGold }, rows: rankedFarms.get(role),
+  });
+}
+
+async function handleFarmCheck(response) {
+  const snapshot = await loadSnapshot();
+  const evidence = profileEvidence(snapshot);
+  if (!evidence.farmCheck) {
+    const byRole = new Map(rankedRoles.map(({ key, label }) => [key, { key, label, checkpoints: [] }]));
+    for (const minute of farmCheckMinutes) {
+      const economy = minute === evidence.economy.options.targetMinute
+        ? evidence.economy : projectGpmEconomy(snapshot, { targetMinute: minute });
+      for (const { key, basis, scenarios } of economy.roles) {
+        const checkpoint = { minute, basis, sampleSize: scenarios[0]?.sampleSize ?? 0, bad: null, good: null, easy: null };
+        for (const { key: farm, earnedGold, gpm } of scenarios) checkpoint[farm] = { gold: earnedGold, gpm };
+        byRole.get(key).checkpoints.push(checkpoint);
+      }
+    }
+    evidence.farmCheck = [...byRole.values()];
+  }
+  return sendJson(response, 200, { patch, source: snapshot.source, fetchedAt: snapshot.fetchedAt, roles: evidence.farmCheck });
 }
 
 async function handleDraftGuide(url, response) {
@@ -684,6 +740,8 @@ export async function handleRequest(request, response, routedUrl) {
     if (route === '/api/gpm-builds/context') return await handleGpmContext(response);
     if (route === '/api/draft-guide' || route === '/api/draft-guide/meta') return await handleDraftGuide(url, response);
     if (route === '/api/role-rankings') return sendJson(response, 200, { ...roleRankings, heroSlugs });
+    if (route === '/api/role-rankings/builds') return await handleRankedFarms(url, response);
+    if (route === '/api/hero-farm-check') return await handleFarmCheck(response);
     if (route === '/api/hero-profiles/meta') {
       return sendJson(response, 200, { patch, heroes: heroes.map(({ id, name, slug }) => ({ id, name, slug })),
         conditions: DRAFT_CONDITIONS.map(({ key, label }) => ({ key, label })) });

@@ -26,12 +26,12 @@ const criterionLabels = {
   lowGold: 'Low-gold impact',
   pooledWins: 'Match wins across positions',
 };
-const farmLabels = { bad: 'Slow', good: 'Steady', easy: 'Fast' };
+const farmLabels = { bad: 'Bad', good: 'Good', easy: 'Easy' };
 const decimals = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
 const counts = new Intl.NumberFormat('en-US');
 const points = new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const list = new Intl.ListFormat('en-US');
-const state = { report: null };
+const state = { report: null, role: null, builds: new Map(), pendingBuilds: new Set(), failedBuilds: new Set() };
 const get = (id) => document.getElementById(id);
 const statusLabel = get('ranking-status');
 
@@ -49,6 +49,106 @@ function criterionLabel(role, key) {
 function activeRole() {
   const role = new URLSearchParams(window.location.search).get('role');
   return Object.hasOwn(roleLabels, role) ? role : 'carry';
+}
+
+function activeFarm() {
+  const farm = new URLSearchParams(window.location.search).get('farm');
+  return Object.hasOwn(farmLabels, farm) ? farm : 'good';
+}
+
+function boardUrl(role, farm = activeFarm()) {
+  const query = new URLSearchParams({ role });
+  if (farm !== 'good') query.set('farm', farm);
+  return `/role-rankings?${query}`;
+}
+
+function gold(value) {
+  return `${counts.format(value)}g`;
+}
+
+function itemIcon(key) {
+  if (!/^[a-z0-9_]+$/.test(key ?? '')) return '';
+  return `<span class="item-icon" aria-hidden="true"><img src="/assets/items/${key}.png" alt="" loading="lazy" decoding="async"></span>`;
+}
+
+function itemList(items, { ordered = false, showCost = false } = {}) {
+  const tag = ordered ? 'ol' : 'ul';
+  const entries = items.map(({ key, name, cost }) => `<li><span class="ranking-item">${itemIcon(key)}<span>${escape(name)}${showCost && Number.isFinite(cost) ? `<small>${gold(cost)}</small>` : ''}</span></span></li>`).join('');
+  return `<${tag} class="ranking-item-list" role="list">${entries}</${tag}>`;
+}
+
+function previewMarkup(farm, level) {
+  const scenario = farm?.scenarios.find(({ key }) => key === level);
+  if (!scenario) return '<span class="subtle">—</span>';
+  const fits = scenario.items.filter(({ affordable }) => affordable !== false);
+  if (!fits.length) return '<span class="subtle">No items fit</span>';
+  const modeled = farm.type === 'right-click-model';
+  return `${modeled ? '<p class="subtle ranking-preview-basis">Modeled damage set</p>' : ''}
+    ${itemList(fits.slice(0, 3), { ordered: !modeled })}${fits.length > 3 ? `<span class="subtle ranking-preview-extra">+${fits.length - 3} more</span>` : ''}`;
+}
+
+function farmBreakdownMarkup(farm, unavailable) {
+  if (!farm) return `<h4>Farm builds</h4><p>${unavailable ? 'Build previews unavailable.' : 'Loading builds…'}</p>`;
+  const ordered = farm.type !== 'right-click-model';
+  return `<h4>Farm builds</h4><p>${escape(farm.label)}</p>
+    <div class="ranking-farm-grid">${farm.scenarios.map((scenario) => {
+      const fits = scenario.items.filter(({ affordable }) => affordable !== false);
+      const later = scenario.items.filter(({ affordable }) => affordable === false);
+      const budget = Number.isFinite(scenario.budget) ? `${gold(scenario.budget)} budget` : 'Budget unavailable';
+      return `<section class="ranking-farm-case"><h5>${escape(farmLabels[scenario.key] ?? scenario.label)} farm</h5>
+        <p class="ranking-farm-budget">${budget}</p>
+        ${fits.length ? itemList(fits, { ordered, showCost: true }) : '<p>No items fit.</p>'}
+        ${later.length ? `<p class="ranking-later-label">Later purchases</p>${itemList(later, { showCost: true })}` : ''}</section>`;
+    }).join('')}</div>`;
+}
+
+function renderBuildPreviews(role) {
+  const level = activeFarm();
+  const builds = state.builds.get(role);
+  const failed = state.failedBuilds.has(role);
+  const status = get('ranking-build-status');
+  for (const button of get('ranking-farm-picker').querySelectorAll('[data-farm]')) {
+    button.setAttribute('aria-pressed', String(button.dataset.farm === level));
+  }
+  for (const link of get('ranking-role-tabs').querySelectorAll('[data-role]')) link.href = boardUrl(link.dataset.role, level);
+  for (const cell of get('ranking-rows').querySelectorAll('[data-build-preview]')) {
+    cell.innerHTML = previewMarkup(builds?.byHero.get(Number(cell.dataset.buildPreview)), level);
+  }
+  get('ranking-build-retry').hidden = !failed;
+  if (!builds) {
+    status.textContent = failed ? 'Build previews could not load.' : 'Loading build previews…';
+    return;
+  }
+  const budget = builds.byHero.values().next().value?.scenarios.find(({ key }) => key === level)?.budget;
+  const { targetMinute, reserveGold } = builds.defaults;
+  status.textContent = Number.isFinite(budget)
+    ? `${gold(budget)} for items by minute ${targetMinute} after setting aside ${gold(reserveGold)}.`
+    : `Minute ${targetMinute} builds. Gold budget unavailable.`;
+}
+
+async function loadBuilds(role) {
+  if (state.builds.has(role) || state.pendingBuilds.has(role)) return;
+  state.pendingBuilds.add(role);
+  state.failedBuilds.delete(role);
+  renderBuildPreviews(role);
+  try {
+    const response = await fetch(`/api/role-rankings/builds?role=${encodeURIComponent(role)}`);
+    if (!response.ok) throw new Error(`Role builds API returned ${response.status}`);
+    const builds = await response.json();
+    const byHero = new Map(builds.rows.map(({ heroId, farm }) => [heroId, farm]));
+    state.builds.set(role, { defaults: builds.defaults, byHero });
+  } catch (error) {
+    state.failedBuilds.add(role);
+    console.error(error);
+  } finally {
+    state.pendingBuilds.delete(role);
+  }
+  if (role !== activeRole()) return;
+  const byHero = state.builds.get(role)?.byHero;
+  for (const section of get('ranking-rows').querySelectorAll('[data-farm-builds]')) {
+    section.innerHTML = farmBreakdownMarkup(byHero?.get(Number(section.dataset.farmBuilds)), true);
+  }
+  renderBuildPreviews(role);
 }
 
 function benchmarkMarkup(role, hero, scoring) {
@@ -75,19 +175,21 @@ function renderRow(role, hero, scoring) {
     : '';
   const breakdownId = `rank-breakdown-${hero.heroId}`;
   const slug = state.report.heroSlugs?.[hero.heroId];
+  const farm = state.builds.get(role)?.byHero.get(hero.heroId);
   return `<tr data-ranked-hero>
     <td class="ranking-index">${hero.rank}</td>
     <th class="ranking-hero" scope="row">
       <button type="button" class="ranking-hero-toggle" data-breakdown="${breakdownId}" aria-controls="${breakdownId}" aria-expanded="false">${escape(hero.name)} <span aria-hidden="true">+</span></button>
-      <p class="ranking-note-mobile">${escape(hero.mechanic)}</p>
     </th>
     <td class="ranking-score-cell"><strong>${points.format(hero.score)}</strong></td>
+    <td class="ranking-build-preview" data-build-preview="${hero.heroId}">${previewMarkup(farm, activeFarm())}</td>
     <td class="ranking-note">${escape(hero.mechanic)}</td>
   </tr><tr class="ranking-breakdown-row" id="${breakdownId}" hidden>
-    <td class="ranking-breakdown-cell" colspan="4">
+    <td class="ranking-breakdown-cell" colspan="5">
       <div class="ranking-breakdown">
         <div>
           <h3>${escape(hero.name)}'s score</h3>
+          <p class="ranking-note-mobile">${escape(hero.mechanic)}</p>
           <p>${decimals.format(hero.mechanicsPoints)} mechanics points + ${decimals.format(hero.winPoints)} match win points</p>
           <dl class="ranking-detail-stats">${ratings}</dl>
         </div>
@@ -96,6 +198,7 @@ function renderRow(role, hero, scoring) {
           <section><h4>Recorded match evidence</h4><p>${counts.format(hero.observedPicksInRole)} picks in this position among reviewed replays.</p>
           <p>${counts.format(hero.pooledWins)} wins in ${counts.format(hero.pooledMatchCount)} matches across all positions.</p></section>
         </div>
+        <section class="ranking-farm-breakdown" data-farm-builds="${hero.heroId}">${farmBreakdownMarkup(farm, state.failedBuilds.has(role))}</section>
         <div class="ranking-breakdown-actions">
           ${slug ? `<a class="text-link" href="/hero/${encodeURIComponent(slug)}?role=${role}">${escape(hero.name)} hero guide</a>` : ''}
           <a class="text-link" href="/efficiency?heroId=${hero.heroId}">Test a build</a>
@@ -112,18 +215,21 @@ function renderRows(role, rankings, scoring) {
   const message = 'No ranked heroes match your search.';
   get('ranking-rows').innerHTML = matches.length
     ? matches.map((hero) => renderRow(role, hero, scoring)).join('')
-    : `<tr><td colspan="4" class="loading-cell">${message}</td></tr>`;
+    : `<tr><td colspan="5" class="loading-cell">${message}</td></tr>`;
   get('ranking-result-count').textContent = search ? `Showing ${matches.length} of ${rankings.length}` : '';
 }
 
 function renderRole() {
   if (!state.report) return;
   const role = activeRole();
+  state.role = role;
   const { roles, scoring } = state.report;
   const { diagnostics, rankings } = roles[role];
   const roleName = roleLabels[role];
   get('ranking-table-title').textContent = `Top ${rankings.length} ${roleName.toLowerCase()} heroes`;
   renderRows(role, rankings, scoring);
+  renderBuildPreviews(role);
+  void loadBuilds(role);
   get('ranking-draft').href = `/draft-guide?role=${role}`;
   get('ranking-share').textContent = 'Copy role link';
   get('ranking-weights').innerHTML = Object.entries(scoring.criteriaWeights[role]).map(([key, weight]) =>
@@ -167,8 +273,20 @@ get('ranking-role-tabs').addEventListener('click', (event) => {
   renderRole();
 });
 window.addEventListener('popstate', () => {
-  get('ranking-search').value = '';
-  renderRole();
+  if (!state.report) return;
+  if (activeRole() === state.role) renderBuildPreviews(state.role);
+  else {
+    get('ranking-search').value = '';
+    renderRole();
+  }
+});
+get('ranking-farm-picker').addEventListener('click', (event) => {
+  const choice = event.target.closest('[data-farm]');
+  if (!choice || choice.dataset.farm === activeFarm()) return;
+  const role = activeRole();
+  window.history.pushState({}, '', boardUrl(role, choice.dataset.farm));
+  get('ranking-share').textContent = 'Copy role link';
+  renderBuildPreviews(role);
 });
 get('ranking-search').addEventListener('input', () => {
   const role = activeRole();
@@ -185,7 +303,7 @@ get('ranking-rows').addEventListener('click', (event) => {
 get('ranking-share').addEventListener('click', async (event) => {
   const button = event.currentTarget;
   const role = activeRole();
-  const shareUrl = new URL(`/role-rankings?role=${role}`, window.location.origin);
+  const shareUrl = new URL(boardUrl(role), window.location.origin);
   try {
     await navigator.clipboard.writeText(shareUrl.href);
     if (role === activeRole()) button.textContent = 'Role link copied';
@@ -225,4 +343,5 @@ async function load() {
 }
 
 get('ranking-retry').addEventListener('click', () => { void load(); });
+get('ranking-build-retry').addEventListener('click', () => { void loadBuilds(activeRole()); });
 void load();

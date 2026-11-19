@@ -103,6 +103,8 @@ The matchup results and budget estimates appear alongside the role fit score. Ea
 
 Open [Role rankings](http://127.0.0.1:4173/role-rankings) to see 20 heroes for each position. Select a hero to inspect the mechanics rationale, individual ratings, and supported benchmarks. The fixed 7.42 analysis gives mechanics and benchmarks up to 95 points and confidence-adjusted pooled win rate up to five.
 
+Choose a farm level to preview item purchases and open a hero's details for all three farm levels. Open the hero guide to adapt those purchases to enemy picks and game conditions.
+
 The snapshot combines 15,008 Legend-average public matches with 49 inferred-role replays. Candidate positions are curated from the hero kit and conventional role fit. Carry DPS uses three minute-20 farm budgets. The mid benchmark evaluates one supported cast at level 12 and labels cases that use the median mapped cast as a scoring input. [Ranking dataset](data/7.42/role-rankings.json)
 
 ## Hero guides
@@ -111,7 +113,9 @@ Open [Heroes](http://127.0.0.1:4173/heroes) to search the 7.42 roster. A hero gu
 
 Select a position to compare bad, good, and easy farm. Item budgets use that position's 25th, 50th, and 85th percentile farm by minute 20, less 1,500 gold reserved for other spending. Each guide labels the basis of the purchases, whether the view uses a curated build, a right-click damage model, or a general role template. Share a selected role with a link such as `/hero/juggernaut?role=carry`.
 
-Add up to five enemies under **What to buy**. The automatic condition uses the threat flagged by the most enemies, with hero-specific item changes first when counts tie. You can choose a condition yourself or return to the default build. The three farm budgets show what you can afford and which counter items need more gold. Shared hero links restore the role, enemies, and selected condition.
+Add up to five enemies under **What to buy**. Automatic mode combines detected threats, ordered by the number of enemies that flag each threat, with hero-specific item changes first when counts tie. You can choose several conditions yourself or return to the default build. Each farm budget shows the purchase order, including affordable alternatives and upgrades to buy later. Shared hero links restore the role, enemies, and selected conditions.
+
+Use **Check your farm pace** to compare cumulative earned gold with Legend benchmarks from minute 5 to 30. Enter your estimated earned gold at a checkpoint to find the closest build tier for your role. Bad farm covers gold through the 25th percentile, easy farm starts at the 85th percentile, and good farm sits between them. Benchmarks also show average gold per minute. The farm label describes personal gold pace.
 
 ## Patch sources
 

@@ -81,11 +81,23 @@
             <input id="ranking-search" type="search" autocomplete="off" maxlength="80">
           </label>
           <span class="subtle" id="ranking-result-count" aria-live="polite"></span>
+          <fieldset class="ranking-farm-picker" id="ranking-farm-picker">
+            <legend>Farm level</legend>
+            <div class="role-tabs">
+              <button type="button" class="role-tab" data-farm="bad" aria-pressed="false">Bad</button>
+              <button type="button" class="role-tab" data-farm="good" aria-pressed="true">Good</button>
+              <button type="button" class="role-tab" data-farm="easy" aria-pressed="false">Easy</button>
+            </div>
+          </fieldset>
+        </div>
+        <div class="ranking-build-summary">
+          <p id="ranking-build-status" class="subtle" role="status"></p>
+          <button type="button" id="ranking-build-retry" class="plain-button" hidden>Retry builds</button>
         </div>
         <table class="role-ranking-table">
           <thead>
             <tr>
-              <th scope="col">Rank</th><th scope="col">Hero</th><th scope="col" aria-sort="descending">Role score</th><th scope="col" class="ranking-note">Role mechanics</th>
+              <th scope="col">Rank</th><th scope="col">Hero</th><th scope="col" class="ranking-score-heading" aria-sort="descending">Role score</th><th scope="col" class="ranking-build-preview">Build preview</th><th scope="col" class="ranking-note">Role mechanics</th>
             </tr>
           </thead>
           <tbody id="ranking-rows"></tbody>
