@@ -98,3 +98,15 @@ test('invalid upgrade claims and decreasing budgets are rejected', () => {
   assert.throws(() => run([point(10, 2000), point(15, 1900)], [path('invalid', 'maelstrom')]), /nondecreasing budgets/);
   assert.throws(() => run([point(15, 5000)], [path('invalid', 'power_treads', 'power_treads')]), /already holds/);
 });
+
+test('an opt-in eight-purchase path still fits within six held items', () => {
+  const longer = path('longer', 'boots', 'phase_boots', 'sobi_mask', 'ring_of_basilius', 'relic', 'radiance', 'blink', 'desolator');
+  const overflow = path('overflow', 'boots', 'quelling_blade', 'blink', 'gloves', 'gauntlets', 'circlet', 'relic');
+  const checkpoints = [point(30, 20000)];
+  assert.throws(() => run(checkpoints, [longer]), /Select one to 6 purchases/);
+  assert.throws(() => run(checkpoints, [longer], { maxPurchases: 8.5 }), /whole number/);
+  assert.throws(() => run(checkpoints, [overflow], { maxPurchases: 8 }), /six held items/);
+  const [result] = run(checkpoints, [longer], { maxPurchases: 8 });
+  assert.equal(result.purchases.length, 8);
+  assert.equal(result.points[0].items.length, 5);
+});

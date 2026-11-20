@@ -98,6 +98,18 @@ Each curve combines sustained physical attacks with supported passive item magic
 
 Open [Best build orders](http://127.0.0.1:4173/best-builds) to search up to six purchases for any hero and Legend position. The search keeps competitive paths at several spending levels and reports three distinct inventories for each target minute and farm pace when available. It scores the purchases from damage, durability, or role utility as shown on the page. Buy timings break ties in favor of earlier impact. Open any result in Build timings to inspect its purchase curve alongside other paths.
 
+### Wraith King replay comparison
+
+The [7.42 Wraith King report](docs/wraith-king-7.42.md) compares the most common recorded Legend carry opening with other purchase orders. The hero-specific bank matches up to 45 recent OpenDota parsed-replay index pages to Legend-average public matches and retains earlier Wraith King replays already collected. A separate bank keeps targeted Wraith King collection from shifting the analyzer's general hero pick rates. Use `--parsed-pages N` to scan a longer window.
+
+```powershell
+node scripts/refresh-wraith-king-replays.mjs
+node scripts/wraith-king-replay-builds.mjs
+node scripts/compare-wraith-king-builds.mjs
+```
+
+The last command prices the most frequent first three major purchases and a recorded fourth when available. It reports modeled DPS at 15, 20, and 30 minutes for Wraith King's Legend carry gold percentiles, with additional results for higher armor, inactive Armlet, extra farming income, and a follow-up item. Run it with `--role offlane` for the offlane cohort.
+
 ## Starting items
 
 Open [Starting items](http://127.0.0.1:4173/starting-builds) or follow the link from a hero's role guide. The search uses a 600-gold pre-horn budget and the hero's level-one stats. Compare balanced loadouts with ones focused on staying in lane, trading, or securing last hits. Each result shows quantities, spent and unspent gold, and the mechanics behind its score. The search fits items into six slots and spends at least 150 gold on lasting equipment. Pre-horn purchases in the available Legend replays provide context for the selected hero and role. [Valve starting-gold update](https://store.steampowered.com/oldnews/37271)
